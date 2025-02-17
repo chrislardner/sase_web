@@ -11,7 +11,7 @@ export default function HomePage() {
           <Link href="/events" className="px-4 py-2 bg-primary-light dark:bg-primary-dark text-text-dark dark:text-text-light rounded hover:bg-secondary-light dark:hover:bg-secondary-dark">
             Upcoming Events
           </Link>
-          <Link href="/blog" className="px-4 py-2 bg-primary-light dark:bg-primary-dark text-text-dark dark:text-text-light rounded hover:bg-secondary-light dark:hover:bg-secondary-dark">
+          <Link href="/news" className="px-4 py-2 bg-primary-light dark:bg-primary-dark text-text-dark dark:text-text-light rounded hover:bg-secondary-light dark:hover:bg-secondary-dark">
             Latest News
           </Link>
           <Link href="/sponsorship" className="px-4 py-2 bg-primary-light dark:bg-primary-dark text-text-dark dark:text-text-light rounded hover:bg-secondary-light dark:hover:bg-secondary-dark">
