@@ -6,12 +6,12 @@ interface Params {
   const dummyEvent = {
     id: '1',
     title: 'SASE Kickoff Meeting',
-    date: '2025-03-01',
+    date: '2025-03-01', 
     description: 'Join us for the kickoff meeting with refreshments and networking.',
     details: 'Detailed information about the event goes here.'
   };
   
-  export default function EventDetailsPage({ params }: { params: Params }) {
+  export default function EventDetailsPage({ params }: { params: Params } ) {
     const event = dummyEvent;
     return (
       <div className="min-h-screen">

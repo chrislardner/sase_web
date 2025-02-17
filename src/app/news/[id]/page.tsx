@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 interface Params {
-    slug: string;
+    name: string;
   }
   
   const dummyPost = {
-    slug: 'career-tips',
+    name: 'career-tips',
     title: 'Top Career Tips',
     category: 'Career',
     content: 'Detailed content about career tips goes here...'
