@@ -11,7 +11,7 @@ interface Params {
     details: 'Detailed information about the event goes here.'
   };
   
-  export default function EventDetailsPage({ params }: { params: Params } ) {
+  export default function EventDetailsPage( ) {
     const event = dummyEvent;
     return (
       <div className="min-h-screen">

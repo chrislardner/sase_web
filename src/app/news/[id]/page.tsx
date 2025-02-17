@@ -10,7 +10,7 @@ interface Params {
     content: 'Detailed content about career tips goes here...'
   };
   
-  export default function BlogPostPage({ params }: { params: Params }) {
+  export default function BlogPostPage() {
     const post = dummyPost;
     return (
       <div className="min-h-screen">
