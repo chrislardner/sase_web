@@ -17,6 +17,9 @@ export default function HomePage() {
           <Link href="/sponsorship" className="px-4 py-2 bg-primary-light dark:bg-primary-dark text-text-dark dark:text-text-light rounded hover:bg-secondary-light dark:hover:bg-secondary-dark">
             Sponsorship
           </Link>
+          <Link href="/update" className="px-4 py-2 bg-primary-light dark:bg-primary-dark text-text-dark dark:text-text-light rounded hover:bg-secondary-light dark:hover:bg-secondary-dark">
+            Members (will not be in final version)
+          </Link>
         </div>
       </div>
       <div className="relative w-full h-64 mt-8">
