@@ -50,7 +50,7 @@ function getQuarter(date: Date): string {
 
 export async function GET() {
   try {
-    const eventsDir = path.join(process.cwd(), 'public/fakeEvents');
+    const eventsDir = path.join(process.cwd(), 'public/events');
     const files = fs.readdirSync(eventsDir).filter(file => file.endsWith('.csv'));
 
     if (files.length === 0) {
