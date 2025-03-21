@@ -1,2 +1,2 @@
 # RHIT SASE WEB
-### Society of Asian Scientists and Engineer Chapter at Rose-Hulman Institute Of Technology 
+### Society of Asian Scientists and Engineers Chapter at Rose-Hulman Institute Of Technology 
