@@ -26,8 +26,8 @@ export default function MembersPage() {
             const response = await fetch('/api/events');
             if (!response.ok) throw new Error('Failed to load members');
 
-            const data = await response.json();
-            setMembers(data.members);
+            const data: { members: Member[] } = await response.json();
+            setMembers(data.members || []);
         } catch (err) {
             setError((err as Error).message);
         } finally {
@@ -44,23 +44,36 @@ export default function MembersPage() {
         return new Date(dateString).toLocaleDateString(undefined, options);
     };
 
+    const uniqueQuarters = Array.from(new Set(members.flatMap(member => Object.keys(member.quarters))));
+
     const columns = [
         { key: 'name', label: 'Name' },
         { key: 'year', label: 'Year' },
         { key: 'email', label: 'Email' },
-        { key: 'events', label: 'Events Attended' },
-        { key: 'quarters', label: 'Quarters' },
+        ...uniqueQuarters.map(quarter => ({ key: quarter, label: quarter })),
         { key: 'isActive', label: 'Active Status' },
-        {key: 'isCampusGroups', label: 'Campus Groups'}
+        { key: 'isCampusGroups', label: 'Campus Groups' }
     ];
 
-    const tableData = members.map(member => ({
-        ...member,
-        events: member.events.map(event => formatDate(event)).join(', '),
-        quarters: Object.entries(member.quarters).map(([quarter, count]) => `${quarter}: ${count}`).join(', '),
-        isActive: member.isActive ? 'Active' : 'Inactive',
-        isCampusGroups: member.isCampusGroups ? 'Yes' : 'No',
-    }));
+    const tableData = members.map(member => {
+        const quarterData = uniqueQuarters.reduce((acc, quarter) => {
+            acc[quarter] = member.quarters[quarter] || 0;
+            acc[`events_${quarter}`] = member.events
+                .filter(event => new Date(event).toLocaleDateString(undefined, { month: 'short', year: 'numeric' }) === quarter)
+                .map(event => formatDate(event))
+                .join(', ');
+            return acc;
+        }, {} as Record<string, number | string>);
+
+        return {
+            name: member.name,
+            year: member.year,
+            email: member.email,
+            isActive: member.isActive ? 'Active' : 'Inactive',
+            isCampusGroups: member.isCampusGroups ? 'Yes' : 'No',
+            ...quarterData,
+        };
+    });
 
     return (
         <div className="min-h-screen p-2 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
