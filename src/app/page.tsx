@@ -17,18 +17,14 @@ export default function HomePage() {
           <Link href="/sponsorship" className="px-4 py-2 bg-primary-light dark:bg-primary-dark text-text-dark dark:text-text-light rounded hover:bg-secondary-light dark:hover:bg-secondary-dark">
             Sponsorship
           </Link>
-          <Link href="/update" className="px-4 py-2 bg-primary-light dark:bg-primary-dark text-text-dark dark:text-text-light rounded hover:bg-secondary-light dark:hover:bg-secondary-dark">
-            Members (will not be in final version)
-          </Link>
         </div>
       </div>
-      <div className="relative w-full h-64 mt-8">
+      <div className="relative w-full h-96 mt-8">
         <Image 
-          src="https://placehold.co/1200x600?text=Cover+Image"
+          src="https://placehold.co/1200x1000?text=Cover+Image"
           alt="Cover Image"
-          layout="fill"
-          objectFit="cover"
-          className="rounded"
+          fill
+          className="rounded object-cover"
         />
       </div>
       <div className="mt-8 text-left">

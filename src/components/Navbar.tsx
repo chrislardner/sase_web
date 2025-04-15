@@ -1,19 +1,14 @@
 'use client';
 
-import Image from 'next/image';
+import { useState } from 'react';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { FaSun, FaMoon } from 'react-icons/fa';
+import Image from 'next/image';
+import { FaBars, FaTimes, FaSun, FaMoon } from 'react-icons/fa';
 import fullSASElogo from '../../public/fullSASElogo.svg';
 
 export default function Navbar() {
   const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setIsDark(true);
-    }
-  }, []);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleDarkMode = () => {
     setIsDark(!isDark);
@@ -26,20 +21,37 @@ export default function Navbar() {
         <Link href="/">
           <Image src={fullSASElogo} alt="SASE Logo" className="h-12 w-auto" />
         </Link>
-        <div className="flex items-center space-x-4">
-          <button onClick={toggleDarkMode} className="flex items-center ml-4 px-2 py-2 border-2 rounded">
-            {isDark ? <FaMoon /> : <FaSun /> }
-          </button>
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center space-x-4">
           <Link href="/events" className="hover:underline">Events</Link>
           <Link href="/resources" className="hover:underline">Resources</Link>
-          {/* <Link href="/news" className="hover:underline">News</Link> */}
           <Link href="/board" className="hover:underline">Board</Link>
           <Link href="/sponsorship" className="hover:underline">Sponsorship</Link>
           <Link href="/contact" className="hover:underline">Contact</Link>
-          {/* <Link href="/login" className="hover:underline">Login</Link> */}
-
+          <button onClick={toggleDarkMode} className="px-2 py-2 border-2 rounded">
+            {isDark ? <FaMoon /> : <FaSun />}
+          </button>
+        </div>
+        {/* Mobile Menu Toggle */}
+        <div className="md:hidden">
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
+            {isMenuOpen ? <FaTimes /> : <FaBars />}
+          </button>
         </div>
       </div>
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden flex flex-col space-y-2 mt-2">
+          <Link href="/events" className="block px-2 py-1 hover:underline">Events</Link>
+          <Link href="/resources" className="block px-2 py-1 hover:underline">Resources</Link>
+          <Link href="/board" className="block px-2 py-1 hover:underline">Board</Link>
+          <Link href="/sponsorship" className="block px-2 py-1 hover:underline">Sponsorship</Link>
+          <Link href="/contact" className="block px-2 py-1 hover:underline">Contact</Link>
+          <button onClick={toggleDarkMode} className="px-2 py-2 border-2 rounded">
+            {isDark ? <FaMoon /> : <FaSun />}
+          </button>
+        </div>
+      )}
     </nav>
   );
 }
