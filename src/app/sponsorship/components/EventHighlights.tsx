@@ -6,7 +6,6 @@ const EventHighlights = () => {
         <section className="mb-12 fade-in">
             <h2 className="text-3xl font-bold text-center mb-8">Event Highlights</h2>
             <div className="space-y-12 dark:text-text-light">
-                {/* National Conference */}
                 <div className="p-4 bg-primary-light dark:bg-primary-dark rounded-lg shadow-lg transform transition">
                     <h3 className="text-2xl font-bold mb-4 text-center text-white">National Conference</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -41,7 +40,6 @@ const EventHighlights = () => {
                     </p>
                 </div>
 
-                {/* Regional Conference */}
                 <div className="p-4 bg-secondary-light dark:bg-secondary-dark rounded-lg shadow-lg transform transition">
                     <h3 className="text-2xl font-bold mb-4 text-center text-white">Regional Conference</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -79,7 +77,6 @@ const EventHighlights = () => {
                     </p>
                 </div>
 
-                {/* Professional Development */}
                 <div className="p-4 bg-gray-700 rounded-lg shadow-lg transform transition">
                     <h3 className="text-2xl font-bold mb-4 text-center text-white">Professional Development</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -109,7 +106,6 @@ const EventHighlights = () => {
                     </div>
                 </div>
 
-                {/* Cultural Events */}
                 <div className="p-4 bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg transform transition">
                     <h3 className="text-2xl font-bold mb-4 text-center text-text-light dark:text-white">Cultural Events</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

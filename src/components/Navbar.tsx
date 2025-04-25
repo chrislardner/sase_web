@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import {useState} from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaBars, FaTimes, FaSun, FaMoon } from 'react-icons/fa';
+import {FaBars, FaMoon, FaSun, FaTimes} from 'react-icons/fa';
 import fullSASElogo from '../../public/fullSASElogo.svg';
 
 export default function Navbar() {
@@ -16,12 +16,11 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-surface-light dark:bg-surface-dark shadow mb-4 px-2 pt-3 pb-4">
+      <nav className="bg-navbar-light dark:bg-navbar-dark shadow mb-4 px-2 pt-3 pb-4">
       <div className="flex justify-between items-center">
         <Link href="/">
           <Image src={fullSASElogo} alt="SASE Logo" className="h-12 w-auto" />
         </Link>
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-4">
           <Link href="/events" className="hover:underline">Events</Link>
           <Link href="/resources" className="hover:underline">Resources</Link>
@@ -32,14 +31,12 @@ export default function Navbar() {
             {isDark ? <FaMoon /> : <FaSun />}
           </button>
         </div>
-        {/* Mobile Menu Toggle */}
         <div className="md:hidden">
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
             {isMenuOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
       </div>
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden flex flex-col space-y-2 mt-2">
           <Link href="/events" className="block px-2 py-1 hover:underline">Events</Link>

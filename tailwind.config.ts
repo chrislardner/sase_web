@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type {Config} from "tailwindcss";
 
 export default {
   darkMode: 'class', 
@@ -34,6 +34,10 @@ export default {
           light: '#F9FAFB',
           dark: '#111827',
         },
+        navbar: {
+          light: '#F3F4F6',
+          dark: '#00060b',
+        }
       },
     },
   },
