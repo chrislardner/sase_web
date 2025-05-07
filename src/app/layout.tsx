@@ -1,8 +1,8 @@
 import './globals.css';
-import ThemeProvider from "../theme/theme-provider";
 import {Inter} from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import {Providers} from '@/components/Providers';
 import React from "react";
 
 const inter = Inter({subsets: ['latin']});
@@ -17,17 +17,13 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
         <html lang="en" suppressHydrationWarning>
         <body
             className={`${inter.className} bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark`}>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange>
+        <Providers>
             <Navbar/>
             <main className="container mx-auto p-4">
                 {children}
             </main>
             <Footer/>
-        </ThemeProvider>
+        </Providers>
         </body>
         </html>
     );
