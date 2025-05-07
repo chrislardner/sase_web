@@ -1,26 +1,34 @@
 import './globals.css';
+import ThemeProvider from "../theme/theme-provider";
 import {Inter} from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import React from "react";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({subsets: ['latin']});
 
 export const metadata = {
-  title: 'SASE@RHIT',
-  description: 'Society of Asian Scientists and Engineers at Rose-Hulman Institute of Technology',
+    title: 'SASE@RHIT',
+    description: 'Society of Asian Scientists and Engineers at Rose-Hulman Institute of Technology',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en" className="dark">
-      <body className={`${inter.className} bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark`}>
-        <Navbar />
-        <main className="container mx-auto p-4">
-          {children}
-        </main>
-        <Footer />
-      </body>
-    </html>
-  );
+export default function RootLayout({children}: { children: React.ReactNode }) {
+    return (
+        <html lang="en" suppressHydrationWarning>
+        <body
+            className={`${inter.className} bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark`}>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange>
+            <Navbar/>
+            <main className="container mx-auto p-4">
+                {children}
+            </main>
+            <Footer/>
+        </ThemeProvider>
+        </body>
+        </html>
+    );
 }

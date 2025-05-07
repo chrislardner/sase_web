@@ -15,17 +15,19 @@ const SponsorshipPage = () => {
         <>
             <Head>
                 <title>SASE Sponsorship - Rose-Hulman</title>
-                <meta name="description" content="Learn about sponsorship opportunities with SASE at Rose-Hulman and help empower the next generation of engineers." />
+                <meta name="description"
+                      content="Learn about sponsorship opportunities with SASE at Rose-Hulman and help empower the next generation of engineers."/>
             </Head>
-            <div className="min-h-screen bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
-                <CoverSection />
+            <div
+                className="min-h-screen bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+                <CoverSection/>
                 <div className="container mx-auto p-6">
-                    <Header />
-                    <PresidentsMessage />
-                    <EboardSection />
-                    <ImpactStatistics />
-                    <EventHighlights />
-                    <SponsorshipPackages />
+                    <Header/>
+                    <PresidentsMessage/>
+                    <EboardSection/>
+                    <ImpactStatistics/>
+                    <EventHighlights/>
+                    <SponsorshipPackages/>
                 </div>
             </div>
             <style jsx global>{`
@@ -38,9 +40,6 @@ const SponsorshipPage = () => {
                         opacity: 1;
                         transform: translateY(0);
                     }
-                }
-                .fade-in {
-                    animation: fadeIn 1s ease-out forwards;
                 }
             `}</style>
         </>

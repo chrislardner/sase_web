@@ -1,10 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
-import { FaUsers, FaGraduationCap } from 'react-icons/fa';
+import {FaGraduationCap, FaUsers} from 'react-icons/fa';
 
 const ImpactStatistics = () => {
     return (
-        <section className="mb-12 p-8 bg-gray-800 text-text-light rounded-lg shadow-xl transform transition-all fade-in">
+        <section
+            className="mb-12 p-8 bg-gray-800 text-text-light rounded-lg shadow-xl transform transition-all fade-in">
             <h2 className="text-4xl font-extrabold mb-8 text-center text-white">Our Impact in Numbers</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
@@ -17,8 +18,9 @@ const ImpactStatistics = () => {
                         className="object-cover rounded-lg shadow-md"
                     />
                 </div>
-                <div className="lg:col-span-1 flex flex-col items-center justify-center bg-gray-700 rounded-lg shadow-md p-8">
-                    <FaUsers className="text-6xl :txt-white mb-4" />
+                <div
+                    className="lg:col-span-1 flex flex-col items-center justify-center bg-gray-700 rounded-lg shadow-md p-8">
+                    <FaUsers className="text-6xl :txt-white mb-4"/>
                     <p className="text-4xl font-bold text-white">25,500+</p>
                     <p className="text-xl text-gray-300">Lorem ipsum dolor sit amet</p>
                 </div>
@@ -40,14 +42,16 @@ const ImpactStatistics = () => {
                         className="object-cover rounded-lg shadow-md"
                     />
                 </div>
-                <div className="lg:col-span-1 flex flex-col items-center justify-center bg-gray-700 rounded-lg shadow-md p-8">
-                    <FaGraduationCap className="text-6xl text-white mb-4" />
+                <div
+                    className="lg:col-span-1 flex flex-col items-center justify-center bg-gray-700 rounded-lg shadow-md p-8">
+                    <FaGraduationCap className="text-6xl text-white mb-4"/>
                     <p className="text-4xl font-bold text-white">3.99</p>
                     <p className="text-xl text-gray-300">Lorem ipsum dolor sit amet</p>
                 </div>
             </div>
             <p className="mt-8 text-center text-xl text-gray-300">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus
+                ante dapibus diam.
             </p>
         </section>
     );

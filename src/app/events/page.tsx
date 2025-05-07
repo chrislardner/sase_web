@@ -1,4 +1,4 @@
-import EventCard from '@/components/EventCard';
+import EventCard from '@/app/events/components/EventCard';
 
 const dummyEvents = [
   {

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 interface TableProps {
     data: Array<{ [key: string]: string | number | boolean }>;
     columns: Array<{ key: string; label: string; icon?: React.ReactNode }>;
 }
 
-const Table: React.FC<TableProps> = ({ data, columns }) => {
+const Table: React.FC<TableProps> = ({data, columns}) => {
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'ascending' | 'descending' } | null>(null);
     const [filters, setFilters] = useState<{ [key: string]: { condition: string; value: string } }>({});
 
@@ -55,13 +55,13 @@ const Table: React.FC<TableProps> = ({ data, columns }) => {
         if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
             direction = 'descending';
         }
-        setSortConfig({ key, direction });
+        setSortConfig({key, direction});
     };
 
     const handleFilterChange = (key: string, condition: string, value: string) => {
         setFilters(prevFilters => ({
             ...prevFilters,
-            [key]: { condition, value }
+            [key]: {condition, value}
         }));
     };
 
@@ -86,7 +86,7 @@ const Table: React.FC<TableProps> = ({ data, columns }) => {
         });
 
         const csvString = csvRows.join('\n');
-        const blob = new Blob([csvString], { type: 'text/csv' });
+        const blob = new Blob([csvString], {type: 'text/csv'});
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.setAttribute('hidden', '');
@@ -103,57 +103,58 @@ const Table: React.FC<TableProps> = ({ data, columns }) => {
                 <button onClick={exportToCSV} className="mb-4 p-2 bg-blue-500 text-white rounded">Export to CSV</button>
                 <table className="min-w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
                     <thead>
-                        <tr className="bg-gray-100 dark:bg-gray-900">
-                            <th className="p-2 border-b border-gray-200 dark:border-gray-700 text-black dark:text-white">#</th>
-                            {columns.map((column) => (
-                                <th
-                                    key={column.key}
-                                    onClick={() => requestSort(column.key)}
-                                    className="p-2 border-b border-gray-200 dark:border-gray-700 cursor-pointer text-black dark:text-white"
+                    <tr className="bg-gray-100 dark:bg-gray-900">
+                        <th className="p-2 border-b border-gray-200 dark:border-gray-700 text-black dark:text-white">#</th>
+                        {columns.map((column) => (
+                            <th
+                                key={column.key}
+                                onClick={() => requestSort(column.key)}
+                                className="p-2 border-b border-gray-200 dark:border-gray-700 cursor-pointer text-black dark:text-white"
+                            >
+                                {column.icon && <span className="mr-2">{column.icon}</span>}
+                                {column.label} {getSortIcon(column.key)}
+                            </th>
+                        ))}
+                    </tr>
+                    <tr className="bg-gray-50 dark:bg-gray-800">
+                        <th className="p-2 border-b border-gray-200 dark:border-gray-700"></th>
+                        {columns.map((column) => (
+                            <th key={column.key} className="p-2 border-b border-gray-200 dark:border-gray-700">
+                                <select
+                                    onChange={(e) => handleFilterChange(column.key, e.target.value, filters[column.key]?.value || '')}
+                                    value={filters[column.key]?.condition || ''}
+                                    className="p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800 text-black dark:text-white"
                                 >
-                                    {column.icon && <span className="mr-2">{column.icon}</span>}
-                                    {column.label} {getSortIcon(column.key)}
-                                </th>
-                            ))}
-                        </tr>
-                        <tr className="bg-gray-50 dark:bg-gray-800">
-                            <th className="p-2 border-b border-gray-200 dark:border-gray-700"></th>
-                            {columns.map((column) => (
-                                <th key={column.key} className="p-2 border-b border-gray-200 dark:border-gray-700">
-                                    <select
-                                        onChange={(e) => handleFilterChange(column.key, e.target.value, filters[column.key]?.value || '')}
-                                        value={filters[column.key]?.condition || ''}
-                                        className="p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800 text-black dark:text-white"
-                                    >
-                                        <option value="">Condition</option>
-                                        <option value=">">{'>'}</option>
-                                        <option value="<">{'<'}</option>
-                                        <option value=">=">{'>='}</option>
-                                        <option value="<=">{'<='}</option>
-                                        <option value="=">=</option>
-                                    </select>
-                                    <input
-                                        type="text"
-                                        value={filters[column.key]?.value || ''}
-                                        onChange={(e) => handleFilterChange(column.key, filters[column.key]?.condition || '', e.target.value)}
-                                        placeholder={`Filter ${column.label}`}
-                                        className="p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800 text-black dark:text-white"
-                                    />
-                                </th>
-                            ))}
-                        </tr>
+                                    <option value="">Condition</option>
+                                    <option value=">">{'>'}</option>
+                                    <option value="<">{'<'}</option>
+                                    <option value=">=">{'>='}</option>
+                                    <option value="<=">{'<='}</option>
+                                    <option value="=">=</option>
+                                </select>
+                                <input
+                                    type="text"
+                                    value={filters[column.key]?.value || ''}
+                                    onChange={(e) => handleFilterChange(column.key, filters[column.key]?.condition || '', e.target.value)}
+                                    placeholder={`Filter ${column.label}`}
+                                    className="p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800 text-black dark:text-white"
+                                />
+                            </th>
+                        ))}
+                    </tr>
                     </thead>
                     <tbody>
-                        {filteredData.map((item, index) => (
-                            <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <td className="p-2 border-b border-gray-200 dark:border-gray-700 text-black dark:text-white">{index + 1}</td>
-                                {columns.map((column) => (
-                                    <td key={column.key} className="p-2 border-b border-gray-200 dark:border-gray-700 text-black dark:text-white">
-                                        {item[column.key]}
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
+                    {filteredData.map((item, index) => (
+                        <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <td className="p-2 border-b border-gray-200 dark:border-gray-700 text-black dark:text-white">{index + 1}</td>
+                            {columns.map((column) => (
+                                <td key={column.key}
+                                    className="p-2 border-b border-gray-200 dark:border-gray-700 text-black dark:text-white">
+                                    {item[column.key]}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
                     </tbody>
                 </table>
             </div>

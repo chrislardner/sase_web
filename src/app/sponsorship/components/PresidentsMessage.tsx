@@ -14,16 +14,22 @@ const PresidentsMessage = () => {
                     className="rounded-lg"
                 />
                 <p className="text-lg leading-relaxed md:col-span-2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum
+                    vestibulum.
                     Cras venenatis euismod malesuada. Nullam ac erat ante. Sed vel urna at dui iaculis consequat.
-                    Curabitur nec nisl odio. Mauris vehicula at nunc id posuere. Praesent non nisi sed eros tincidunt tempor.
+                    Curabitur nec nisl odio. Mauris vehicula at nunc id posuere. Praesent non nisi sed eros tincidunt
+                    tempor.
                     Donec sit amet eros sit amet risus ultricies gravida. Integer ac sem vel ex vehicula lacinia.
-                    Suspendisse potenti. Proin ut dui sed metus pharetra hendrerit. Ut id lorem at libero malesuada feugiat.
+                    Suspendisse potenti. Proin ut dui sed metus pharetra hendrerit. Ut id lorem at libero malesuada
+                    feugiat.
                     Nulla facilisi. Donec fringilla, lorem at fermentum egestas, felis leo scelerisque mauris, sit amet
                     ultricies velit magna nec lorem. Sed ac magna sit amet risus tristique interdum. Integer nec libero
-                    venenatis, aliquam mauris quis, blandit nulla. Nulla facilisi. Duis aliquet egestas purus in blandit.
-                    Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit
-                    amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+                    venenatis, aliquam mauris quis, blandit nulla. Nulla facilisi. Duis aliquet egestas purus in
+                    blandit.
+                    Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna
+                    sit
+                    amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
+                    himenaeos.
                 </p>
             </div>
         </section>

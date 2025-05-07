@@ -4,7 +4,7 @@ import Image from 'next/image';
 const CoverSection = () => {
     return (
         <section className="w-full h-[60vh] relative fade-in">
-            <Image 
+            <Image
                 src="https://placehold.co/1200x600?text=Cover+Image"
                 alt="Cover Image"
                 fill

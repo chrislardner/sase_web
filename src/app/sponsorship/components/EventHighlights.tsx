@@ -36,11 +36,13 @@ const EventHighlights = () => {
                         </div>
                     </div>
                     <p className="mt-4 text-center text-white">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.
                     </p>
                 </div>
 
-                <div className="p-4 bg-secondary-light dark:bg-secondary-dark rounded-lg shadow-lg transform transition">
+                <div
+                    className="p-4 bg-secondary-light dark:bg-secondary-dark rounded-lg shadow-lg transform transition">
                     <h3 className="text-2xl font-bold mb-4 text-center text-white">Regional Conference</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <Image
@@ -73,7 +75,8 @@ const EventHighlights = () => {
                         />
                     </div>
                     <p className="mt-4 text-center text-white">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.
                     </p>
                 </div>
 
@@ -100,14 +103,16 @@ const EventHighlights = () => {
                         </div>
                         <div className="col-span-2 flex items-center justify-center">
                             <p className="text-center text-white">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua.
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <div className="p-4 bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg transform transition">
-                    <h3 className="text-2xl font-bold mb-4 text-center text-text-light dark:text-white">Cultural Events</h3>
+                    <h3 className="text-2xl font-bold mb-4 text-center text-text-light dark:text-white">Cultural
+                        Events</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <Image
                             src="https://placehold.co/300x200?text=Cultural+1"
@@ -139,7 +144,8 @@ const EventHighlights = () => {
                         />
                     </div>
                     <p className="mt-4 text-center text-text-light dark:text-white">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.
                     </p>
                 </div>
             </div>
