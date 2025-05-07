@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import {Providers} from '@/components/Providers';
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react"
 import React from "react";
 
 const inter = Inter({subsets: ['latin']});
@@ -23,6 +24,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
             <main className="container mx-auto p-4">
                 {children}
                 <SpeedInsights />
+                <Analytics />
             </main>
             <Footer/>
         </Providers>
