@@ -5,9 +5,9 @@ const EventHighlights = () => {
     return (
         <section className="mb-12 fade-in">
             <h2 className="text-3xl font-bold text-center mb-8">Event Highlights</h2>
-            <div className="space-y-12 dark:text-text-light">
-                <div className="p-4 bg-primary-light dark:bg-primary-dark rounded-lg shadow-lg transform transition">
-                    <h3 className="text-2xl font-bold mb-4 text-center text-white">National Conference</h3>
+            <div className="space-y-12">
+                <div className="p-4 rounded-lg shadow-lg transform transition">
+                    <h3 className="text-2xl font-bold mb-4 text-center">National Conference</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div className="col-span-2">
                             <Image
@@ -35,15 +35,15 @@ const EventHighlights = () => {
                             />
                         </div>
                     </div>
-                    <p className="mt-4 text-center text-white">
+                    <p className="mt-4 text-center">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua.
                     </p>
                 </div>
 
                 <div
-                    className="p-4 bg-secondary-light dark:bg-secondary-dark rounded-lg shadow-lg transform transition">
-                    <h3 className="text-2xl font-bold mb-4 text-center text-white">Regional Conference</h3>
+                    className="p-4 rounded-lg shadow-lg transform transition">
+                    <h3 className="text-2xl font-bold mb-4 text-center">Regional Conference</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <Image
                             src="https://placehold.co/300x200?text=Regional+1"
@@ -74,14 +74,14 @@ const EventHighlights = () => {
                             className="object-cover rounded-lg w-full"
                         />
                     </div>
-                    <p className="mt-4 text-center text-white">
+                    <p className="mt-4 text-center">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua.
                     </p>
                 </div>
 
-                <div className="p-4 bg-gray-700 rounded-lg shadow-lg transform transition">
-                    <h3 className="text-2xl font-bold mb-4 text-center text-white">Professional Development</h3>
+                <div className="p-4 rounded-lg shadow-lg transform transition">
+                    <h3 className="text-2xl font-bold mb-4 text-center">Professional Development</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div className="flex justify-center">
                             <Image
@@ -102,7 +102,7 @@ const EventHighlights = () => {
                             />
                         </div>
                         <div className="col-span-2 flex items-center justify-center">
-                            <p className="text-center text-white">
+                            <p className="text-center">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
                                 incididunt ut labore et dolore magna aliqua.
                             </p>
@@ -110,8 +110,8 @@ const EventHighlights = () => {
                     </div>
                 </div>
 
-                <div className="p-4 bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg transform transition">
-                    <h3 className="text-2xl font-bold mb-4 text-center text-text-light dark:text-white">Cultural
+                <div className="p-4 rounded-lg shadow-lg transform transition">
+                    <h3 className="text-2xl font-bold mb-4 text-center">Cultural
                         Events</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <Image
@@ -143,7 +143,7 @@ const EventHighlights = () => {
                             className="object-cover rounded-lg w-full"
                         />
                     </div>
-                    <p className="mt-4 text-center text-text-light dark:text-white">
+                    <p className="mt-4 text-center">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua.
                     </p>

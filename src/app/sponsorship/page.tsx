@@ -19,7 +19,7 @@ const SponsorshipPage = () => {
                       content="Learn about sponsorship opportunities with SASE at Rose-Hulman and help empower the next generation of engineers."/>
             </Head>
             <div
-                className="min-h-screen bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+                className="min-h-screen">
                 <CoverSection/>
                 <div className="container mx-auto p-6">
                     <Header/>

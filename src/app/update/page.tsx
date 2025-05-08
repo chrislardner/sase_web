@@ -239,10 +239,10 @@ export default function UpdatePage() {
         <div className="min-h-screen p-4">
             <h1 className="text-2xl font-bold mb-4">Update Members</h1>
             <input type="file" accept=".csv" multiple onChange={handleFileChange} className="mb-4"/>
-            {error && <p className="text-red-500 mb-4">{error}</p>}
+            {error && <p className="">{error}</p>}
             {members.length > 0 && (
                 <>
-                    <button onClick={exportToCSV} className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
+                    <button onClick={exportToCSV} className="mb-4 px-4 py-2 rounded">
                         Download CSV
                     </button>
                     <div className="overflow-x-auto">

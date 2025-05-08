@@ -4,22 +4,22 @@ import Image from 'next/image';
 export default function HomePage() {
     return (
         <div
-            className="min-h-screen flex flex-col text-center bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+            className="min-h-screen flex flex-col text-center">
             <div>
                 <h1 className="text-4xl font-bold mb-4">Welcome to SASE @ Rose-Hulman</h1>
                 <p className="mb-8">Insert catchy tagline about how amazing SASE @ Rose-Hulman borrowed from RHIT page
                     or SASE page</p>
                 <div className="space-x-4">
                     <Link href="/events"
-                          className="px-4 py-2 bg-primary-light dark:bg-primary-dark text-text-dark dark:text-text-light rounded hover:bg-secondary-light dark:hover:bg-secondary-dark">
+                          className="px-4 py-2 hover:underline">
                         Upcoming Events
                     </Link>
                     <Link href="/news"
-                          className="px-4 py-2 bg-primary-light dark:bg-primary-dark text-text-dark dark:text-text-light rounded hover:bg-secondary-light dark:hover:bg-secondary-dark">
+                          className="px-4 py-2 hover:underline">
                         Latest News
                     </Link>
                     <Link href="/sponsorship"
-                          className="px-4 py-2 bg-primary-light dark:bg-primary-dark text-text-dark dark:text-text-light rounded hover:bg-secondary-light dark:hover:bg-secondary-dark">
+                          className="px-4 py-2 hover:underline">
                         Sponsorship
                     </Link>
                 </div>

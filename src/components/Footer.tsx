@@ -6,7 +6,7 @@ import rhitLogo from '../../public/rhitLogo.svg';
 
 export default function Footer() {
     return (
-        <footer className="mt-auto bg-primary-light py-7 text-white">
+        <footer className="mt-auto py-7 bg-gray-500 text-white">
             <div className="container mx-auto flex flex-col items-center justify-between md:flex-row px-4 md:px-8">
                 <div className="mb-6 flex flex-col items-center md:mb-0">
                     <div className="mb-6 flex items-center">
@@ -27,15 +27,15 @@ export default function Footer() {
                 <div className="flex flex-col items-center md:items-end">
                     <div className="mb-4 flex flex-col items-center space-y-4 md:flex-row md:space-x-6 md:space-y-0">
                         <Link href="/events"
-                              className="text-lg text-white transition-all hover:text-secondary-light hover:underline">Events</Link>
+                              className="transition-all hover:underline">Events</Link>
                         <Link href="/sponsorship"
-                              className="text-lg text-white transition-all hover:text-secondary-light hover:underline">Sponsorship</Link>
+                              className="transition-all hover:underline">Sponsorship</Link>
                         <Link href="/contact"
-                              className="text-lg text-white transition-all hover:text-secondary-light hover:underline">Contact
+                              className="transition-all hover:underline">Contact
                             Us</Link>
                     </div>
                     <div className="flex flex-col items-center md:flex-row md:items-center">
-                        <div className="h-0.5 w-[350px] bg-white"></div>
+                        <div className="h-0.5 w-[350px]"></div>
                     </div>
                 </div>
             </div>

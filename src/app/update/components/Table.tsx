@@ -100,30 +100,30 @@ const Table: React.FC<TableProps> = ({data, columns}) => {
     return (
         <div className="p-4 h-full overflow-auto">
             <div className="overflow-x-auto">
-                <button onClick={exportToCSV} className="mb-4 p-2 bg-blue-500 text-white rounded">Export to CSV</button>
-                <table className="min-w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                <button onClick={exportToCSV} className="mb-4 p-2 rounded">Export to CSV</button>
+                <table className="min-w-full">
                     <thead>
-                    <tr className="bg-gray-100 dark:bg-gray-900">
-                        <th className="p-2 border-b border-gray-200 dark:border-gray-700 text-black dark:text-white">#</th>
+                    <tr className="">
+                        <th className="p-2 border-b">#</th>
                         {columns.map((column) => (
                             <th
                                 key={column.key}
                                 onClick={() => requestSort(column.key)}
-                                className="p-2 border-b border-gray-200 dark:border-gray-700 cursor-pointer text-black dark:text-white"
+                                className="p-2 border-b"
                             >
                                 {column.icon && <span className="mr-2">{column.icon}</span>}
                                 {column.label} {getSortIcon(column.key)}
                             </th>
                         ))}
                     </tr>
-                    <tr className="bg-gray-50 dark:bg-gray-800">
-                        <th className="p-2 border-b border-gray-200 dark:border-gray-700"></th>
+                    <tr className="">
+                        <th className="p-2 border-b "></th>
                         {columns.map((column) => (
-                            <th key={column.key} className="p-2 border-b border-gray-200 dark:border-gray-700">
+                            <th key={column.key} className="p-2 border-b ">
                                 <select
                                     onChange={(e) => handleFilterChange(column.key, e.target.value, filters[column.key]?.value || '')}
                                     value={filters[column.key]?.condition || ''}
-                                    className="p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800 text-black dark:text-white"
+                                    className="p-2 border"
                                 >
                                     <option value="">Condition</option>
                                     <option value=">">{'>'}</option>
@@ -137,7 +137,7 @@ const Table: React.FC<TableProps> = ({data, columns}) => {
                                     value={filters[column.key]?.value || ''}
                                     onChange={(e) => handleFilterChange(column.key, filters[column.key]?.condition || '', e.target.value)}
                                     placeholder={`Filter ${column.label}`}
-                                    className="p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800 text-black dark:text-white"
+                                    className="p-2 border"
                                 />
                             </th>
                         ))}
@@ -145,11 +145,11 @@ const Table: React.FC<TableProps> = ({data, columns}) => {
                     </thead>
                     <tbody>
                     {filteredData.map((item, index) => (
-                        <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                            <td className="p-2 border-b border-gray-200 dark:border-gray-700 text-black dark:text-white">{index + 1}</td>
+                        <tr key={index} className="">
+                            <td className="p-2 border-b">{index + 1}</td>
                             {columns.map((column) => (
                                 <td key={column.key}
-                                    className="p-2 border-b border-gray-200 dark:border-gray-700 text-black dark:text-white">
+                                    className="p-2 border-b">
                                     {item[column.key]}
                                 </td>
                             ))}

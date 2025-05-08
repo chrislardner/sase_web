@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const PresidentsMessage = () => {
     return (
-        <section className="dark:text-text-light mb-12 p-8 bg-white rounded-lg shadow-xl transform transition fade-in">
+        <section className="mb-12 p-8 rounded-lg shadow-xl transform transition fade-in">
             <h2 className="text-3xl font-bold mb-4">Message from the President</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <Image

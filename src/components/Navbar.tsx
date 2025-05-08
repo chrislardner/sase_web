@@ -17,7 +17,7 @@ export default function Navbar() {
   }, []);
 
   return (
-      <nav className="bg-navbar-light dark:bg-navbar-dark shadow mb-4 px-2 pt-3 pb-4">
+      <nav className="shadow mb-4 px-2 pt-3 pb-4">
         <div className="flex justify-between items-center">
           <Link href="/">
             <Image src={fullSASElogo} alt="SASE Logo" className="h-12 w-auto"/>
@@ -30,7 +30,6 @@ export default function Navbar() {
             <Link href="/sponsorship" className="hover:underline">Sponsorship</Link>
             <Link href="/contact" className="hover:underline">Contact</Link>
 
-            {/* Defer rendering the theme toggle button until mounted */}
             {mounted && (
                 <button
                     onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
