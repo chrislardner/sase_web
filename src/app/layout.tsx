@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import {Providers} from '@/components/Providers';
 import {SpeedInsights} from "@vercel/speed-insights/next";
-import {Analytics} from "@vercel/analytics/react"
+import {Analytics} from "@vercel/analytics/next";
 import React from "react";
 
 const inter = Inter({subsets: ['latin']});
