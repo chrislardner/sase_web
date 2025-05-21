@@ -5,7 +5,7 @@ import Head from 'next/head';
 import CoverSection from './components/CoverSection';
 import Header from './components/HeaderSection';
 import PresidentsMessage from './components/PresidentsMessage';
-import EboardSection from './components/EboardSection';
+import EBoardSection from './components/EBoardSection';
 import ImpactStatistics from './components/ImpactStatistics';
 import EventHighlights from './components/EventHighlights';
 import SponsorshipPackages from './components/SponsorshipPackages';
@@ -24,7 +24,7 @@ const SponsorshipPage = () => {
                 <div className="container mx-auto p-6">
                     <Header/>
                     <PresidentsMessage/>
-                    <EboardSection/>
+                    <EBoardSection/>
                     <ImpactStatistics/>
                     <EventHighlights/>
                     <SponsorshipPackages/>

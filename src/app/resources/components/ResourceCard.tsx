@@ -9,7 +9,7 @@ interface ResourceCardProps {
     resource: Resource;
 }
 
-export default function ResourceCard({resource}: ResourceCardProps) {
+export default function ResourceCard({resource}: Readonly<ResourceCardProps>) {
     return (
         <div className="border p-4 rounded shadow hover:shadow-lg transition">
             <h3 className="text-xl font-semibold mb-2">{resource.title}</h3>

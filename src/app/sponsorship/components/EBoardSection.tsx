@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-const EboardSection = () => {
+const EBoardSection = () => {
     return (
         <section className="mb-12 fade-in">
             <h2 className="text-3xl font-bold text-center mb-6">Meet Our Executive Board</h2>
@@ -18,4 +18,4 @@ const EboardSection = () => {
     );
 };
 
-export default EboardSection;
+export default EBoardSection;

@@ -29,7 +29,10 @@ const Table: React.FC<TableProps> = ({data, columns}) => {
         return sortedData.filter(item =>
             columns.every(column => {
                 const filter = filters[column.key];
-                if (!filter || !filter.value) return true;
+                if (!filter) return true;
+                else if (!filter.value) {
+                    return true;
+                }
                 const itemValue = item[column.key];
                 const filterValue = filter.value;
                 switch (filter.condition) {
