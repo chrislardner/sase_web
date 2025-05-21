@@ -5,7 +5,7 @@ import {useEffect, useState} from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {FaBars, FaMoon, FaSun, FaTimes} from 'react-icons/fa';
-import fullSASElogo from '../../public/fullSASElogo.svg';
+import fullSASELogo from '../../public/fullSASElogo.svg';
 
 export default function Navbar() {
   const {theme, setTheme} = useTheme();
@@ -20,7 +20,7 @@ export default function Navbar() {
       <nav className="shadow mb-4 px-2 pt-3 pb-4">
         <div className="flex justify-between items-center">
           <Link href="/">
-            <Image src={fullSASElogo} alt="SASE Logo" className="h-12 w-auto"/>
+            <Image src={fullSASELogo} alt="SASE Logo" className="h-12 w-auto"/>
           </Link>
 
           <div className="hidden md:flex items-center space-x-4">
