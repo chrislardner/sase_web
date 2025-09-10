@@ -1,49 +1,83 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import {FaBriefcase, FaCalendarAlt, FaHandHoldingHeart, FaUsers,} from 'react-icons/fa';
 
 export default function HomePage() {
+    return (<main className="page-shell">
+        <header className="text-center">
+            <h1 className="h1-title">SASE @ RHIT</h1>
+            <p className="lead mt-2">Society of Asian Scientists &amp; Engineers at Rose-Hulman Institute of Technology</p>
+            <div className="mt-0.5 flex items-center justify-center">
+                <nav className="cta-row">
+                    <Link href="/calendar" className="btn btn-ghost">Calendar</Link>
+                    {/*<Link href="/sponsorship" className="btn btn-ghost">Sponsorship</Link>*/}
+                    <Link href="/contact" className="btn btn-ghost">Contact Us</Link>
+                </nav>
+            </div>
+        </header>
 
-    return (
-        <div
-            className="min-h-screen flex flex-col text-center">
-            <div>
-                <h1 className="text-4xl font-bold mb-4">Welcome to SASE @ Rose-Hulman</h1>
-                <p className="mb-8">Insert catchy tagline about how amazing SASE @ Rose-Hulman borrowed from RHIT page
-                    or SASE page</p>
-                <div className="space-x-4">
-                    <Link href="/events"
-                          className="px-4 py-2 hover:underline">
-                        Upcoming Events
-                    </Link>
-                    <Link href="/news"
-                          className="px-4 py-2 hover:underline">
-                        Latest News
-                    </Link>
-                    <Link href="/sponsorship"
-                          className="px-4 py-2 hover:underline">
-                        Sponsorship
-                    </Link>
-                </div>
-            </div>
-            <div className="relative w-full h-96 mt-8">
-                <Image
-                    src="https://placehold.co/1200x1000?text=Cover+Image"
-                    alt="Cover Image"
-                    fill
-                    className="rounded object-cover"
-                />
-            </div>
-            <div className="mt-8 text-left">
-                <h2 className="text-2xl font-bold mb-4">About SASE @ Rose-Hulman</h2>
-                <p className="mb-4">SASE @ Rose-Hulman is dedicated to promoting the personal and professional
-                    development of Asian heritage scientists and engineers. We strive to create a welcoming community
-                    that fosters growth, leadership, and success.</p>
-                <p className="mb-4">Check out our <Link href="/sponsorship"
-                                                        className="text-primary-light dark:text-primary-dark hover:underline">Sponsorship</Link> page
-                    to learn how you can support our mission.</p>
-                <p>Explore our other pages to learn more about our events, initiatives, and how you can get
-                    involved!</p>
-            </div>
+
+        <div className="mt-6 overflow-hidden rounded-lg shadow">
+            <Image
+                src="/images/cover_nc_sase.jpg"
+                alt="SASE at Rose-Hulman"
+                width={1920}
+                height={1080}
+                priority
+                sizes="100vw"
+                className="w-full h-[20rem] md:h-[26rem] lg:h-[30rem] object-cover object-top"
+            />
         </div>
-    );
+
+        <section className="section">
+            <h2 className="text-2xl font-bold mb-4">Our Pillars</h2>
+            <ul className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <li className="flex items-start gap-3">
+                    <FaBriefcase className="mt-1" aria-hidden/>
+                    <div>
+                        <h3 className="font-semibold">Professional Development</h3>
+                        <p className="card-subtle text-sm">Workshops, mentorship, and career events.</p>
+                    </div>
+                </li>
+                <li className="flex items-start gap-3">
+                    <FaUsers className="mt-1" aria-hidden/>
+                    <div>
+                        <h3 className="font-semibold">Cultural Awareness</h3>
+                        <p className="card-subtle text-sm">Celebrate and share diverse experiences.</p>
+                    </div>
+                </li>
+                <li className="flex items-start gap-3">
+                    <FaHandHoldingHeart className="mt-1" aria-hidden/>
+                    <div>
+                        <h3 className="font-semibold">Community Service</h3>
+                        <p className="card-subtle text-sm">Give back through local service projects.</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section className="section">
+            <h2 className="text-2xl font-bold mb-4">What We Do</h2>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                <li className="flex items-start gap-2">
+                    <FaCalendarAlt className="mt-0.5" aria-hidden/>
+                    <span>Weekly meetings & skill-building workshops.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                    <FaBriefcase className="mt-0.5" aria-hidden/>
+                    <span>Resume reviews, mock interviews, and industry nights.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                    <FaUsers className="mt-0.5" aria-hidden/>
+                    <span>Cultural socials, game nights, and mentorship.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                    <FaHandHoldingHeart className="mt-0.5" aria-hidden/>
+                    <span>Service projects and outreach in our local community.</span>
+                </li>
+            </ul>
+        </section>
+    </main>);
 }

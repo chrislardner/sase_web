@@ -72,9 +72,9 @@ const Table: React.FC<TableProps> = ({data, columns}) => {
         if (!sortConfig) return null;
         if (sortConfig.key !== key) return null;
         if (sortConfig.direction === 'ascending') {
-            return '▲'; // Up arrow
+            return '▲';
         } else {
-            return '▼'; // Down arrow
+            return '▼';
         }
     };
 
