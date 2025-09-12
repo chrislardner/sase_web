@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { FaDiscord, FaInstagram, FaEnvelope } from 'react-icons/fa';
 import saseFlask from '../../public/saseFlask.svg';
 import rhitLogo from '../../public/rhit_logo.png';
@@ -10,19 +9,9 @@ export default function Footer() {
     return (
         <footer className="footer-root">
             <div className="footer-inner">
-                <div className="flex flex-col items-center md:items-start gap-6">
-                    <div className="footer-brand">
-                        <Image src={saseFlask} alt="SASE Flask" width={64} className="h-auto" />
-                        <Image src={rhitLogo} alt="RHIT Logo" width={220} className="h-auto" />
-                    </div>
-                </div>
-
-                <div className="flex flex-col items-center md:items-end">
-                    <nav className="footer-links">
-                        <Link href="/calendar" className="footer-link">Calendar</Link>
-                        {/*<Link href="/sponsorship" className="footer-link">Sponsorship</Link>*/}
-                        <Link href="/contact" className="footer-link">Contact Us</Link>
-                    </nav>
+                <div className="footer-brand">
+                    <Image src={saseFlask} alt="SASE Flask" width={64} className="h-auto" />
+                    <Image src={rhitLogo} alt="RHIT Logo" width={220} className="h-auto" />
                 </div>
             </div>
 

@@ -252,13 +252,6 @@
         background: var(--accent); color: var(--accent-contrast);
     }
 
-    .has-events::after {
-        content: "";
-        position: absolute; left: 8px; right: 8px; bottom: 6px;
-        height: 4px; border-radius: 9999px;
-        background: var(--accent); opacity: .55;
-    }
-
     .cal-cell.has-events {
         background: rgba(128, 0, 0, 0.05);
         border-color: rgba(128, 0, 0, 0.18);
@@ -318,7 +311,6 @@
     .meta-icon { @apply mt-0.5 text-neutral-500 dark:text-neutral-400; }
     .prose-lite { @apply leading-relaxed; }
 
-    /* chips inside calendar cells */
     .cal-chips{
         position:absolute; left:6px; right:6px; bottom:6px;
         display:flex; flex-wrap:wrap; gap:4px;
@@ -354,5 +346,17 @@
         dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700;
     }
 
+    @media (max-width: 640px) {
+        .cal-cell { height: 4.75rem; padding: .4rem .45rem; }
+        .cal-num { font-size: .9rem; }
 
+        .cal-chips { left: 8px; right: 8px; bottom: 6px; gap: 6px; }
+        .cal-chip {
+            width: 10px; height: 10px;
+            padding: 0; border-radius: 9999px;
+            font-size: 0; line-height: 0;
+        }
+        .cal-chip--more { display: none; }
+        .cal-badge { display: none; }
+    }
 }

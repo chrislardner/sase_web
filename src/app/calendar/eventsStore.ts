@@ -3,7 +3,7 @@
 import type {EventId, EventItem} from "./types";
 
 const STORAGE_KEY = "sase.calendar.v4";
-const CONTENT_VERSION = "2025-09-09v6";
+const CONTENT_VERSION = "2025-09-11";
 const TTL_MS = 1000 * 60 * 60 * 24 * 30;
 
 type StoredPayload = {
@@ -16,7 +16,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Welcome Party",
     color: "rgb(128, 0, 0)",
     startsAt: "2025-09-04T19:00:00",
-    description: "Join us at the Pi-Vilion for our kickoff meeting and enjoy local Terre Haute food.",
+    description: "Join us at the Pi-Vilion for our kickoff meeting and enjoy local Terre Haute food",
     location: "Pi-Vilion"
 }, {
     id: "2",
@@ -24,7 +24,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Boba Night",
     color: "rgb(5, 150, 105)",
     startsAt: "2025-09-11T19:00:00",
-    description: "Enjoy free homemade boba.",
+    description: "Enjoy free homemade boba",
     location: "Pi-Vilion"
 }, {
     id: "3",
@@ -32,15 +32,15 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Games Night",
     color: "rgb(234, 88, 12)",
     startsAt: "2025-09-18T19:00:00",
-    description: "Featuring Mahjong, Jianzi, and more.",
+    description: "Featuring Mahjong, Jianzi, and more",
     location: "Courtyard by NAB (aka FAB)"
 }, {
     id: "4",
     title: "Professional Development Panel",
-    oneWordTitle: "ASCEND Panel",
+    oneWordTitle: "ADAPT Panel",
     color: "rgb(37, 99, 235)",
     startsAt: "2025-09-25T19:00:00",
-    description: "Meet with ASCEND about Internship and Full-Time Roles",
+    description: "Meet with ADAPT about internship and full-time roles",
     location: "TBD"
 }, {
     id: "5",
@@ -48,7 +48,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Fall Day of Service",
     color: "rgb(2, 132, 199)",
     startsAt: "2025-09-27T09:00:00",
-    description: "Join us for a day of service. Registration by 9/22.",
+    description: "Join us for a day of service. Register by 9/22",
     location: "TBD"
 }, {
     id: "6",
@@ -56,7 +56,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Nationals",
     color: "rgb(124, 58, 237)",
     startsAt: "2025-10-02T08:00:00",
-    description: "Travel to SASE National Conference.",
+    description: "Travel to SASE National Conference",
     location: "Pittsburgh, PA"
 }, {
     id: "7",
@@ -64,7 +64,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Nationals",
     color: "rgb(124, 58, 237)",
     startsAt: "2025-10-03T08:00:00",
-    description: "Travel to SASE National Conference.",
+    description: "Travel to SASE National Conference",
     location: "Pittsburgh, PA"
 }, {
     id: "8",
@@ -72,7 +72,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Nationals",
     color: "rgb(124, 58, 237)",
     startsAt: "2025-10-04T08:00:00",
-    description: "Travel to SASE National Conference.",
+    description: "Travel to SASE National Conference",
     location: "Pittsburgh, PA"
 }, {
     id: "9",
@@ -80,7 +80,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Mid-Autumn Dinner",
     color: "rgb(217, 119, 6)",
     startsAt: "2025-10-05T18:00:00",
-    description: "Celebrate Mid-Autumn with dinner with your SASE friends.",
+    description: "Celebrate Mid-Autumn with dinner with your SASE friends",
     location: "TBD"
 }, {
     id: "10",
@@ -88,7 +88,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Fall Break",
     color: "rgb(107, 114, 128)",
     startsAt: "2025-10-09T12:00:00",
-    description: "Enjoy Fall Break—no regular meeting this week.",
+    description: "Enjoy Fall Break—no regular meeting this week",
     location: "—"
 }, {
     id: "11",
@@ -96,7 +96,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Onigiri Action",
     color: "rgb(16, 185, 129)",
     startsAt: "2025-10-16T19:00:00",
-    description: "Make onigiri together and support a good cause.",
+    description: "Make onigiri together and support a good cause",
     location: "TBD"
 }, {
     id: "12",
@@ -104,7 +104,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Night Market",
     color: "rgb(190, 18, 60)",
     startsAt: "2025-10-18T18:00:00",
-    description: "Outdoor night market with food and activities.",
+    description: "Outdoor night market with food and activities",
     location: "TBD"
 }, {
     id: "13",
@@ -112,7 +112,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Crafts Night",
     color: "rgb(99, 102, 241)",
     startsAt: "2025-10-23T19:00:00",
-    description: "Relaxed craft night.",
+    description: "Relaxed craft night",
     location: "TBD"
 }, {
     id: "14",
@@ -120,7 +120,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Outing",
     color: "rgb(59, 130, 246)",
     startsAt: "2025-10-30T19:00:00",
-    description: "Free skating, bowling, or similar activity out in Terre Haute.",
+    description: "Free skating, bowling, or similar activity out in Terre Haute",
     location: "TBD"
 }, {
     id: "15",
@@ -128,7 +128,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Trunk or Treat",
     color: "rgb(234, 88, 12)",
     startsAt: "2025-10-31T18:00:00",
-    description: "Community Trunk or Treat event.",
+    description: "Community Trunk or Treat event",
     location: "Speed Lot"
 }, {
     id: "16",
@@ -136,7 +136,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "TREES",
     color: "rgb(2, 132, 199)",
     startsAt: "2025-11-01T09:00:00",
-    description: "Volunteer day with TREES.",
+    description: "Volunteer day with TREES",
     location: "Terre Haute"
 }, {
     id: "17",
@@ -144,7 +144,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Lantern Festival",
     color: "rgb(128, 0, 0)",
     startsAt: "2025-11-06T19:00:00",
-    description: "Lantern-making and celebration.",
+    description: "Lantern-making and celebration",
     location: "TBD"
 }, {
     id: "18",
@@ -152,7 +152,7 @@ const seedEvents: EventItem[] = [{
     oneWordTitle: "Study Mode",
     color: "rgb(107, 114, 128)",
     startsAt: "2025-11-13T19:00:00",
-    description: "Quiet study session and community time.",
+    description: "Quiet study session and community time",
     location: "TBD"
 }, {
     id: "19",
