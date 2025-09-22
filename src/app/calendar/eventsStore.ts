@@ -3,7 +3,7 @@
 import type {EventId, EventItem} from "./types";
 
 const STORAGE_KEY = "sase.calendar.v4";
-const CONTENT_VERSION = "2025-09-11";
+const CONTENT_VERSION = "2025-09-21";
 const TTL_MS = 1000 * 60 * 60 * 24 * 30;
 
 type StoredPayload = {
@@ -33,15 +33,15 @@ const seedEvents: EventItem[] = [{
     color: "rgb(234, 88, 12)",
     startsAt: "2025-09-18T19:00:00",
     description: "Featuring Mahjong, Jianzi, and more",
-    location: "Courtyard by NAB (aka FAB)"
+    location: "M107, Courtyard by NAB (aka FAB)"
 }, {
     id: "4",
     title: "Professional Development Panel",
-    oneWordTitle: "ADAPT Panel",
+    oneWordTitle: "Ingredion Panel",
     color: "rgb(37, 99, 235)",
     startsAt: "2025-09-25T19:00:00",
-    description: "Meet with ADAPT about internship and full-time roles",
-    location: "TBD"
+    description: "Meet with Ingredion about internship and full-time roles",
+    location: "M107"
 }, {
     id: "5",
     title: "Fall Day of Service",

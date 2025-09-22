@@ -1,6 +1,6 @@
 'use client';
 
-import { FaDiscord, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import { FaSchool, FaInstagram, FaEnvelope } from 'react-icons/fa';
 
 export default function ContactPage() {
     return (
@@ -9,12 +9,12 @@ export default function ContactPage() {
 
             <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <a
-                    href="https://discord.com/invite/cJZu2ERVyS"
+                    href="https://rosehulman.campusgroups.com/feeds?type=club&type_id=35480&tab=about"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-icon w-full sm:w-auto inline-flex items-center gap-2"
                 >
-                    <FaDiscord /> <span>Join Discord</span>
+                    <FaSchool /> <span>Join On CampusGroups</span>
                 </a>
 
                 <a

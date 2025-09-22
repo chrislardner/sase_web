@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { FaDiscord, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import { FaSchool, FaInstagram, FaEnvelope } from 'react-icons/fa';
 import saseFlask from '../../public/saseFlask.svg';
 import rhitLogo from '../../public/rhit_logo.png';
 
@@ -29,13 +29,13 @@ export default function Footer() {
                             <FaInstagram className="text-2xl" />
                         </a>
                         <a
-                            href="https://discord.com/invite/cJZu2ERVyS"
+                            href="https://rosehulman.campusgroups.com/feeds?type=club&type_id=35480&tab=about"
                             target="_blank"
                             rel="noopener noreferrer"
-                            aria-label="Discord"
+                            aria-label="CampusGroups"
                             className="h-6 w-6 transition-transform hover:scale-110"
                         >
-                            <FaDiscord className="text-2xl" />
+                            <FaSchool className="text-2xl" />
                         </a>
                         <a
                             href="mailto:rhit@saseconnect.org"
