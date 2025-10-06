@@ -3,18 +3,29 @@
 import type {EventId, EventItem} from "./types";
 
 const STORAGE_KEY = "sase.calendar.v4";
-const CONTENT_VERSION = "2025-09-21";
+const CONTENT_VERSION = "2025-10-06.v5";
 const TTL_MS = 1000 * 60 * 60 * 24 * 30;
 
 type StoredPayload = {
     contentVersion: string; savedAt: number; items: EventItem[];
 };
 
+const COLORS = {
+    blue: "rgb(25, 125, 200)",      // social
+    red: "rgb(225, 25, 25)",        // professional
+    yellow: "rgb(200, 200, 25)",     // service
+    green: "rgb(25, 150, 25)",    // cultural
+    orange: "rgb(200, 125, 25)",     // other
+    gray: "rgb(150, 150, 150)",     // other
+    pink: "rgb(250, 75, 150)",      // other
+    teal: "rgb(25, 150, 150)",      // other
+}
+
 const seedEvents: EventItem[] = [{
     id: "1",
     title: "SASE Welcome Party",
     oneWordTitle: "Welcome Party",
-    color: "rgb(128, 0, 0)",
+    color: COLORS.blue,
     startsAt: "2025-09-04T19:00:00",
     description: "Join us at the Pi-Vilion for our kickoff meeting and enjoy local Terre Haute food",
     location: "Pi-Vilion"
@@ -22,7 +33,7 @@ const seedEvents: EventItem[] = [{
     id: "2",
     title: "Boba Night",
     oneWordTitle: "Boba Night",
-    color: "rgb(5, 150, 105)",
+    color: COLORS.blue,
     startsAt: "2025-09-11T19:00:00",
     description: "Enjoy free homemade boba",
     location: "Pi-Vilion"
@@ -30,135 +41,143 @@ const seedEvents: EventItem[] = [{
     id: "3",
     title: "SASE Courtyard Games",
     oneWordTitle: "Games Night",
-    color: "rgb(234, 88, 12)",
+    color: COLORS.blue,
     startsAt: "2025-09-18T19:00:00",
     description: "Featuring Mahjong, Jianzi, and more",
-    location: "M107, Courtyard by NAB (aka FAB)"
+    location: "M107, Courtyard by NAB"
 }, {
     id: "4",
     title: "Professional Development Panel",
     oneWordTitle: "Ingredion Panel",
-    color: "rgb(37, 99, 235)",
+    color: COLORS.red,
     startsAt: "2025-09-25T19:00:00",
-    description: "Meet with Ingredion about internship and full-time roles",
+    description: "Meet with Ingredion about internships and full-time roles",
     location: "M107"
 }, {
     id: "5",
     title: "Fall Day of Service",
     oneWordTitle: "Fall Day of Service",
-    color: "rgb(2, 132, 199)",
+    color: COLORS.yellow,
     startsAt: "2025-09-27T09:00:00",
     description: "Join us for a day of service. Register by 9/22",
-    location: "TBD"
+    location: "Union Circle"
 }, {
     id: "6",
-    title: "SASE National Conference",
-    oneWordTitle: "Nationals",
-    color: "rgb(124, 58, 237)",
-    startsAt: "2025-10-02T08:00:00",
-    description: "Travel to SASE National Conference",
-    location: "Pittsburgh, PA"
+    title: "Study Night",
+    oneWordTitle: "SASE x SASA Collab ",
+    color: COLORS.blue,
+    startsAt: "2025-10-23T09:00:00",
+    description: "SASE x SASA Collab",
+    location: "TBD"
 }, {
     id: "7",
     title: "SASE National Conference",
     oneWordTitle: "Nationals",
-    color: "rgb(124, 58, 237)",
-    startsAt: "2025-10-03T08:00:00",
+    color: COLORS.red,
+    startsAt: "2025-10-02T08:00:00",
     description: "Travel to SASE National Conference",
     location: "Pittsburgh, PA"
 }, {
     id: "8",
     title: "SASE National Conference",
     oneWordTitle: "Nationals",
-    color: "rgb(124, 58, 237)",
-    startsAt: "2025-10-04T08:00:00",
+    color: COLORS.red,
+    startsAt: "2025-10-03T08:00:00",
     description: "Travel to SASE National Conference",
     location: "Pittsburgh, PA"
 }, {
     id: "9",
+    title: "SASE National Conference",
+    oneWordTitle: "Nationals",
+    color: COLORS.red,
+    startsAt: "2025-10-04T08:00:00",
+    description: "Travel to SASE National Conference",
+    location: "Pittsburgh, PA"
+}, {
+    id: "10",
     title: "Mid-Autumn Social Dinner",
     oneWordTitle: "Mid-Autumn Dinner",
-    color: "rgb(217, 119, 6)",
+    color: COLORS.blue,
     startsAt: "2025-10-05T18:00:00",
     description: "Celebrate Mid-Autumn with dinner with your SASE friends",
     location: "TBD"
 }, {
-    id: "10",
+    id: "11",
     title: "No Meeting — Fall Break",
     oneWordTitle: "Fall Break",
-    color: "rgb(107, 114, 128)",
+    color: COLORS.gray,
     startsAt: "2025-10-09T12:00:00",
     description: "Enjoy Fall Break—no regular meeting this week",
     location: "—"
 }, {
-    id: "11",
-    title: "Onigiri Action",
-    oneWordTitle: "Onigiri Action",
-    color: "rgb(16, 185, 129)",
-    startsAt: "2025-10-16T19:00:00",
-    description: "Make onigiri together and support a good cause",
-    location: "TBD"
+    id: "11.1",
+    title: "No Meeting — Fall Break",
+    oneWordTitle: "Fall Break",
+    color: COLORS.gray,
+    startsAt: "2025-10-10T12:00:00",
+    description: "Enjoy Fall Break—no regular meeting this week",
+    location: "—"
 }, {
     id: "12",
-    title: "Night Market",
-    oneWordTitle: "Night Market",
-    color: "rgb(190, 18, 60)",
-    startsAt: "2025-10-18T18:00:00",
-    description: "Outdoor night market with food and activities",
-    location: "TBD"
+    title: "Onigiri Action",
+    oneWordTitle: "Onigiri Action",
+    color: COLORS.yellow,
+    startsAt: "2025-10-16T19:00:00",
+    description: "Make onigiri together and support a good cause",
+    location: "Olin O231"
 }, {
     id: "13",
-    title: "Crafts Night",
-    oneWordTitle: "Crafts Night",
-    color: "rgb(99, 102, 241)",
-    startsAt: "2025-10-23T19:00:00",
-    description: "Relaxed craft night",
-    location: "TBD"
+    title: "Night Market",
+    oneWordTitle: "Night Market",
+    color: COLORS.green,
+    startsAt: "2025-10-18T18:00:00",
+    description: "Outdoor night market with food and activities",
+    location: "Olin O231"
 }, {
-    id: "14",
+    id: "15",
     title: "Social Outing — Skating or Bowling",
     oneWordTitle: "Outing",
-    color: "rgb(59, 130, 246)",
+    color: COLORS.blue,
     startsAt: "2025-10-30T19:00:00",
     description: "Free skating, bowling, or similar activity out in Terre Haute",
     location: "TBD"
 }, {
-    id: "15",
+    id: "16",
     title: "Trunk or Treat",
     oneWordTitle: "Trunk or Treat",
-    color: "rgb(234, 88, 12)",
+    color: COLORS.yellow,
     startsAt: "2025-10-31T18:00:00",
     description: "Community Trunk or Treat event",
     location: "Speed Lot"
 }, {
-    id: "16",
+    id: "17",
     title: "TREES",
     oneWordTitle: "TREES",
-    color: "rgb(2, 132, 199)",
+    color: COLORS.yellow,
     startsAt: "2025-11-01T09:00:00",
     description: "Volunteer day with TREES",
     location: "Terre Haute"
 }, {
-    id: "17",
+    id: "18",
     title: "Lantern Festival",
     oneWordTitle: "Lantern Festival",
-    color: "rgb(128, 0, 0)",
+    color: COLORS.blue,
     startsAt: "2025-11-06T19:00:00",
     description: "Lantern-making and celebration",
     location: "TBD"
 }, {
-    id: "18",
+    id: "19",
     title: "Study Mode",
     oneWordTitle: "Study Mode",
-    color: "rgb(107, 114, 128)",
+    color: COLORS.blue,
     startsAt: "2025-11-13T19:00:00",
     description: "Quiet study session and community time",
     location: "TBD"
 }, {
-    id: "19",
+    id: "20",
     title: "No Meeting — Finals Week",
     oneWordTitle: "Finals Break",
-    color: "rgb(107, 114, 128)",
+    color: COLORS.gray,
     startsAt: "2025-11-20T12:00:00",
     description: "No meeting this week. Good luck with exams and have a restful break!",
     location: "—"
