@@ -1,6 +1,6 @@
 'use client';
 
-import { FaSchool, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import {FaSchool, FaInstagram, FaEnvelope, FaGithub} from 'react-icons/fa';
 
 export default function ContactPage() {
     return (
@@ -16,14 +16,12 @@ export default function ContactPage() {
                 >
                     <FaSchool /> <span>Join On CampusGroups</span>
                 </a>
-
                 <a
                     href="mailto:rhit@saseconnect.org"
                     className="btn btn-icon w-full sm:w-auto inline-flex items-center gap-2"
                 >
                     <FaEnvelope /> <span>Email Us</span>
                 </a>
-
                 <a
                     href="https://instagram.com/saserhit"
                     target="_blank"
@@ -31,6 +29,14 @@ export default function ContactPage() {
                     className="btn btn-icon w-full sm:w-auto inline-flex items-center gap-2"
                 >
                     <FaInstagram /> <span>Instagram</span>
+                </a>
+                <a
+                    href="https://github.com/chrislardner/sase_web"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-icon w-full sm:w-auto inline-flex items-center gap-2"
+                >
+                    <FaGithub /> <span>Contribute on GitHub</span>
                 </a>
             </div>
         </main>
