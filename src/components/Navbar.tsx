@@ -1,70 +1,137 @@
 'use client';
 
-import {useTheme} from "next-themes";
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import {FaBars, FaMoon, FaSun, FaTimes} from 'react-icons/fa';
-import fullSASELogo from '../../public/fullSASElogo.svg';
+import { usePathname } from 'next/navigation';
+import { useTheme } from 'next-themes';
+import { FaBars, FaTimes, FaMoon, FaSun } from 'react-icons/fa';
+
+const LINKS = [
+    { href: '/', label: 'Home' },
+    { href: '/calendar', label: 'Calendar' },
+    { href: '/contact', label: 'Contact' },
+];
 
 export default function Navbar() {
-  const {theme, setTheme} = useTheme();
-  const [mounted, setMounted] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const pathname = usePathname();
+    const { resolvedTheme, setTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+    useEffect(() => setMounted(true), []);
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 2);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
 
-  return (
-      <nav className="shadow mb-4 px-2 pt-3 pb-4">
-        <div className="flex justify-between items-center">
-          <Link href="/">
-            <Image src={fullSASELogo} alt="SASE Logo" className="h-12 w-auto"/>
-          </Link>
+    const toggleTheme = () => {
+        if (!mounted) return;
+        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+    };
+    const closeMenu = () => setIsOpen(false);
 
-          <div className="hidden md:flex items-center space-x-4">
-            <Link href="/events" className="hover:underline">Events</Link>
-            <Link href="/resources" className="hover:underline">Resources</Link>
-            <Link href="/board" className="hover:underline">Board</Link>
-            <Link href="/sponsorship" className="hover:underline">Sponsorship</Link>
-            <Link href="/contact" className="hover:underline">Contact</Link>
+    return (
+        <nav className={`nav-root ${scrolled ? 'has-shadow' : ''}`} aria-label="Main">
+            <div className="nav-inner">
+                <Link href="/" className="flex items-center gap-3" onClick={closeMenu}>
+                    <span className="sr-only">SASE Home</span>
 
-            {mounted && (
-                <button
-                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                    className="px-2 py-2 border-2 rounded"
-                >
-                  {theme === "dark" ? <FaMoon/> : <FaSun/>}
-                </button>
-            )}
-          </div>
+                    <Image
+                        src="/sase_dual_logo.png"
+                        alt="SASE @ RHIT"
+                        width={144}
+                        height={40}
+                        priority
+                        className="h-10 w-auto"
+                    />
 
-          <div className="md:hidden">
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
-              {isMenuOpen ? <FaTimes/> : <FaBars/>}
-            </button>
-          </div>
-        </div>
+                    <span
+                        aria-hidden
+                        className="hidden sm:block h-6 w-px bg-neutral-200 dark:bg-neutral-800"
+                    />
 
-        {isMenuOpen && (
-            <div className="md:hidden flex flex-col space-y-2 mt-2">
-              <Link href="/events" className="block px-2 py-1 hover:underline">Events</Link>
-              <Link href="/resources" className="block px-2 py-1 hover:underline">Resources</Link>
-              <Link href="/board" className="block px-2 py-1 hover:underline">Board</Link>
-              <Link href="/sponsorship" className="block px-2 py-1 hover:underline">Sponsorship</Link>
-              <Link href="/contact" className="block px-2 py-1 hover:underline">Contact</Link>
+                    <Image
+                        src="/R_logo_light.png"
+                        alt="Rose-Hulman"
+                        width={160}
+                        height={40}
+                        className="h-8 w-auto inline dark:hidden"
+                    />
+                    <Image
+                        src="/R_logo_dark.png"
+                        alt="Rose-Hulman"
+                        width={160}
+                        height={40}
+                        className="h-8 w-auto hidden dark:inline"
+                    />
+                </Link>
 
-              {mounted && (
-                  <button
-                      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                      className="px-2 py-2 border-2 rounded"
-                  >
-                    {theme === "dark" ? <FaMoon/> : <FaSun/>}
-                  </button>
-              )}
+                <div className="nav-links">
+                    {LINKS.map(({ href, label }) => {
+                        const active = pathname === href || pathname?.startsWith(href + '/');
+                        return (
+                            <Link
+                                key={href}
+                                href={href}
+                                className={active ? 'nav-link nav-link--active' : 'nav-link'}
+                            >
+                                {label}
+                            </Link>
+                        );
+                    })}
+
+                    <button type="button" onClick={toggleTheme} className="btn-icon" aria-label="Toggle dark mode">
+                        {mounted && resolvedTheme === 'dark' ? <FaSun /> : <FaMoon />}
+                    </button>
+                </div>
+
+                <div className="md:hidden">
+                    <button
+                        type="button"
+                        onClick={() => setIsOpen(v => !v)}
+                        className="nav-mobile-trigger"
+                        aria-label="Toggle menu"
+                        aria-controls="mobile-menu"
+                        aria-expanded={isOpen}
+                    >
+                        {isOpen ? <FaTimes /> : <FaBars />}
+                    </button>
+                </div>
             </div>
-        )}
-      </nav>
-  );
+
+            <div id="mobile-menu" className={`nav-mobile-panel ${isOpen ? 'block' : 'hidden'}`}>
+                <div className="nav-mobile-list">
+                    {LINKS.map(({ href, label }) => {
+                        const active = pathname === href || pathname?.startsWith(href + '/');
+                        return (
+                            <Link
+                                key={href}
+                                href={href}
+                                onClick={closeMenu}
+                                className={active ? 'nav-mobile-link nav-mobile-link--active' : 'nav-mobile-link'}
+                            >
+                                {label}
+                            </Link>
+                        );
+                    })}
+
+                    <button
+                        type="button"
+                        onClick={() => {
+                            toggleTheme();
+                            closeMenu();
+                        }}
+                        className="btn-icon mt-1 w-full"
+                        aria-label="Toggle dark mode"
+                    >
+                        {mounted && resolvedTheme === 'dark' ? <FaSun /> : <FaMoon />}
+                    </button>
+                </div>
+            </div>
+        </nav>
+    );
 }

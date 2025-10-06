@@ -58,7 +58,6 @@ function getQuarter(date: Date): string {
     throw new Error(`Date ${date} does not fall within any relevant academic quarter`);
 }
 
-// Helper function to read a file as text
 const readFileAsText = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -218,7 +217,6 @@ export default function UpdatePage() {
         {key: 'isCampusGroups', label: 'Campus Groups'},
     ];
 
-    // Map member data to a flat format for the Table component.
     const tableData = members.map(member => {
         const quarterData: Record<string, number | string> = {};
         uniqueQuarters.forEach(q => {

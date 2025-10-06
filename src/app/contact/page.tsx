@@ -1,29 +1,44 @@
 'use client';
 
-export default function ConnectPage() {
+import {FaSchool, FaInstagram, FaEnvelope, FaGithub} from 'react-icons/fa';
+
+export default function ContactPage() {
     return (
-        <div className="max-w-lg mx-auto min-h-screen">
-            <h2 className="text-3xl font-bold mb-4">Connect with Us</h2>
-            <p className="mb-4">
-                We would love to hear from you! Follow us on social media or reach out through the following channels:
-            </p>
-            <ul className="space-y-2">
-                <li>
-                    <a href="https://instagram.com/example" className="text-blue-500 hover:underline">
-                        Instagram
-                    </a>
-                </li>
-                <li>
-                    <a href="https://discord.com/example" className="text-blue-500 hover:underline">
-                        Discord
-                    </a>
-                </li>
-                <li>
-                    <a href="mailto:rhit@saseconnect.org" className="text-blue-500 hover:underline">
-                        Email Us
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <main className="page-shell">
+            <h1 className="h1-title text-center">Connect with Us</h1>
+
+            <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a
+                    href="https://instagram.com/saserhit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-icon w-full sm:w-auto inline-flex items-center gap-2"
+                >
+                    <FaInstagram /> <span>Instagram</span>
+                </a>
+                <a
+                    href="https://rosehulman.campusgroups.com/feeds?type=club&type_id=35480&tab=about"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-icon w-full sm:w-auto inline-flex items-center gap-2"
+                >
+                    <FaSchool /> <span>Join On CampusGroups</span>
+                </a>
+                <a
+                    href="mailto:rhit@saseconnect.org"
+                    className="btn btn-icon w-full sm:w-auto inline-flex items-center gap-2"
+                >
+                    <FaEnvelope /> <span>Email Us</span>
+                </a>
+                <a
+                    href="https://github.com/chrislardner/sase_web"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-icon w-full sm:w-auto inline-flex items-center gap-2"
+                >
+                    <FaGithub /> <span>Contribute on GitHub</span>
+                </a>
+            </div>
+        </main>
     );
 }
