@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
         pathname: '**',
       },
     ],
-    dangerouslyAllowSVG: true,
+    dangerouslyAllowSVG: false,
   },
 
   webpack(config) {
