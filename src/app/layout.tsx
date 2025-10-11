@@ -7,6 +7,8 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 import React from 'react';
 import {Metadata} from "next";
+import ConsoleMessage from "@/components/ConsoleMessage";
+import HotKeys from "@/components/HotKeys";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,6 +27,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <main id="content" className="flex-1">
                 {children}
             </main>
+            <ConsoleMessage />
+            <HotKeys />
             <SpeedInsights />
             <Analytics />
             <Footer />
