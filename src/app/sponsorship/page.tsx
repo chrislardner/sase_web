@@ -1,49 +1,41 @@
-"use client";
+import EventHighlights from "./components/EventHighlights/index";
+import Header from "@/app/sponsorship/components/HeaderSection";
+import CoverSection from "@/app/sponsorship/components/CoverSection";
+import EBoardSection from "@/app/sponsorship/components/EBoardSection";
+import ImpactStatistics from "@/app/sponsorship/components/ImpactStatistics";
+import SponsorshipPackages from "@/app/sponsorship/components/SponsorshipPackages";
+import SectionPager from "./components/SectionPager";
 
-import React from 'react';
-import Head from 'next/head';
-import CoverSection from './components/CoverSection';
-import Header from './components/HeaderSection';
-import PresidentsMessage from './components/PresidentsMessage';
-import EBoardSection from './components/EBoardSection';
-import ImpactStatistics from './components/ImpactStatistics';
-import EventHighlights from './components/EventHighlights';
-import SponsorshipPackages from './components/SponsorshipPackages';
-
-const SponsorshipPage = () => {
+export default function SponsorshipPage() {
     return (
         <>
-            <Head>
-                <title>SASE Sponsorship - Rose-Hulman</title>
-                <meta name="description"
-                      content="Learn about sponsorship opportunities with SASE at Rose-Hulman and help empower the next generation of engineers."/>
-            </Head>
-            <div
-                className="min-h-screen">
-                <CoverSection/>
-                <div className="container mx-auto p-6">
-                    <Header/>
-                    <PresidentsMessage/>
-                    <EBoardSection/>
-                    <ImpactStatistics/>
-                    <EventHighlights/>
-                    <SponsorshipPackages/>
-                </div>
+            <CoverSection />
+            <SectionPager
+                // optional: customize IDs if you named them differently
+                sections={[
+                    { id: "intro", label: "Intro" },
+                    { id: "eboard-impact", label: "E-Board & Impact" },
+                    { id: "events", label: "Events" },
+                    { id: "packages", label: "Sponsorship" },
+                ]}
+                offset={72}
+            />
+            <div className="container mx-auto p-6">
+                <section id="intro">
+                    <Header />
+                </section>
+
+                <section id="eboard-impact">
+                    <EBoardSection />
+                    <ImpactStatistics />
+                </section>
+
+                <EventHighlights />
+
+                <section id="packages">
+                    <SponsorshipPackages />
+                </section>
             </div>
-            <style jsx global>{`
-                @keyframes fadeIn {
-                    from {
-                        opacity: 0;
-                        transform: translateY(20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-            `}</style>
         </>
     );
-};
-
-export default SponsorshipPage;
+}

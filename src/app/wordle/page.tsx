@@ -135,7 +135,7 @@ export default function WordleWeekly() {
 
             if (data.win) {
                 setWon(true);
-                setStatus('🎉🎉🎉 Solved! 🎉🎉🎉');
+                setStatus('Solved!');
             } else {
                 setStatus(`Attempts: ${rows.length + 1}/${meta.maxGuesses}`);
             }

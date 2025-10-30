@@ -3,7 +3,7 @@ import React from 'react';
 const SponsorshipPackages = () => {
     return (
         <section
-            className="mb-12 p-8 rounded-lg shadow-xl transform transition hover:scale-105 fade-in">
+            className="mb-12 p-8 rounded-lg shadow-xl transform transition fade-in">
             <h2 className="text-3xl font-bold mb-4 text-center">How to Contribute & Sponsorship Packages</h2>
             <p className="text-lg mb-6 text-center">
                 Your sponsorship makes a significant impact. Choose from our exclusive packages:

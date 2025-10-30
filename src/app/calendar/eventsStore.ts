@@ -3,7 +3,7 @@
 import type {EventId, EventItem} from "./types";
 
 const STORAGE_KEY = "sase.calendar.v4";
-const CONTENT_VERSION = "2025-10-06.v5";
+const CONTENT_VERSION = "2025-10-30";
 const TTL_MS = 1000 * 60 * 60 * 24 * 30;
 
 type StoredPayload = {
@@ -63,12 +63,12 @@ const seedEvents: EventItem[] = [{
     location: "Union Circle"
 }, {
     id: "6",
-    title: "Study Night",
-    oneWordTitle: "SASE x SASA Collab ",
+    title: "Sports",
+    oneWordTitle: "SASE x SASA ",
     color: COLORS.blue,
     startsAt: "2025-10-23T09:00:00",
     description: "SASE x SASA Collab",
-    location: "TBD"
+    location: "SRC"
 }, {
     id: "7",
     title: "SASE National Conference",
@@ -132,15 +132,15 @@ const seedEvents: EventItem[] = [{
     color: COLORS.green,
     startsAt: "2025-10-18T18:00:00",
     description: "Outdoor night market with food and activities",
-    location: "Olin O231"
+    location: "NAB Courtyard"
 }, {
     id: "15",
-    title: "Social Outing — Skating or Bowling",
-    oneWordTitle: "Outing",
+    title: "Games Night",
+    oneWordTitle: "Games",
     color: COLORS.blue,
     startsAt: "2025-10-30T19:00:00",
-    description: "Free skating, bowling, or similar activity out in Terre Haute",
-    location: "TBD"
+    description: "Featuring Mahjong, Jianzi, and more",
+    location: "Olin 231"
 }, {
     id: "16",
     title: "Trunk or Treat",
@@ -156,7 +156,7 @@ const seedEvents: EventItem[] = [{
     color: COLORS.yellow,
     startsAt: "2025-11-01T09:00:00",
     description: "Volunteer day with TREES",
-    location: "Terre Haute"
+    location: "Union Circle"
 }, {
     id: "18",
     title: "Lantern Festival",
@@ -164,7 +164,7 @@ const seedEvents: EventItem[] = [{
     color: COLORS.blue,
     startsAt: "2025-11-06T19:00:00",
     description: "Lantern-making and celebration",
-    location: "TBD"
+    location: "Speed Lake"
 }, {
     id: "19",
     title: "Study Mode",
@@ -172,7 +172,7 @@ const seedEvents: EventItem[] = [{
     color: COLORS.blue,
     startsAt: "2025-11-13T19:00:00",
     description: "Quiet study session and community time",
-    location: "TBD"
+    location: "Olin 231"
 }, {
     id: "20",
     title: "No Meeting — Finals Week",
@@ -236,13 +236,6 @@ export function saveEvents(events: EventItem[]) {
 
 export function getEventById(id: EventId): EventItem | undefined {
     return loadEvents().find(e => e.id === id);
-}
-
-export function upsertEvent(event: EventItem) {
-    const events = loadEvents();
-    const idx = events.findIndex(e => e.id === event.id);
-    if (idx >= 0) events[idx] = event; else events.push(event);
-    saveEvents(events);
 }
 
 export function deleteEvent(id: EventId) {
