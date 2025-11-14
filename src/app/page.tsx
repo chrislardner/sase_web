@@ -21,13 +21,13 @@ export default function HomePage() {
 
         <div className="mt-6 overflow-hidden rounded-lg shadow">
             <Image
-                src="/images/cover_nc_sase.jpg"
+                src="/images/Speed_Lake_2.webp"
                 alt="SASE at Rose-Hulman"
                 width={1920}
                 height={1080}
                 priority
                 sizes="100vw"
-                className="w-full h-[20rem] md:h-[26rem] lg:h-[30rem] object-cover object-top"
+                className="w-full h-[20rem] md:h-[26rem] lg:h-[30rem] object-cover"
             />
         </div>
 

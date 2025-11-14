@@ -1,20 +1,21 @@
 import Image from "next/image";
 import { FaSchool, FaInstagram, FaEnvelope, FaGithub } from "react-icons/fa";
 import { Tooltip } from "@/components/Tooltip";
-import saseFlask from "../../public/saseFlask.svg";
-import rhitLogo from "../../public/rhit_logo.png";
+import saseFlask from "../../public/logos/sase_flask.svg";
+import rhitLogo from "../../public/logos/rhit_logo.png";
+import Link from "next/link";
 
 export default function Footer() {
     const year = new Date().getFullYear();
 
     return (
         <footer className="footer-root">
-            <div className="footer-inner">
-                <div className="footer-brand">
+            <Link href="/" className="footer-inner">
+                <div className="footer-brand" >
                     <Image src={saseFlask} alt="SASE Flask" width={64} className="h-auto" />
                     <Image src={rhitLogo} alt="RHIT Logo" width={220} className="h-auto" />
                 </div>
-            </div>
+            </Link>
 
             <div className="footer-bottom">
                 <div className="footer-bottom-inner">

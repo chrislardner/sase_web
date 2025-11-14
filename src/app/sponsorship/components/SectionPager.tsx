@@ -5,9 +5,11 @@ import { useEffect, useMemo, useState } from "react";
 export default function SectionPager({
                                          sections = [
                                              { id: "intro", label: "Intro" },
-                                             { id: "eboard-impact", label: "E-Board & Impact" },
+                                             { id: "members", label: "Members" },
                                              { id: "events", label: "Events" },
                                              { id: "packages", label: "Sponsorship" },
+                                             { id: "packages-pdf", label: "Sponsorship PDF" },
+
                                          ],
                                          offset = 72,
                                      }: {

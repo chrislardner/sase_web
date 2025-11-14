@@ -10,6 +10,7 @@ import { FaBars, FaTimes, FaMoon, FaSun } from 'react-icons/fa';
 const LINKS = [
     { href: '/', label: 'Home' },
     { href: '/calendar', label: 'Calendar' },
+    { href: '/sponsorship', label: 'Sponsorship' },
     { href: '/contact', label: 'Contact' },
 ];
 
@@ -41,7 +42,7 @@ export default function Navbar() {
                     <span className="sr-only">SASE Home</span>
 
                     <Image
-                        src="/sase_dual_logo.png"
+                        src="/logos/sase_dual_logo.png"
                         alt="SASE @ RHIT"
                         width={144}
                         height={40}
@@ -55,14 +56,14 @@ export default function Navbar() {
                     />
 
                     <Image
-                        src="/R_logo_light.png"
+                        src="/logos/R_logo_light.png"
                         alt="Rose-Hulman"
                         width={160}
                         height={40}
                         className="h-8 w-auto inline dark:hidden"
                     />
                     <Image
-                        src="/R_logo_dark.png"
+                        src="/logos/R_logo_dark.png"
                         alt="Rose-Hulman"
                         width={160}
                         height={40}

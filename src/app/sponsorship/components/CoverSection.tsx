@@ -5,13 +5,13 @@ const CoverSection = () => {
     return (
         <section className="w-full h-[60vh] relative fade-in">
             <Image
-                src="https://placehold.co/1200x600?text=Cover+Image"
+                src="/images/Speed_Lake_1.JPG"
                 alt="Cover Image"
                 fill
                 className="object-cover"
             />
             <div className="absolute inset-0"></div>
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+            <div className="absolute text-white inset-0 flex flex-col items-center justify-center text-center">
                 <h1 className="text-5xl md:text-7xl font-bold">SASE Sponsorship</h1>
                 <p className="mt-4 text-xl md:text-2xl">Empowering future leaders in engineering</p>
             </div>

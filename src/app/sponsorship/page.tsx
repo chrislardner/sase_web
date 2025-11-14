@@ -1,22 +1,23 @@
 import EventHighlights from "./components/EventHighlights/index";
 import Header from "@/app/sponsorship/components/HeaderSection";
 import CoverSection from "@/app/sponsorship/components/CoverSection";
-import EBoardSection from "@/app/sponsorship/components/EBoardSection";
-import ImpactStatistics from "@/app/sponsorship/components/ImpactStatistics";
+import MembersSection from "@/app/sponsorship/components/MembersSection";
+import Stats from "@/app/sponsorship/components/Stats";
 import SponsorshipPackages from "@/app/sponsorship/components/SponsorshipPackages";
 import SectionPager from "./components/SectionPager";
+import SponsorshipPDFSection from "@/app/sponsorship/components/SponsorshipPDFSection";
 
 export default function SponsorshipPage() {
     return (
         <>
             <CoverSection />
             <SectionPager
-                // optional: customize IDs if you named them differently
                 sections={[
                     { id: "intro", label: "Intro" },
-                    { id: "eboard-impact", label: "E-Board & Impact" },
+                    { id: "members", label: "Members" },
                     { id: "events", label: "Events" },
                     { id: "packages", label: "Sponsorship" },
+                    { id: "packages-pdf", label: "Sponsorship PDF" },
                 ]}
                 offset={72}
             />
@@ -25,15 +26,18 @@ export default function SponsorshipPage() {
                     <Header />
                 </section>
 
-                <section id="eboard-impact">
-                    <EBoardSection />
-                    <ImpactStatistics />
+                <section id="members">
+                    <MembersSection />
+                    <Stats />
                 </section>
 
                 <EventHighlights />
 
                 <section id="packages">
                     <SponsorshipPackages />
+                </section>
+                <section id="package-pdf">
+                    <SponsorshipPDFSection />
                 </section>
             </div>
         </>
