@@ -51,7 +51,7 @@ export const EVENT_IMAGES: EventImagesMap = {
             `${IMAGE_BASE_PATH}/LNY24.png`,
             `${IMAGE_BASE_PATH}/Lunar New Year W_25.png`,
             `${IMAGE_BASE_PATH}/SASE LNY S_24.jpg`,
-            `${IMAGE_BASE_PATH}/Dance Team LNY W_25.jpg`,
+            `${IMAGE_BASE_PATH}/Dance Team LNY W_25.png`,
             `${IMAGE_BASE_PATH}/LNY_23.png`,
 
         ],
@@ -112,11 +112,10 @@ export const EVENT_IMAGES: EventImagesMap = {
             `${IMAGE_BASE_PATH}/Sister Chapter Challenge with ASU.JPG`,
             `${IMAGE_BASE_PATH}/Nationals Pic with Another Chapter.png`,
             `${IMAGE_BASE_PATH}/NC Atlanta Everyone F_23.jpg`,
-            `${IMAGE_BASE_PATH}/NC Pittsburgh Chapter Pics.png`,
             `${IMAGE_BASE_PATH}/MWRC S_24.PNG`,
             `${IMAGE_BASE_PATH}/MWRC Purdue S_25.jpeg`,
             `${IMAGE_BASE_PATH}/MWRC Lion Dance S_25.png`,
-            `${IMAGE_BASE_PATH}/Chinatown Adventures with Other Chapters F_24.jpg`,
+            `${IMAGE_BASE_PATH}/Chinatown Adventures with Other Chapters F_24.JPG`,
         ],
     },
 

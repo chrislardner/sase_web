@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import {Meta, Row, Tile} from "@/server/wordle";
+import {Meta, Row, Tile} from "@/server/puzzle";
 
 
 async function fetchMeta(): Promise<Meta> {
-    const res = await fetch('/api/wordle', { cache: 'no-store' });
+    const res = await fetch('/api/puzzle', { cache: 'no-store' });
     if (!res.ok) throw new Error('meta fetch failed');
     return res.json();
 }
@@ -21,7 +21,7 @@ function mergeShade(prev: KeyShade, next: KeyShade): KeyShade {
     return (rank[next ?? 'undefined'] > rank[prev ?? 'undefined']) ? next : prev;
 }
 
-export default function WordleWeekly() {
+export default function PuzzleWeekly() {
     const [meta, setMeta] = useState<Meta | null>(null);
     const [rows, setRows] = useState<Row[]>([]);
     const [current, setCurrent] = useState('');
@@ -37,7 +37,7 @@ export default function WordleWeekly() {
             const m = await fetchMeta();
             setMeta(m);
 
-            const k = `sase-wordle:v1:${m.puzzleId}`;
+            const k = `sase-puzzle:v1:${m.puzzleId}`;
             const saved = localStorage.getItem(k);
             if (saved) {
                 try {
@@ -76,7 +76,7 @@ export default function WordleWeekly() {
 
     useEffect(() => {
         if (!meta) return;
-        const k = `sase-wordle:v1:${meta.puzzleId}`;
+        const k = `sase-puzzle:v1:${meta.puzzleId}`;
         localStorage.setItem(k, JSON.stringify({ rows, won }));
     }, [rows, won, meta]);
 
@@ -106,7 +106,7 @@ export default function WordleWeekly() {
                 nonce++;
             }
 
-            const res = await fetch('/api/wordle', {
+            const res = await fetch('/api/puzzle', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 cache: 'no-store',
@@ -158,7 +158,7 @@ export default function WordleWeekly() {
 
     async function shareResult() {
         if (!meta || rows.length === 0) return;
-        const header = `SASE Wordle (${meta.len}) • ${meta.periodLabel}`;
+        const header = `SASE Word Puzzle (${meta.len}) • ${meta.periodLabel}`;
         const attempts = won ? rows.length : 'X';
         const grid = rows.map(r => r.result.map(t => t === 'correct' ? '🟩' : t === 'present' ? '🟨' : '⬛').join('')).join('\n');
         const text = `${header}\n${attempts}/${meta.maxGuesses}\n\n${grid}`;
@@ -174,7 +174,7 @@ export default function WordleWeekly() {
         <main className="mx-auto max-w-md px-4 py-8">
             <header className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-semibold">SASE Wordle — Weekly</h1>
+                    <h1 className="text-2xl font-semibold">SASE@RHIT Word Puzzle</h1>
                     <p className="text-xs text-neutral-500">
                         {meta ? `Length: ${meta.len} • Period: ${meta.periodLabel}` : 'Loading…'}
                     </p>

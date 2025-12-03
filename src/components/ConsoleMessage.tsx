@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 declare global {
     interface Window {
         __saseHint?: boolean;
-        goWordle?: () => void;
+        goPuzzle?: () => void;
     }
 }
 
@@ -18,12 +18,12 @@ export default function ConsoleMessage(): null {
 
         const title = '%cSASE site';
         const style = 'color:#2563eb;font-weight:600;';
-        const hint = '\npsst… window.goWordle()';
+        const hint = '\npsst… window.goPuzzle()';
 
         console.log(title, style, hint);
 
-        window.goWordle = () => {
-            window.location.assign('/wordle');
+        window.goPuzzle = () => {
+            window.location.assign('/puzzle');
         };
     }, []);
     return null;

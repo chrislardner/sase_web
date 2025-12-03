@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
-const DEST_PATH = '/wordle';
+const DEST_PATH = '/puzzle';
 const COUNTDOWN_SECONDS = 3 as const;
 
 const SEQ = [

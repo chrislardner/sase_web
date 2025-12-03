@@ -20,7 +20,7 @@ function getKey() {
 }
 
 function readEncBlob(): Buffer {
-    const p = path.join(process.cwd(), 'src', 'server', 'wordle', 'answers.enc');
+    const p = path.join(process.cwd(), 'src', 'server', 'puzzle', 'answers.enc');
     const raw = fs.readFileSync(p, 'utf8').trim();
     return Buffer.from(raw, 'base64');
 }
