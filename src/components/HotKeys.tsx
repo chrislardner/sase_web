@@ -126,7 +126,7 @@ export default function HotKeys() {
                 <div className="p-4">
                     <h2 id="konami-title" className="text-lg font-semibold">Secret unlocked</h2>
                     <p id="konami-desc" className="mt-1 text-sm text-neutral-300">
-                        Launch SASE Wordle in <span className="font-mono">{seconds}s</span>…
+                        Launch SASE Word Puzzle in <span className="font-mono">{seconds}s</span>…
                     </p>
                     <div className="mt-4 flex items-center gap-2">
                         <button

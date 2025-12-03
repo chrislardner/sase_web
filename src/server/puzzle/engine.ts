@@ -3,13 +3,13 @@ import crypto from 'crypto';
 import { getAnswersForLen } from './secureBank';
 import type { Tile } from './types';
 
-const TZ = process.env.SASE_WORDLE_TZ || 'America/Chicago';
-const SECRET = process.env.SASE_WORDLE_SECRET || ''; // 32+ bytes (raw or base64)
-const MAX_GUESSES = Number(process.env.SASE_WORDLE_MAX_GUESSES || '6');
-const MIN_LEN = Number(process.env.SASE_WORDLE_MIN_LEN || '4');
-const MAX_LEN = Number(process.env.SASE_WORDLE_MAX_LEN || '10');
+const TZ = process.env.SASE_PUZZLE_TZ || 'America/Chicago';
+const SECRET = process.env.SASE_PUZZLE_SECRET || ''; // 32+ bytes (raw or base64)
+const MAX_GUESSES = Number(process.env.SASE_PUZZLE_MAX_GUESSES || '6');
+const MIN_LEN = Number(process.env.SASE_PUZZLE_MIN_LEN || '4');
+const MAX_LEN = Number(process.env.SASE_PUZZLE_MAX_LEN || '10');
 
-export const PERIOD_DAYS = Number(process.env.SASE_WORDLE_PERIOD_DAYS || '7');
+export const PERIOD_DAYS = Number(process.env.SASE_PUZZLE_PERIOD_DAYS || '7');
 
 function nowInTZ(): Date {
     const s = new Date().toLocaleString('en-US', { timeZone: TZ });
@@ -113,7 +113,7 @@ export function maxGuesses(): number {
     return MAX_GUESSES;
 }
 
-export function makePowChallenge(puzzleId: string, bits = Number(process.env.SASE_WORDLE_POW_BITS || '15')) {
+export function makePowChallenge(puzzleId: string, bits = Number(process.env.SASE_PUZZLE_POW_BITS || '15')) {
     const prefix = toB64Url(crypto.randomBytes(16));
     const sig = toB64Url(hmac(`pow:${puzzleId}:${bits}:${prefix}`));
     return { bits, prefix, sig };

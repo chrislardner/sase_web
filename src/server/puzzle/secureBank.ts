@@ -15,7 +15,7 @@ import crypto from 'crypto';
 let cached: { byLen: Record<string, string[]> } | null = null;
 
 function getKey() {
-    const k = process.env.SASE_WORDLE_ANSWERS_KEY || '';
+    const k = process.env.SASE_PUZZLE_ANSWERS_KEY || '';
     return /^[A-Za-z0-9+/=]+$/.test(k) ? Buffer.from(k, 'base64') : Buffer.from(k);
 }
 
@@ -31,7 +31,7 @@ function decrypt(): { byLen: Record<string, string[]> } {
     const tag = blob.subarray(blob.length - 16);
     const ciphertext = blob.subarray(12, blob.length - 16);
     const key = getKey();
-    if (key.length !== 32) throw new Error('SASE_WORDLE_ANSWERS_KEY must be 32 bytes');
+    if (key.length !== 32) throw new Error('SASE_PUZZLE_ANSWERS_KEY must be 32 bytes');
 
     const decipher = crypto.createDecipheriv('aes-256-gcm', key, iv);
     decipher.setAuthTag(tag);

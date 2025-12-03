@@ -33,10 +33,10 @@ if (!Object.keys(byLen).length) {
     process.exit(1);
 }
 
-const keyStr = process.env.SASE_WORDLE_ANSWERS_KEY || '';
+const keyStr = process.env.SASE_PUZZLE_ANSWERS_KEY || '';
 const key = /^[A-Za-z0-9+/=]+$/.test(keyStr) ? Buffer.from(keyStr, 'base64') : Buffer.from(keyStr);
 if (key.length !== 32) {
-    console.error('SASE_WORDLE_ANSWERS_KEY must be 32 bytes (raw or base64)');
+    console.error('SASE_PUZZLE_ANSWERS_KEY must be 32 bytes (raw or base64)');
     process.exit(1);
 }
 
@@ -47,6 +47,6 @@ const ciphertext = Buffer.concat([cipher.update(json), cipher.final()]);
 const tag = cipher.getAuthTag();
 const out = Buffer.concat([iv, ciphertext, tag]).toString('base64');
 
-const outPath = path.join(process.cwd(), 'src', 'server', 'wordle', 'answers.enc');
+const outPath = path.join(process.cwd(), 'src', 'server', 'puzzle', 'answers.enc');
 fs.writeFileSync(outPath, out);
 console.log('Wrote', outPath);
