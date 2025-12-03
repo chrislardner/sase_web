@@ -72,7 +72,7 @@ export const EVENT_IMAGES: EventImagesMap = {
     },
 
     "onigiri-action": {
-        thumbnail: `${IMAGE_BASE_PATH}/Onigiri Action F_24.JPG`,
+        thumbnail: `${IMAGE_BASE_PATH}/Onigiri Action F_24.jpg`,
         gallery: [
             `${IMAGE_BASE_PATH}/Onigiri Action F_24.jpg`,
             `${IMAGE_BASE_PATH}/Onigiri Action F_25.JPG`,
