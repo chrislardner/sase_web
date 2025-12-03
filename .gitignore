@@ -42,7 +42,6 @@ next-env.d.ts
 
 public/events/*
 /src/app/api/*
-/src/app/dashboard/
 .idea/
 
 /private/
