@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ImageCarousel from "./ImageCarousel";
 import type { EventItem } from "./EventsData";
-import { placeholder } from "./EventsData";
+import { getEventGallery } from "@/app/lib/images";
 
 type Props = {
     event: EventItem;
@@ -17,7 +17,7 @@ export default function EventOverlay({ event, index, onClose, onPrevEvent, onNex
     const dialogRef = useRef<HTMLDivElement>(null);
     const closeRef = useRef<HTMLButtonElement>(null);
 
-    const images = useMemo(() => Array.from({ length: 10 }, () => placeholder.rail(1600, 1000)), []);
+    const images = getEventGallery(event.id);
     const [imgIdx, setImgIdx] = useState(0);
 
     useEffect(() => setImgIdx(0), [index]);

@@ -2,15 +2,9 @@
 
 import Image from "next/image";
 import type { EventItem } from "./EventsData";
-import { placeholder } from "./EventsData";
+import { getEventThumbnail } from "@/app/lib/images";
 
-export default function EventList({
-                                      events,
-                                      onOpen,
-                                  }: {
-    events: EventItem[];
-    onOpen: (index: number) => void;
-}) {
+export default function EventList({ events, onOpen,}: { events: EventItem[]; onOpen: (index: number) => void; }) {
     return (
         <div className="space-y-8">
             {events.map((ev, i) => (
@@ -18,8 +12,16 @@ export default function EventList({
                     key={ev.id}
                     className="grid grid-cols-1 md:grid-cols-[240px_1fr_auto] items-center gap-4 p-4 rounded-lg shadow-lg bg-white/80 dark:bg-neutral-900/70"
                 >
-                    <div className="relative w-full md:w-[240px] h-40 md:h-32 overflow-hidden rounded-md">
-                        <Image src={placeholder.thumb()} alt={`${ev.title} thumbnail`} fill className="object-cover" />
+                    <div
+                        className="relative w-full md:w-[240px] h-40 md:h-32 overflow-hidden rounded-md cursor-pointer"
+                        onClick={() => onOpen(i)}
+                    >
+                        <Image
+                            src={getEventThumbnail(ev.id)}
+                            alt={`${ev.title} thumbnail`}
+                            fill
+                            className="object-cover"
+                        />
                         <div className="absolute inset-0 bg-gradient-to-tr from-black/5 via-transparent to-black/10" />
                     </div>
 

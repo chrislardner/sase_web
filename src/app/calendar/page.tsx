@@ -6,6 +6,7 @@ import {FaChevronLeft, FaChevronRight, FaMapMarkerAlt} from 'react-icons/fa';
 import {useEvents} from './useEvents';
 import type {EventItem} from './types';
 import {formatEventDateTime} from './datetime';
+import CalendarExport from "@/app/calendar/CalendarExport";
 
 const keyLocal = (d: Date) => {
     const y = d.getFullYear();
@@ -221,7 +222,7 @@ export default function CalendarPage() {
         if (!focusEvent) return [];
         const d = startOfDay(new Date(focusEvent.startsAt));
         return eventsBy.get(keyLocal(d)) ?? [];
-    }, [eventsBy, focusEvent]);
+    }, [eventsBy]);
 
     const hasPrev = focusEventId != null && (idIndex.get(focusEventId) ?? 0) > 0;
     const hasNext = focusEventId != null && (idIndex.get(focusEventId) ?? -1) < timeline.length - 1;
@@ -250,7 +251,10 @@ export default function CalendarPage() {
     };
 
     return (<main className="page-shell">
-            <h2 className="h2-title">Calendar</h2>
+            <div className="flex justify-between items-center">
+                <h2 className="h2-title">Calendar</h2>
+                <CalendarExport events={events} />
+            </div>
 
             <EventInspector
                 event={focusEvent ?? initial ?? null}
