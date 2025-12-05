@@ -236,7 +236,6 @@ export default function PuzzleWeekly() {
                     disabled={inputDisabled}
                     onKeyDown={e => {
                         if (e.key === 'Enter') submitGuess();
-                        if (e.key === 'Backspace') handleKey('back');
                     }}
                     aria-label="Enter your guess"
                 />
