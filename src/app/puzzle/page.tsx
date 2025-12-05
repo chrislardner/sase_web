@@ -150,9 +150,9 @@ export default function PuzzleWeekly() {
     function handleKey(ch: string) {
         if (!meta || inputDisabled) return;
         if (ch === 'enter') { submitGuess(); return; }
-        if (ch === 'back') { setCurrent(s => s.slice(0, -1)); return; }
         if (/^[a-z]$/.test(ch) && current.length < (meta?.len ?? 0)) {
             setCurrent(s => s + ch);
+        if (ch === 'back') { setCurrent(s => s.slice(0, -1)); return; }
         }
     }
 
