@@ -273,7 +273,6 @@ export default function PuzzleWeekly() {
                             })}{' '}
                             (America/Chicago)
                         </div>
-                        <div>Period: {meta.periodDays} day(s) • change via <code>SASE_PUZZLE_PERIOD_DAYS</code></div>
                     </>
                 )}
             </footer>
