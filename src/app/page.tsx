@@ -13,7 +13,7 @@ export default function HomePage() {
                 <nav className="cta-row">
                     <Link href="/calendar" className="btn btn-ghost">Calendar</Link>
                     <Link href="/contact" className="btn btn-ghost">Contact Us</Link>
-                    <Link href="/puzzle" className="btn btn-ghost">Word Puzzle</Link>
+                    {/*<Link href="/puzzle" className="btn btn-ghost">Word Puzzle</Link>*/}
                 </nav>
             </div>
         </header>
