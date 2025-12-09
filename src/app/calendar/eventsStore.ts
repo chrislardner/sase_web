@@ -3,7 +3,7 @@
 import type { EventId, EventItem, Quarter, AcademicYear } from "./types";
 
 const STORAGE_KEY = "sase.calendar.v5";
-const CONTENT_VERSION = "2025-12-08";
+const CONTENT_VERSION = "2025-12-08.v1";
 const TTL_MS = 1000 * 60 * 60 * 24 * 30;
 
 type StoredPayload = {
@@ -314,7 +314,7 @@ const WINTER_2026: EventItem[] = [
         oneWordTitle: "Boba Night",
         color: COLORS.social,
         startsAt: "2025-12-11T19:00:00",
-        description: "Boba Night charity event; Thai tea, milk, condensed milk, boba, and earrings sale",
+        description: "Boba Night charity event",
         location: "TBD",
         quarter: "winter",
         academicYear: "2025-2026",
@@ -326,7 +326,7 @@ const WINTER_2026: EventItem[] = [
         color: COLORS.social,
         startsAt: "2025-12-17T19:00:00",
         endsAt: "2025-12-17T21:00:00",
-        description: "Ice skating social (18+). Wednesday if Thursday does not work.",
+        description: "Ice skating",
         location: "TBD",
         quarter: "winter",
         academicYear: "2025-2026",
