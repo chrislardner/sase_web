@@ -6,7 +6,7 @@ import {BoardCard} from './BoardCard';
 import {boardMembers} from './boardMembers';
 
 export default function ExecutiveBoardPage() {
-    const [hoveredRole, setHoveredRole] = useState<string | null>(null);
+    const [, setHoveredRole] = useState<string | null>(null);
 
     return (
         <main className="">
