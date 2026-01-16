@@ -14,7 +14,7 @@
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "framer-motion": "^12.26.1",
-    "next": "^15.5.4",
+    "next": "^16.1.2",
     "next-themes": "^0.4.6",
     "papaparse": "^5.5.2",
     "react": "^19.1.0",
