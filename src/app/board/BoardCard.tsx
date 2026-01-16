@@ -15,7 +15,7 @@ export function BoardCard({ member, onClick, isHovered }: BoardCardProps) {
     };
 
     const getRoleGradient = () => {
-        return "from-rhit-maroon to-rhit-maroon-soft";
+        return "bg-rhit-maroon-soft";
     };
 
     const displayBio = member.bio && member.bio !== "-" ? member.bio :
@@ -35,8 +35,8 @@ export function BoardCard({ member, onClick, isHovered }: BoardCardProps) {
         >
             <div className={`absolute -inset-0.5 bg-gradient-to-r ${getRoleGradient()} rounded-2xl opacity-0 group-hover:opacity-60 blur transition duration-500 ${isHovered ? 'opacity-60' : ''}`} />
 
-            <div className="relative bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-xl h-full flex flex-col">
-                <div className="relative h-64 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+            <div className="relative bg-white dark:bg-gray-950 rounded-2xl overflow-hidden shadow-xl h-full flex flex-col">
+                <div className="relative h-64 overflow-hidden bg-gradient-to-br from-rhit-maroon-soft to-gray-300 dark:from-rhit-maroon-soft dark:to-gray-400">
                     <div className="absolute inset-0 flex items-center justify-center">
                         <motion.div
                             className={`w-28 h-28 rounded-full bg-gradient-to-br ${getRoleGradient()} flex items-center justify-center text-white text-3xl font-bold shadow-xl`}                            whileHover={{ scale: 1.05 }}
@@ -69,7 +69,7 @@ export function BoardCard({ member, onClick, isHovered }: BoardCardProps) {
                     </div>
                 </div>
 
-                <div className="p-6 flex-1 flex flex-col">
+                <div className="p-6 flex-1 dark:bg-rhit-maroon/50 flex flex-col">
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
                         {member.name}
                     </h3>
@@ -138,14 +138,14 @@ export function BoardCard({ member, onClick, isHovered }: BoardCardProps) {
 
                     {member.bio|| member.whySASE || member.interests || member.hobbies ? (
                         <motion.div
-                            className="mt-auto pt-2 text-center text-sm text-rhit-maroon font-medium"
+                            className="mt-auto pt-2 text-center text-sm text-gray-800 dark:text-gray-200 font-medium"
                             animate={{ opacity: [0.5, 1, 0.5] }}
                             transition={{ duration: 2, repeat: Infinity }}
                         >
                             Click to learn more →
                         </motion.div>
                     ) : (
-                        <div className="mt-auto pt-2 text-center text-sm text-gray-400 dark:text-gray-500">
+                        <div className="mt-auto pt-2 text-center text-sm text-gray-800 dark:text-gray-200">
                             More info coming soon
                         </div>
                     )}

@@ -12,10 +12,8 @@ export default function ExecutiveBoardPage() {
     const [hoveredRole, setHoveredRole] = useState<string | null>(null);
 
     return (
-        <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black">
-            <section className="relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-red-600/10 dark:from-blue-600/20 dark:to-red-600/20" />
-
+        <main className="">
+            <section className="relative overflow-hidden bg-rhit-maroon-soft dark:bg-rhit-maroon">
                 <div className="relative max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -23,22 +21,18 @@ export default function ExecutiveBoardPage() {
                         transition={{ duration: 0.6 }}
                         className="text-center"
                     >
-                        <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-rhit-maroon to-rhit-maroon-soft bg-clip-text text-transparent">
+                        <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r text-gray-50 bg-clip-text">
                             Executive Board
                         </h1>
 
-                        <p className="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                            Meet the leaders driving SASE@RHIT forward
-                        </p>
-
-                        <div className="mt-8 flex justify-center space-x-2">
+                        <div className="flex justify-center space-x-2">
                             <motion.div
                                 className="mt-8 flex justify-center"
                                 initial={{ width: 0, opacity: 0 }}
                                 animate={{ width: '36rem', opacity: 1 }}
                                 transition={{ duration: 0.6, ease: 'easeOut' }}
                             >
-                                <div className="h-1 w-full rounded-full bg-rhit-maroon" />
+                                <div className="h-1 w-full rounded-full bg-gray-50" />
                             </motion.div>
                         </div>
                     </motion.div>
