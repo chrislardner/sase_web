@@ -43,10 +43,13 @@ export default function SponsorshipPackages() {
             <div className="mb-6 text-center">
                 <h2 id="packages-title" className="text-3xl font-bold">Sponsorship Packages</h2>
                 <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
-                    One-year terms; recurring payments available. Instructions on how to donate are on our Sponsorship Packet (PDF).
+                    One-year terms; recurring payments available. Instructions on how to donate are on our Sponsorship
+                    Packet (PDF).
                 </p>
                 <div className="mt-6 text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed">
-                    Sponsors are welcome to attend events and engage with students. Tax-deductible receipts can be issued via Rose-Hulman’s Business Office. For event-specific sponsorships, email <a className="underline" href="mailto:rhit@saseconnect.org">rhit@saseconnect.org</a>.
+                    Sponsors are welcome to attend events and engage with students. Tax-deductible receipts can be
+                    issued via Rose-Hulman’s Business Office. For event-specific sponsorships, email <a
+                    className="underline" href="mailto:rhit@saseconnect.org">rhit@saseconnect.org</a>.
                 </div>
             </div>
 
@@ -59,9 +62,11 @@ export default function SponsorshipPackages() {
                     >
                         <div className="flex items-baseline justify-between gap-3">
                             <h3 role="columnheader" className="text-xl font-semibold">{t.name}</h3>
-                            <span className="text-lg font-medium text-neutral-800 dark:text-neutral-200">{t.price}</span>
+                            <span
+                                className="text-lg font-medium text-neutral-800 dark:text-neutral-200">{t.price}</span>
                         </div>
-                        {t.blurb ? <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-300">{t.blurb}</p> : null}
+                        {t.blurb ?
+                            <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-300">{t.blurb}</p> : null}
 
                         <ul className="mt-4 space-y-2">
                             {t.perks.map((p, i) => (

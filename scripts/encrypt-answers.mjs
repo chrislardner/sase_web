@@ -1,11 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
-import { config as loadEnv } from 'dotenv';
+import {config as loadEnv} from 'dotenv';
 
 const root = process.cwd();
-loadEnv({ path: path.join(root, '.env') });
-loadEnv({ path: path.join(root, '.env.local'), override: true });
+loadEnv({path: path.join(root, '.env')});
+loadEnv({path: path.join(root, '.env.local'), override: true});
 
 const dir = process.argv[2];
 if (!dir) {
@@ -40,7 +40,7 @@ if (key.length !== 32) {
     process.exit(1);
 }
 
-const json = Buffer.from(JSON.stringify({ byLen }), 'utf8');
+const json = Buffer.from(JSON.stringify({byLen}), 'utf8');
 const iv = crypto.randomBytes(12);
 const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
 const ciphertext = Buffer.concat([cipher.update(json), cipher.final()]);

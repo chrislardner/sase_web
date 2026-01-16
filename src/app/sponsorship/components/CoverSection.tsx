@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { HERO_IMAGES } from '@/app/lib/images';
+import {HERO_IMAGES} from '@/app/lib/images';
 
 const CoverSection = () => {
     return (
@@ -12,7 +12,7 @@ const CoverSection = () => {
                 className="object-cover"
                 priority
             />
-            <div className="absolute inset-0 bg-black/30" />
+            <div className="absolute inset-0 bg-black/30"/>
             <div className="absolute text-white inset-0 flex flex-col items-center justify-center text-center px-4">
                 <h1 className="text-5xl md:text-7xl font-bold drop-shadow-lg">
                     SASE Sponsorship

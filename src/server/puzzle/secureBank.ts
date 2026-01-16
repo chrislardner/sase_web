@@ -45,6 +45,6 @@ function ensureLoaded() {
 }
 
 export function getAnswersForLen(len: number): string[] {
-    const { byLen } = ensureLoaded();
+    const {byLen} = ensureLoaded();
     return byLen[String(len)] || [];
 }

@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import type { EventId, EventItem, Quarter, AcademicYear } from "./types";
-import { getEventById, loadEvents, getEventsByQuarter } from "./eventsStore";
+import {useEffect, useMemo, useState} from "react";
+import type {AcademicYear, EventId, EventItem, Quarter} from "./types";
+import {getEventById, getEventsByQuarter, loadEvents} from "./eventsStore";
 
 export function useEvents() {
     const [events, setEvents] = useState<EventItem[]>(() => loadEvents());

@@ -1,6 +1,6 @@
 'use client';
 
-import { FaSchool, FaInstagram, FaEnvelope, FaGithub } from 'react-icons/fa';
+import {FaEnvelope, FaGithub, FaInstagram, FaSchool} from 'react-icons/fa';
 
 export default function ContactPage() {
     return (
@@ -14,7 +14,7 @@ export default function ContactPage() {
                     rel="noopener noreferrer"
                     className="btn btn-icon w-full sm:w-auto inline-flex items-center gap-2"
                 >
-                    <FaInstagram /> <span>Instagram</span>
+                    <FaInstagram/> <span>Instagram</span>
                 </a>
                 <a
                     href="https://rosehulman.campusgroups.com/feeds?type=club&type_id=35480&tab=about"
@@ -22,13 +22,13 @@ export default function ContactPage() {
                     rel="noopener noreferrer"
                     className="btn btn-icon w-full sm:w-auto inline-flex items-center gap-2"
                 >
-                    <FaSchool /> <span>Join On CampusGroups</span>
+                    <FaSchool/> <span>Join On CampusGroups</span>
                 </a>
                 <a
                     href="mailto:rhit@saseconnect.org"
                     className="btn btn-icon w-full sm:w-auto inline-flex items-center gap-2"
                 >
-                    <FaEnvelope /> <span>Email Us</span>
+                    <FaEnvelope/> <span>Email Us</span>
                 </a>
                 <a
                     href="https://github.com/chrislardner/sase_web"
@@ -36,7 +36,7 @@ export default function ContactPage() {
                     rel="noopener noreferrer"
                     className="btn btn-icon w-full sm:w-auto inline-flex items-center gap-2"
                 >
-                    <FaGithub /> <span>Contribute on GitHub</span>
+                    <FaGithub/> <span>Contribute on GitHub</span>
                 </a>
             </div>
 

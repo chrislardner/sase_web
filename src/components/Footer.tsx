@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { FaSchool, FaInstagram, FaEnvelope, FaGithub } from "react-icons/fa";
-import { Tooltip } from "@/components/Tooltip";
+import {FaEnvelope, FaGithub, FaInstagram, FaSchool} from "react-icons/fa";
+import {Tooltip} from "@/components/Tooltip";
 import saseFlask from "../../public/logos/sase_flask.svg";
 import rhitLogo from "../../public/logos/rhit_logo.png";
 import Link from "next/link";
@@ -11,15 +11,17 @@ export default function Footer() {
     return (
         <footer className="footer-root">
             <Link href="/" className="footer-inner">
-                <div className="footer-brand" >
-                    <Image src={saseFlask} alt="SASE Flask" width={64} className="h-auto" />
-                    <Image src={rhitLogo} alt="RHIT Logo" width={220} className="h-auto" />
+                <div className="footer-brand">
+                    <Image src={saseFlask} alt="SASE Flask" width={64} className="h-auto"/>
+                    <Image src={rhitLogo} alt="RHIT Logo" width={220} className="h-auto"/>
                 </div>
             </Link>
 
             <div className="footer-bottom">
                 <div className="footer-bottom-inner">
-                    <div className="footer-legal">© {year} Society of Asian Scientists and Engineers at Rose-Hulman Institute of Technology</div>
+                    <div className="footer-legal">© {year} Society of Asian Scientists and Engineers at Rose-Hulman
+                        Institute of Technology
+                    </div>
 
                     <div className="footer-icons flex items-center gap-3">
                         <Tooltip label="Follow us on Instagram" side="top">
@@ -30,7 +32,7 @@ export default function Footer() {
                                 aria-label="Instagram"
                                 className="h-6 w-6 transition-transform hover:scale-110 focus:scale-110 outline-none"
                             >
-                                <FaInstagram className="text-2xl" />
+                                <FaInstagram className="text-2xl"/>
                             </a>
                         </Tooltip>
 
@@ -42,7 +44,7 @@ export default function Footer() {
                                 aria-label="CampusGroups"
                                 className="h-6 w-6 transition-transform hover:scale-110 focus:scale-110 outline-none"
                             >
-                                <FaSchool className="text-2xl" />
+                                <FaSchool className="text-2xl"/>
                             </a>
                         </Tooltip>
 
@@ -52,7 +54,7 @@ export default function Footer() {
                                 aria-label="Email"
                                 className="h-6 w-6 transition-transform hover:scale-110 focus:scale-110 outline-none"
                             >
-                                <FaEnvelope className="text-2xl" />
+                                <FaEnvelope className="text-2xl"/>
                             </a>
                         </Tooltip>
 
@@ -64,7 +66,7 @@ export default function Footer() {
                                 aria-label="GitHub"
                                 className="h-6 w-6 transition-transform hover:scale-110 focus:scale-110 outline-none"
                             >
-                                <FaGithub className="text-2xl" />
+                                <FaGithub className="text-2xl"/>
                             </a>
                         </Tooltip>
                     </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 export type DonutDatum = {
     code: string;
@@ -154,19 +154,19 @@ export function DonutChart(props: DonutChartProps) {
                                 <>
                                     <text
                                         y={-16}
-                                        style={{ fontSize: '15px', fontWeight: 600 }}
+                                        style={{fontSize: '15px', fontWeight: 600}}
                                     >
                                         {active.label}
                                     </text>
                                     <text
                                         y={2}
-                                        style={{ fontSize: '11px', opacity: 0.85 }}
+                                        style={{fontSize: '11px', opacity: 0.85}}
                                     >
                                         {active.value} {valueUnit}
                                     </text>
                                     <text
                                         y={20}
-                                        style={{ fontSize: '11px', opacity: 0.85 }}
+                                        style={{fontSize: '11px', opacity: 0.85}}
                                     >
                                         {activePct!.toFixed(1)}%
                                     </text>
@@ -175,13 +175,13 @@ export function DonutChart(props: DonutChartProps) {
                                 <>
                                     <text
                                         y={-6}
-                                        style={{ fontSize: '18px', fontWeight: 600 }}
+                                        style={{fontSize: '18px', fontWeight: 600}}
                                     >
                                         {total}
                                     </text>
                                     <text
                                         y={14}
-                                        style={{ fontSize: '11px', opacity: 0.8 }}
+                                        style={{fontSize: '11px', opacity: 0.8}}
                                     >
                                         {totalLabel}
                                     </text>
@@ -209,7 +209,7 @@ export function DonutChart(props: DonutChartProps) {
                                     className="flex items-center justify-between gap-3"
                                     onMouseEnter={() => setActiveIndex(i)}
                                     onMouseLeave={() => setActiveIndex(null)}
-                                    style={{ cursor: 'default' }}
+                                    style={{cursor: 'default'}}
                                 >
                                     <div className="flex items-center gap-2">
                     <span

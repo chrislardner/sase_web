@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import ImageCarousel from "./ImageCarousel";
-import type { EventItem } from "./EventsData";
-import { getEventGallery } from "@/app/lib/images";
+import type {EventItem} from "./EventsData";
+import {getEventGallery} from "@/app/lib/images";
 
 type Props = {
     event: EventItem;
@@ -13,7 +13,7 @@ type Props = {
     onNextEvent: () => void;
 };
 
-export default function EventOverlay({ event, index, onClose, onPrevEvent, onNextEvent }: Props) {
+export default function EventOverlay({event, index, onClose, onPrevEvent, onNextEvent}: Props) {
     const dialogRef = useRef<HTMLDivElement>(null);
     const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -21,7 +21,9 @@ export default function EventOverlay({ event, index, onClose, onPrevEvent, onNex
     const [imgIdx, setImgIdx] = useState(0);
 
     useEffect(() => setImgIdx(0), [index]);
-    useEffect(() => { closeRef.current?.focus(); }, []);
+    useEffect(() => {
+        closeRef.current?.focus();
+    }, []);
 
     const onKey = useCallback((e: KeyboardEvent) => {
         if (e.key === "Escape") onClose();
@@ -91,7 +93,8 @@ export default function EventOverlay({ event, index, onClose, onPrevEvent, onNex
                         </div>
                     </div>
 
-                    <div className="mt-6 pt-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
+                    <div
+                        className="mt-6 pt-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
                         <button className={outlineBtn} onClick={onPrevEvent} aria-label="Previous event">
                             ← Prev Event
                         </button>

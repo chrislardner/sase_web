@@ -7,8 +7,8 @@ const Stats = () => {
         <section
             className="mb-12 p-8 rounded-lg shadow-xl transform transition-all fade-in">
             <div className=" gap-8">
-                <MajorsChart />
-                <YearChart />
+                <MajorsChart/>
+                <YearChart/>
             </div>
             <p className="mt-8 text-center text-xl">
 

@@ -1,6 +1,6 @@
 "use client";
 
-import type { EventId, EventItem, Quarter, AcademicYear } from "./types";
+import type {AcademicYear, EventId, EventItem, Quarter} from "./types";
 
 const STORAGE_KEY = "sase.calendar.v5";
 const CONTENT_VERSION = "2025-12-08.v1";
@@ -575,4 +575,4 @@ export function getSpringEvents(academicYear: AcademicYear): EventItem[] {
     return getEventsByQuarter("spring", academicYear);
 }
 
-export { COLORS };
+export {COLORS};

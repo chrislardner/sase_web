@@ -8,7 +8,7 @@ type Props = {
     side?: "top" | "bottom" | "left" | "right";
 };
 
-export function Tooltip({ label, children, side = "top" }: Props) {
+export function Tooltip({label, children, side = "top"}: Props) {
     const id = useId();
 
     const pos =

@@ -120,11 +120,11 @@ export function getAvailableQuarters(events: EventItem[]): { quarter: Quarter; a
         const key = `${event.quarter}-${event.academicYear}`;
         if (!seen.has(key)) {
             seen.add(key);
-            result.push({ quarter: event.quarter, academicYear: event.academicYear });
+            result.push({quarter: event.quarter, academicYear: event.academicYear});
         }
     }
 
-    const quarterOrder: Record<Quarter, number> = { fall: 0, winter: 1, spring: 2 };
+    const quarterOrder: Record<Quarter, number> = {fall: 0, winter: 1, spring: 2};
     result.sort((a, b) => {
         const yearCompare = a.academicYear.localeCompare(b.academicYear);
         if (yearCompare !== 0) return yearCompare;
@@ -136,7 +136,7 @@ export function getAvailableQuarters(events: EventItem[]): { quarter: Quarter; a
 
 export function downloadICS(events: EventItem[], filename: string, calendarName?: string): void {
     const ics = generateICS(events, calendarName);
-    const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+    const blob = new Blob([ics], {type: "text/calendar;charset=utf-8"});
     const url = URL.createObjectURL(blob);
 
     const link = document.createElement("a");

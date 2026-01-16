@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import type { EventItem } from "./EventsData";
-import { getEventThumbnail } from "@/app/lib/images";
+import type {EventItem} from "./EventsData";
+import {getEventThumbnail} from "@/app/lib/images";
 
-export default function EventList({ events, onOpen,}: { events: EventItem[]; onOpen: (index: number) => void; }) {
+export default function EventList({events, onOpen,}: { events: EventItem[]; onOpen: (index: number) => void; }) {
     return (
         <div className="space-y-8">
             {events.map((ev, i) => (
@@ -22,7 +22,7 @@ export default function EventList({ events, onOpen,}: { events: EventItem[]; onO
                             fill
                             className="object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-tr from-black/5 via-transparent to-black/10" />
+                        <div className="absolute inset-0 bg-gradient-to-tr from-black/5 via-transparent to-black/10"/>
                     </div>
 
                     <div>

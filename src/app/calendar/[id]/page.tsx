@@ -1,25 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { notFound, useParams } from "next/navigation";
-import { FaArrowLeft } from "react-icons/fa";
-import { useEvents } from "../useEvents";
-import { formatEventDateTime } from "../datetime";
+import {notFound, useParams} from "next/navigation";
+import {FaArrowLeft} from "react-icons/fa";
+import {useEvents} from "../useEvents";
+import {formatEventDateTime} from "../datetime";
 
 export default function EventDetailsPage() {
-    const { id } = useParams<{ id: string }>();
-    const { get } = useEvents();
+    const {id} = useParams<{ id: string }>();
+    const {get} = useEvents();
     const event = get(id);
 
     if (!event) return notFound();
 
-    const { date, time } = formatEventDateTime(event.startsAt);
+    const {date, time} = formatEventDateTime(event.startsAt);
 
     return (
         <main className="page-shell">
             <div className="mb-4">
                 <Link href="/calendar" className="inline-flex items-center gap-2 text-sm link">
-                    <FaArrowLeft aria-hidden />
+                    <FaArrowLeft aria-hidden/>
                     Back to Calendar
                 </Link>
             </div>

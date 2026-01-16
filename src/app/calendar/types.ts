@@ -21,7 +21,7 @@ export function parseEventId(id: EventId): { quarter: Quarter; year: number; seq
     const match = id.match(/^([FWS])(\d{2})-(\d+)$/);
     if (!match) return null;
 
-    const quarterMap: Record<string, Quarter> = { F: "fall", W: "winter", S: "spring" };
+    const quarterMap: Record<string, Quarter> = {F: "fall", W: "winter", S: "spring"};
     return {
         quarter: quarterMap[match[1]],
         year: 2000 + parseInt(match[2], 10),

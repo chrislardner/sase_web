@@ -1,3 +1,5 @@
+import {BOARD_IMAGES} from "@/app/lib/images";
+
 export interface BoardMember {
     id: string;
     name: string;
@@ -6,6 +8,7 @@ export interface BoardMember {
     year?: string;
     minors?: string;
     image?: string;
+    focus?: { x: number; y: number };
     bio?: string;
     interests?: string[];
     hobbies?: string[];
@@ -54,6 +57,8 @@ export const boardMembers: BoardMember[] = [
         major: "Mechanical Engineering",
         year: "Sophomore",
         minors: "Concurrent MS in Engineering Management",
+        image: BOARD_IMAGES.externalVP,
+        focus: {x: 0.5, y: 0.3},
         bio: "Jonathan is a sophomore mechanical engineer major also working towards his master's in engineering management. When he's not solving problem sets, you'll find him playing pickleball, making tea, or dabbling on the piano. Ever since serving as the former Freshman Representative and now External Vice President, SASE has always been a place where he can relax, have fun, and connect with people outside of the classroom!",
         hobbies: ["Pickleball", "Making Tea", "Piano"],
         previousRoles: ["Freshman Representative"],
@@ -76,6 +81,8 @@ export const boardMembers: BoardMember[] = [
         major: "Computer Science",
         year: "Junior",
         hometown: "Santa Clara, California",
+        image: BOARD_IMAGES.eventCoordinator,
+        focus: {x: 0.5, y: 0.4},
         bio: "Sandya is a junior Computer Science major from Santa Clara, California with interests in robotics, embedded engineering, and origami-based research. She serves on the CSSE advisory board and helps organize events for the department's mentoring program. Outside academics, she enjoys dance and fiber arts. Drawn to cultural communities at Rose through her background in Japanese Club and Japan Bowl, she first joined SASE as cultural chair in her freshman spring and later became an event coordinator.",
         interests: ["Robotics", "Embedded Engineering", "Origami-based Research"],
         hobbies: ["Dance", "Fiber Arts"],
@@ -99,22 +106,3 @@ export const boardMembers: BoardMember[] = [
         role: "Web Developer",
     }
 ];
-
-export const sortByRole = (members: BoardMember[]): BoardMember[] => {
-    const roleOrder = {
-        "President": 1,
-        "Internal Vice President": 2,
-        "External Vice President": 3,
-        "Treasurer": 4,
-        "Secretary": 5,
-        "Event Coordinator": 6,
-        "Marketing Chair": 7,
-        "Freshman Representative": 8,
-        "Web Developer": 9,
-    };
-
-    return [...members].sort((a, b) =>
-        (roleOrder[a.role as keyof typeof roleOrder] || 99) -
-        (roleOrder[b.role as keyof typeof roleOrder] || 99)
-    );
-};

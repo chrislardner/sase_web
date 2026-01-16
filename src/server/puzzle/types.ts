@@ -1,6 +1,6 @@
 import 'server-only';
 
-export type Tile = 'correct'|'present'|'absent';
+export type Tile = 'correct' | 'present' | 'absent';
 export type Row = { guess: string; result: Tile[] };
 
 export type Meta = {
@@ -19,7 +19,7 @@ export type GuessRequest = {
 };
 export type GuessResponse = {
     ok: boolean;
-    result?: ('correct'|'present'|'absent')[];
+    result?: ('correct' | 'present' | 'absent')[];
     win?: boolean;
     remaining?: number;
     error?: string;

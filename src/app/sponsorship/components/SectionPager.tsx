@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import {useEffect, useMemo, useState} from "react";
 
 export default function SectionPager({
                                          sections = [
-                                             { id: "intro", label: "Intro" },
-                                             { id: "members", label: "Members" },
-                                             { id: "events", label: "Events" },
-                                             { id: "packages", label: "Sponsorship" },
-                                             { id: "packages-pdf", label: "Sponsorship PDF" },
+                                             {id: "intro", label: "Intro"},
+                                             {id: "members", label: "Members"},
+                                             {id: "events", label: "Events"},
+                                             {id: "packages", label: "Sponsorship"},
+                                             {id: "packages-pdf", label: "Sponsorship PDF"},
 
                                          ],
                                          offset = 72,
@@ -34,7 +34,7 @@ export default function SectionPager({
                 threshold: 0.01,
             }
         );
-        sections.forEach(({ id }) => {
+        sections.forEach(({id}) => {
             const el = document.getElementById(id);
             if (el) obs.observe(el);
         });
@@ -45,7 +45,7 @@ export default function SectionPager({
         const el = document.getElementById(id);
         if (!el) return;
         const y = el.getBoundingClientRect().top + window.scrollY - offset - 8;
-        window.scrollTo({ top: y, behavior: "smooth" });
+        window.scrollTo({top: y, behavior: "smooth"});
         history.replaceState(null, "", `#${id}`);
     };
 

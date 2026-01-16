@@ -10,34 +10,34 @@ import SponsorshipPDFSection from "@/app/sponsorship/components/SponsorshipPDFSe
 export default function SponsorshipPage() {
     return (
         <>
-            <CoverSection />
+            <CoverSection/>
             <SectionPager
                 sections={[
-                    { id: "intro", label: "Intro" },
-                    { id: "members", label: "Members" },
-                    { id: "events", label: "Events" },
-                    { id: "packages", label: "Sponsorship" },
-                    { id: "packages-pdf", label: "Sponsorship PDF" },
+                    {id: "intro", label: "Intro"},
+                    {id: "members", label: "Members"},
+                    {id: "events", label: "Events"},
+                    {id: "packages", label: "Sponsorship"},
+                    {id: "packages-pdf", label: "Sponsorship PDF"},
                 ]}
                 offset={72}
             />
             <div className="container mx-auto p-6">
                 <section id="intro">
-                    <Header />
+                    <Header/>
                 </section>
 
                 <section id="members">
-                    <MembersSection />
-                    <Stats />
+                    <MembersSection/>
+                    <Stats/>
                 </section>
 
-                <EventHighlights />
+                <EventHighlights/>
 
                 <section id="packages">
-                    <SponsorshipPackages />
+                    <SponsorshipPackages/>
                 </section>
                 <section id="package-pdf">
-                    <SponsorshipPDFSection />
+                    <SponsorshipPDFSection/>
                 </section>
             </div>
         </>

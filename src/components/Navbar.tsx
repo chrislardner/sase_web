@@ -1,23 +1,23 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import { useTheme } from 'next-themes';
-import { FaBars, FaTimes, FaMoon, FaSun } from 'react-icons/fa';
+import {usePathname} from 'next/navigation';
+import {useTheme} from 'next-themes';
+import {FaBars, FaMoon, FaSun, FaTimes} from 'react-icons/fa';
 
 const LINKS = [
-    { href: '/', label: 'Home' },
-    { href: '/calendar', label: 'Calendar' },
-    { href: '/sponsorship', label: 'Sponsorship' },
-    { href: '/contact', label: 'Contact' },
-    { href: '/board', label: 'Board' },
+    {href: '/', label: 'Home'},
+    {href: '/calendar', label: 'Calendar'},
+    {href: '/sponsorship', label: 'Sponsorship'},
+    {href: '/contact', label: 'Contact'},
+    {href: '/board', label: 'Board'},
 ];
 
 export default function Navbar() {
     const pathname = usePathname();
-    const { resolvedTheme, setTheme } = useTheme();
+    const {resolvedTheme, setTheme} = useTheme();
     const [mounted, setMounted] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -26,7 +26,7 @@ export default function Navbar() {
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 2);
         onScroll();
-        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('scroll', onScroll, {passive: true});
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
@@ -73,7 +73,7 @@ export default function Navbar() {
                 </Link>
 
                 <div className="nav-links">
-                    {LINKS.map(({ href, label }) => {
+                    {LINKS.map(({href, label}) => {
                         const active = pathname === href || pathname?.startsWith(href + '/');
                         return (
                             <Link
@@ -87,7 +87,7 @@ export default function Navbar() {
                     })}
 
                     <button type="button" onClick={toggleTheme} className="btn-icon" aria-label="Toggle dark mode">
-                        {mounted && resolvedTheme === 'dark' ? <FaSun /> : <FaMoon />}
+                        {mounted && resolvedTheme === 'dark' ? <FaSun/> : <FaMoon/>}
                     </button>
                 </div>
 
@@ -100,14 +100,14 @@ export default function Navbar() {
                         aria-controls="mobile-menu"
                         aria-expanded={isOpen}
                     >
-                        {isOpen ? <FaTimes /> : <FaBars />}
+                        {isOpen ? <FaTimes/> : <FaBars/>}
                     </button>
                 </div>
             </div>
 
             <div id="mobile-menu" className={`nav-mobile-panel ${isOpen ? 'block' : 'hidden'}`}>
                 <div className="nav-mobile-list">
-                    {LINKS.map(({ href, label }) => {
+                    {LINKS.map(({href, label}) => {
                         const active = pathname === href || pathname?.startsWith(href + '/');
                         return (
                             <Link
@@ -130,7 +130,7 @@ export default function Navbar() {
                         className="btn-icon mt-1 w-full"
                         aria-label="Toggle dark mode"
                     >
-                        {mounted && resolvedTheme === 'dark' ? <FaSun /> : <FaMoon />}
+                        {mounted && resolvedTheme === 'dark' ? <FaSun/> : <FaMoon/>}
                     </button>
                 </div>
             </div>

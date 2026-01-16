@@ -1,23 +1,30 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {Meta, Row, Tile} from "@/server/puzzle";
 
 
 async function fetchMeta(): Promise<Meta> {
-    const res = await fetch('/api/puzzle', { cache: 'no-store' });
+    const res = await fetch('/api/puzzle', {cache: 'no-store'});
     if (!res.ok) throw new Error('meta fetch failed');
     return res.json();
 }
-function hex(b: ArrayBuffer) { return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join(''); }
-async function sha256(s: string) { return hex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s))); }
+
+function hex(b: ArrayBuffer) {
+    return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+
+async function sha256(s: string) {
+    return hex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)));
+}
 
 const KEYS_ROW1 = 'qwertyuiop'.split('');
 const KEYS_ROW2 = 'asdfghjkl'.split('');
 const KEYS_ROW3 = 'zxcvbnm'.split('');
-type KeyShade = 'correct'|'present'|'absent'|undefined;
+type KeyShade = 'correct' | 'present' | 'absent' | undefined;
+
 function mergeShade(prev: KeyShade, next: KeyShade): KeyShade {
-    const rank = { correct: 3, present: 2, absent: 1, undefined: 0 } as const;
+    const rank = {correct: 3, present: 2, absent: 1, undefined: 0} as const;
     return (rank[next ?? 'undefined'] > rank[prev ?? 'undefined']) ? next : prev;
 }
 
@@ -53,7 +60,8 @@ export default function PuzzleWeekly() {
                         });
                         setKeyShades(shades);
                     }
-                } catch { /* ignore */ }
+                } catch { /* ignore */
+                }
             }
 
             setStatus(`Weekly puzzle • ${m.periodLabel} • ${m.len} letters`);
@@ -69,7 +77,7 @@ export default function PuzzleWeekly() {
             const hh = Math.floor(s / 3600);
             const mm = Math.floor((s % 3600) / 60);
             const ss = s % 60;
-            setCountdown(`${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`);
+            setCountdown(`${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')}`);
         }, 1000);
         return () => clearInterval(id);
     }, [meta]);
@@ -77,7 +85,7 @@ export default function PuzzleWeekly() {
     useEffect(() => {
         if (!meta) return;
         const k = `sase-puzzle:v1:${meta.puzzleId}`;
-        localStorage.setItem(k, JSON.stringify({ rows, won }));
+        localStorage.setItem(k, JSON.stringify({rows, won}));
     }, [rows, won, meta]);
 
     const attemptsLeft = useMemo(
@@ -97,7 +105,7 @@ export default function PuzzleWeekly() {
 
         setBusy(true);
         try {
-            const { bits, prefix, sig } = meta.pow;
+            const {bits, prefix, sig} = meta.pow;
             let nonce = 0;
             while (true) {
                 const h = await sha256(prefix + String(nonce));
@@ -108,12 +116,12 @@ export default function PuzzleWeekly() {
 
             const res = await fetch('/api/puzzle', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {'Content-Type': 'application/json'},
                 cache: 'no-store',
                 body: JSON.stringify({
                     puzzleId: meta.puzzleId,
                     guess: cleaned,
-                    pow: { bits, prefix, nonce: String(nonce), sig },
+                    pow: {bits, prefix, nonce: String(nonce), sig},
                 }),
             });
 
@@ -124,12 +132,14 @@ export default function PuzzleWeekly() {
             }
 
             const result: Tile[] = data.result;
-            const newRow: Row = { guess: cleaned, result };
+            const newRow: Row = {guess: cleaned, result};
             setRows(r => [...r, newRow]);
 
             setKeyShades(prev => {
-                const next = { ...prev };
-                cleaned.split('').forEach((ch, i) => { next[ch] = mergeShade(next[ch], result[i]); });
+                const next = {...prev};
+                cleaned.split('').forEach((ch, i) => {
+                    next[ch] = mergeShade(next[ch], result[i]);
+                });
                 return next;
             });
 
@@ -149,10 +159,16 @@ export default function PuzzleWeekly() {
 
     function handleKey(ch: string) {
         if (!meta || inputDisabled) return;
-        if (ch === 'enter') { submitGuess(); return; }
+        if (ch === 'enter') {
+            submitGuess();
+            return;
+        }
         if (/^[a-z]$/.test(ch) && current.length < (meta?.len ?? 0)) {
             setCurrent(s => s + ch);
-        if (ch === 'back') { setCurrent(s => s.slice(0, -1)); return; }
+            if (ch === 'back') {
+                setCurrent(s => s.slice(0, -1));
+                return;
+            }
         }
     }
 
@@ -193,7 +209,7 @@ export default function PuzzleWeekly() {
                         <div
                             key={i}
                             className="grid gap-1"
-                            style={{ gridTemplateColumns: `repeat(${meta.len}, minmax(2.2rem, 2.4rem))` }}
+                            style={{gridTemplateColumns: `repeat(${meta.len}, minmax(2.2rem, 2.4rem))`}}
                         >
                             {r.guess.split('').map((ch, j) => {
                                 const t = r.result[j];
@@ -202,7 +218,8 @@ export default function PuzzleWeekly() {
                                         t === 'present' ? 'bg-yellow-500 text-white border-yellow-600' :
                                             'bg-neutral-800 text-white/90 border-neutral-700';
                                 return (
-                                    <div key={j} className={`aspect-square grid place-items-center rounded-md text-base font-semibold border ${cls}`}>
+                                    <div key={j}
+                                         className={`aspect-square grid place-items-center rounded-md text-base font-semibold border ${cls}`}>
                                         {ch.toUpperCase()}
                                     </div>
                                 );
@@ -211,9 +228,9 @@ export default function PuzzleWeekly() {
                     ))}
                     <div
                         className="grid gap-1"
-                        style={{ gridTemplateColumns: `repeat(${meta.len}, minmax(2.2rem, 2.4rem))` }}
+                        style={{gridTemplateColumns: `repeat(${meta.len}, minmax(2.2rem, 2.4rem))`}}
                     >
-                        {Array.from({ length: meta.len }).map((_, idx) => (
+                        {Array.from({length: meta.len}).map((_, idx) => (
                             <div
                                 key={idx}
                                 className="aspect-square grid place-items-center rounded-md text-base font-semibold border border-neutral-700 bg-neutral-900 text-neutral-300"
@@ -252,11 +269,11 @@ export default function PuzzleWeekly() {
             <div className="mt-4 select-none">
                 {[KEYS_ROW1, KEYS_ROW2, KEYS_ROW3].map((row, ri) => (
                     <div key={ri} className="flex justify-center gap-1 mb-1">
-                        {ri === 2 && <Key label="Enter" wide onClick={() => handleKey('enter')} />}
+                        {ri === 2 && <Key label="Enter" wide onClick={() => handleKey('enter')}/>}
                         {row.map(k => (
-                            <Key key={k} label={k.toUpperCase()} shade={keyShades[k]} onClick={() => handleKey(k)} />
+                            <Key key={k} label={k.toUpperCase()} shade={keyShades[k]} onClick={() => handleKey(k)}/>
                         ))}
-                        {ri === 2 && <Key label="⌫" wide onClick={() => handleKey('back')} />}
+                        {ri === 2 && <Key label="⌫" wide onClick={() => handleKey('back')}/>}
                     </div>
                 ))}
             </div>
@@ -281,17 +298,18 @@ export default function PuzzleWeekly() {
 
 function Key({
                  label, onClick, shade, wide,
-             }:{
-    label: string; onClick: () => void; shade?: 'correct'|'present'|'absent'; wide?: boolean;
+             }: {
+    label: string; onClick: () => void; shade?: 'correct' | 'present' | 'absent'; wide?: boolean;
 }) {
     const base = 'px-3 py-2 rounded text-sm font-medium border transition active:opacity-70';
     const cls =
         shade === 'correct' ? 'bg-green-600 text-white border-green-700' :
             shade === 'present' ? 'bg-yellow-500 text-white border-yellow-600' :
-                shade === 'absent'  ? 'bg-neutral-800 text-white/90 border-neutral-700' :
+                shade === 'absent' ? 'bg-neutral-800 text-white/90 border-neutral-700' :
                     'bg-neutral-900 text-neutral-200 border-neutral-700';
     return (
-        <button className={`${base} ${cls} ${wide ? 'min-w-[3.8rem]' : 'min-w-[2rem]'}`} onClick={onClick} aria-label={label}>
+        <button className={`${base} ${cls} ${wide ? 'min-w-[3.8rem]' : 'min-w-[2rem]'}`} onClick={onClick}
+                aria-label={label}>
             {label}
         </button>
     );

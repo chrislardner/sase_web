@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef } from "react";
+import {useCallback, useEffect, useRef} from "react";
 
 const PLACEHOLDER_IMAGE = "https://placehold.co/1600x1000/1a1a2e/ffffff?text=SASE+RHIT";
 
@@ -12,7 +12,7 @@ type Props = {
     title: string;
 };
 
-export default function ImageCarousel({ images, current, onChange, title }: Props) {
+export default function ImageCarousel({images, current, onChange, title}: Props) {
     const validImages = images?.filter((img) => img && img.trim() !== "") ?? [];
     const imgs = validImages.length > 0 ? validImages : [PLACEHOLDER_IMAGE];
 
@@ -31,7 +31,7 @@ export default function ImageCarousel({ images, current, onChange, title }: Prop
 
     useEffect(() => {
         const btn = thumbBtnRefs.current[safeIndex];
-        btn?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        btn?.scrollIntoView({behavior: "smooth", block: "nearest", inline: "center"});
     }, [safeIndex]);
 
     const prev = () => onChange((safeIndex - 1 + imgs.length) % imgs.length);
@@ -52,7 +52,8 @@ export default function ImageCarousel({ images, current, onChange, title }: Prop
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                 />
                 {showNav && (
-                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-xs px-2 py-0.5 rounded bg-black/50 text-white">
+                    <div
+                        className="absolute bottom-2 left-1/2 -translate-x-1/2 text-xs px-2 py-0.5 rounded bg-black/50 text-white">
                         {safeIndex + 1} / {imgs.length}
                     </div>
                 )}

@@ -1,7 +1,7 @@
 import 'server-only';
 import crypto from 'crypto';
-import { getAnswersForLen } from './secureBank';
-import type { Tile } from './types';
+import {getAnswersForLen} from './secureBank';
+import type {Tile} from './types';
 
 const TZ = process.env.SASE_PUZZLE_TZ || 'America/Chicago';
 const SECRET = process.env.SASE_PUZZLE_SECRET || ''; // 32+ bytes (raw or base64)
@@ -12,14 +12,16 @@ const MAX_LEN = Number(process.env.SASE_PUZZLE_MAX_LEN || '10');
 export const PERIOD_DAYS = Number(process.env.SASE_PUZZLE_PERIOD_DAYS || '7');
 
 function nowInTZ(): Date {
-    const s = new Date().toLocaleString('en-US', { timeZone: TZ });
+    const s = new Date().toLocaleString('en-US', {timeZone: TZ});
     return new Date(s);
 }
+
 function startOfDay(d: Date): Date {
     const nd = new Date(d);
     nd.setHours(0, 0, 0, 0);
     return nd;
 }
+
 const ANCHOR = new Date('2025-08-25T00:00:00');
 
 export function currentPeriodIndex(): {
@@ -34,13 +36,14 @@ export function currentPeriodIndex(): {
     const label = PERIOD_DAYS === 7
         ? `${start.toLocaleDateString()} → ${end.toLocaleDateString()}`
         : `${start.toLocaleDateString()} (+${PERIOD_DAYS}d)`;
-    return { index, start, end, label, expiresAt: end.getTime() };
+    return {index, start, end, label, expiresAt: end.getTime()};
 }
 
 export function hmac(input: string | Buffer, key = SECRET): Buffer {
     const k = key && /^[A-Za-z0-9+/=]+$/.test(key) ? Buffer.from(key, 'base64') : Buffer.from(key);
     return crypto.createHmac('sha256', k).update(input).digest();
 }
+
 export function toB64Url(buf: Buffer): string {
     return buf.toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
 }
@@ -57,6 +60,7 @@ function digestToIndex(digest: Buffer, mod: number): number {
 export function puzzleIdForPeriod(periodIndex: number): string {
     return toB64Url(hmac(`period:${PERIOD_DAYS}:${periodIndex}`));
 }
+
 export function periodLenFor(periodIndex: number): number {
     const lengths: number[] = [];
     for (let l = MIN_LEN; l <= MAX_LEN; l++) {
@@ -67,6 +71,7 @@ export function periodLenFor(periodIndex: number): number {
     const d = hmac(`lenpick:${PERIOD_DAYS}:${periodIndex}`);
     return lengths[digestToIndex(d, lengths.length)];
 }
+
 export function answerForPeriod(periodIndex: number): string {
     const len = periodLenFor(periodIndex);
     const bank = getAnswersForLen(len);
@@ -116,8 +121,9 @@ export function maxGuesses(): number {
 export function makePowChallenge(puzzleId: string, bits = Number(process.env.SASE_PUZZLE_POW_BITS || '15')) {
     const prefix = toB64Url(crypto.randomBytes(16));
     const sig = toB64Url(hmac(`pow:${puzzleId}:${bits}:${prefix}`));
-    return { bits, prefix, sig };
+    return {bits, prefix, sig};
 }
+
 export function verifyPow(puzzleId: string, bits: number, prefix: string, nonce: string, sig: string): boolean {
     const expected = toB64Url(hmac(`pow:${puzzleId}:${bits}:${prefix}`));
     if (expected !== sig) return false;
@@ -125,9 +131,15 @@ export function verifyPow(puzzleId: string, bits: number, prefix: string, nonce:
 
     let zeros = 0;
     for (const byte of hash) {
-        if (byte === 0) { zeros += 8; continue; }
+        if (byte === 0) {
+            zeros += 8;
+            continue;
+        }
         let b = byte;
-        while ((b & 0x80) === 0) { zeros++; b <<= 1; }
+        while ((b & 0x80) === 0) {
+            zeros++;
+            b <<= 1;
+        }
         break;
     }
     return zeros >= bits;

@@ -1,156 +1,143 @@
+'use client';
+
+import {motion} from 'framer-motion';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { FaLinkedin, FaGithub, FaEnvelope, FaGlobe } from 'react-icons/fa';
-import type { BoardMember } from './boardMembers';
+import {FaEnvelope, FaGithub, FaGlobe, FaLinkedin, FaMapMarkerAlt} from 'react-icons/fa';
+import type {BoardMember} from './boardMembers';
+import {useState} from "react";
 
 interface BoardCardProps {
     member: BoardMember;
-    onClick: () => void;
-    isHovered: boolean;
 }
 
-export function BoardCard({ member, onClick, isHovered }: BoardCardProps) {
+export function BoardCard({member}: BoardCardProps) {
+    const [imageError, setImageError] = useState(false);
+
     const getInitials = (name: string) => {
-        return name.split(' ').map(n => n[0]).join('').toUpperCase();
+        return name
+            .split(' ')
+            .map((n) => n[0])
+            .join('')
+            .toUpperCase();
     };
 
-    const getRoleGradient = () => {
-        return "bg-rhit-maroon-soft";
-    };
-
-    const displayBio = member.bio && member.bio !== "-" ? member.bio :
-        `${member.name} serves as SASE's ${member.role}.`;
-
-    const displayMajorYear = [member.major, member.year].filter(Boolean).join(' • ') ||
-        "Rose-Hulman Student";
-
-    const hasLinks = member.links && Object.keys(member.links).length > 0;
-
-    return (
-        <motion.div
-            className="relative group cursor-pointer h-full"
-            onClick={onClick}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-        >
-            <div className={`absolute -inset-0.5 bg-gradient-to-r ${getRoleGradient()} rounded-2xl opacity-0 group-hover:opacity-60 blur transition duration-500 ${isHovered ? 'opacity-60' : ''}`} />
-
-            <div className="relative bg-white dark:bg-gray-950 rounded-2xl overflow-hidden shadow-xl h-full flex flex-col">
-                <div className="relative h-64 overflow-hidden bg-gradient-to-br from-rhit-maroon-soft to-gray-300 dark:from-rhit-maroon-soft dark:to-gray-400">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <motion.div
-                            className={`w-28 h-28 rounded-full bg-gradient-to-br ${getRoleGradient()} flex items-center justify-center text-white text-3xl font-bold shadow-xl`}                            whileHover={{ scale: 1.05 }}
-                        >
+    return (<motion.div
+        initial={{opacity: 0, scale: 0.95, y: 20}}
+        animate={{opacity: 1, scale: 1, y: 0}}
+        transition={{type: 'spring', stiffness: 300, damping: 30}}
+        className="relative w-full bg-white dark:bg-gray-900 rounded-3xl shadow-2xl overflow-hidden"
+    >
+        <div className="relative h-80 bg-gradient-to-br from-sase-blue to-rhit-maroon">
+            {!imageError && member.image ? (
+                <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    style={{
+                        objectFit: "cover",
+                        objectPosition: member.focus
+                            ? `${member.focus.x * 100}% ${member.focus.y * 100}%`
+                            : "50% 50%",
+                    }}
+                    onError={() => setImageError(true)}
+                />
+            ) : (
+                <div
+                    className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-sase-blue/80 to-rhit-maroon/80">
+                        <span className="text-white text-6xl md:text-7xl font-bold">
                             {getInitials(member.name)}
-                        </motion.div>
-                    </div>
-
-                    {member.image && (
-                        <Image
-                            src={member.image}
-                            alt={member.name}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-110 relative z-10"
-                            onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                target.style.display = 'none';
-                            }}
-                        />
-                    )}
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-20" />
-
-                    <div className="absolute top-4 right-4 z-30">
-                        <motion.div
-                            whileHover={{ scale: 1.05 }}
-                            className={`bg-gradient-to-r ${getRoleGradient()} text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg`}                        >
-                            {member.role}
-                        </motion.div>
-                    </div>
+                        </span>
                 </div>
+            )}
 
-                <div className="p-6 flex-1 dark:bg-rhit-maroon/50 flex flex-col">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
-                        {member.name}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-                        {displayMajorYear}
-                    </p>
-
-                    <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-3 mb-4 flex-1">
-                        {displayBio}
-                    </p>
-
-                    {hasLinks && (
-                        <div className="flex space-x-3 mb-3">
-                            {member.links?.linkedin && (
-                                <motion.a
-                                    whileHover={{ scale: 1.2 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    href={member.links.linkedin}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    onClick={(e) => e.stopPropagation()}
-                                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
-                                >
-                                    <FaLinkedin size={20} />
-                                </motion.a>
-                            )}
-                            {member.links?.github && (
-                                <motion.a
-                                    whileHover={{ scale: 1.2 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    href={member.links.github}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    onClick={(e) => e.stopPropagation()}
-                                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                                >
-                                    <FaGithub size={20} />
-                                </motion.a>
-                            )}
-                            {member.links?.email && (
-                                <motion.a
-                                    whileHover={{ scale: 1.2 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    href={`mailto:${member.links.email}`}
-                                    onClick={(e) => e.stopPropagation()}
-                                    className="text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400"
-                                >
-                                    <FaEnvelope size={20} />
-                                </motion.a>
-                            )}
-                            {member.links?.portfolio && (
-                                <motion.a
-                                    whileHover={{ scale: 1.2 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    href={member.links.portfolio}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    onClick={(e) => e.stopPropagation()}
-                                    className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400"
-                                >
-                                    <FaGlobe size={20} />
-                                </motion.a>
-                            )}
-                        </div>
-                    )}
-
-                    {member.bio|| member.whySASE || member.interests || member.hobbies ? (
-                        <motion.div
-                            className="mt-auto pt-2 text-center text-sm text-gray-800 dark:text-gray-200 font-medium"
-                            animate={{ opacity: [0.5, 1, 0.5] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                        >
-                            Click to learn more →
-                        </motion.div>
-                    ) : (
-                        <div className="mt-auto pt-2 text-center text-sm text-gray-800 dark:text-gray-200">
-                            More info coming soon
-                        </div>
-                    )}
-                </div>
+            <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+                <motion.h2
+                    initial={{x: -20, opacity: 0}}
+                    animate={{x: 0, opacity: 1}}
+                    transition={{delay: 0.1}}
+                    className="text-4xl md:text-5xl font-bold mb-2"
+                >
+                    {member.name}
+                </motion.h2>
+                <motion.div
+                    initial={{x: -20, opacity: 0}}
+                    animate={{x: 0, opacity: 1}}
+                    transition={{delay: 0.2}}
+                    className="flex flex-wrap justify-start items-center text-white/90 space-x-2 text-md font-semibold"
+                >
+                    <span className="truncate">{member.role}</span>
+                    {member.major && <span className="truncate">• {member.major}</span>}
+                    {member.year && <span className="truncate">• {member.year}</span>}
+                </motion.div>
             </div>
-        </motion.div>
-    );
+        </div>
+
+        <div className="p-8 space-y-6">
+            {member.hometown && (
+                <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 text-sm md:text-base">
+                    <FaMapMarkerAlt className="text-red-500 dark:text-red-400"/>
+                    <span>{member.hometown}</span>
+                </div>)}
+
+            <motion.div
+                initial={{y: 20, opacity: 0}}
+                animate={{y: 0, opacity: 1}}
+                transition={{delay: 0.5}}
+            >
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                    About {member.name.split(' ')[0]}
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    {member.bio || "More information about this board member will be added soon."}
+                </p>
+            </motion.div>
+
+            {member.links && (<motion.div
+                initial={{y: 20, opacity: 0}}
+                animate={{y: 0, opacity: 1}}
+                transition={{delay: 0.7}}
+                className="pt-6 border-t border-gray-200 dark:border-gray-700"
+            >
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                    Connect with {member.name.split(' ')[0]}
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                    {member.links.linkedin && (<a
+                        href={member.links.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                        <FaLinkedin/>
+                        <span>LinkedIn</span>
+                    </a>)}
+                    {member.links.github && (<a
+                        href={member.links.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center space-x-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors"
+                    >
+                        <FaGithub/>
+                        <span>GitHub</span>
+                    </a>)}
+                    {member.links.portfolio && (<a
+                        href={member.links.portfolio}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                    >
+                        <FaGlobe/>
+                        <span>Portfolio</span>
+                    </a>)}
+                    {member.links.email && (<a
+                        href={`mailto:${member.links.email}`}
+                        className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                    >
+                        <FaEnvelope/>
+                        <span>Email</span>
+                    </a>)}
+                </div>
+            </motion.div>)}
+        </div>
+    </motion.div>);
 }

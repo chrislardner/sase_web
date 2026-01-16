@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { FaCalendarAlt, FaDownload } from "react-icons/fa";
-import type { EventItem, Quarter, AcademicYear } from "./types";
+import {useState} from "react";
+import {FaCalendarAlt, FaDownload} from "react-icons/fa";
+import type {AcademicYear, EventItem, Quarter} from "./types";
 import {
-    downloadQuarterICS,
     downloadAcademicYearICS,
     downloadICS,
-    getAvailableQuarters,
+    downloadQuarterICS,
     filterByQuarterAndYear,
+    getAvailableQuarters,
 } from "./icsExport";
 
 type Props = {
@@ -21,7 +21,7 @@ const QUARTER_LABELS: Record<Quarter, string> = {
     spring: "Spring",
 };
 
-export default function CalendarExport({ events }: Props) {
+export default function CalendarExport({events}: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const availableQuarters = getAvailableQuarters(events);
 
@@ -38,7 +38,7 @@ export default function CalendarExport({ events }: Props) {
     };
 
     // Group quarters by academic year
-    const quartersByYear = availableQuarters.reduce((acc, { quarter, academicYear }) => {
+    const quartersByYear = availableQuarters.reduce((acc, {quarter, academicYear}) => {
         if (!acc[academicYear]) acc[academicYear] = [];
         acc[academicYear].push(quarter);
         return acc;
@@ -52,7 +52,7 @@ export default function CalendarExport({ events }: Props) {
                 aria-expanded={isOpen}
                 aria-haspopup="menu"
             >
-                <FaCalendarAlt aria-hidden />
+                <FaCalendarAlt aria-hidden/>
                 <span>Export Calendar</span>
             </button>
 
@@ -81,7 +81,7 @@ export default function CalendarExport({ events }: Props) {
                                         className="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
                                         role="menuitem"
                                     >
-                                        <FaDownload className="text-[10px]" aria-hidden />
+                                        <FaDownload className="text-[10px]" aria-hidden/>
                                         Full Year
                                     </button>
                                 </div>
@@ -97,7 +97,7 @@ export default function CalendarExport({ events }: Props) {
                                                 role="menuitem"
                                             >
                                                 <span className="flex items-center gap-2">
-                                                    <FaDownload className="text-neutral-400" aria-hidden />
+                                                    <FaDownload className="text-neutral-400" aria-hidden/>
                                                     <span>{QUARTER_LABELS[quarter]} Quarter</span>
                                                 </span>
                                                 <span className="text-xs text-neutral-500 dark:text-neutral-400">
@@ -110,14 +110,14 @@ export default function CalendarExport({ events }: Props) {
                             </div>
                         ))}
 
-                        <hr className="my-3 border-neutral-200 dark:border-neutral-700" />
+                        <hr className="my-3 border-neutral-200 dark:border-neutral-700"/>
 
                         <button
                             onClick={handleDownloadAll}
                             className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
                             role="menuitem"
                         >
-                            <FaDownload aria-hidden />
+                            <FaDownload aria-hidden/>
                             Download All Events
                         </button>
 

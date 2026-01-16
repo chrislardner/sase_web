@@ -87,4 +87,4 @@ export const EVENTS: EventItem[] = [
     },
 ];
 
-export { placeholder, getEventImages, getEventThumbnail, getEventGallery } from "@/app/lib/images";
+export {placeholder, getEventImages, getEventThumbnail, getEventGallery} from "@/app/lib/images";

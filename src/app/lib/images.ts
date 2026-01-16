@@ -6,6 +6,8 @@ export type EventImages = {
 export type EventImagesMap = Record<string, EventImages>;
 
 const IMAGE_BASE_PATH = "/event_images";
+const BOARD_BASE_PATH = "/board";
+
 
 const PLACEHOLDER = {
     thumbnail: "https://placehold.co/480x320/1a1a2e/ffffff?text=SASE+RHIT",
@@ -19,6 +21,11 @@ export const HERO_IMAGES = {
 
 export const SECTION_IMAGES = {
     members: `${IMAGE_BASE_PATH}/Graduation Class of 2024.jpg`,
+};
+
+export const BOARD_IMAGES: Record<string, string> = {
+    externalVP: `${BOARD_BASE_PATH}/Jonathan_Lin_2025.jpg`,
+    eventCoordinator: `${BOARD_BASE_PATH}/Sandya_Suresh_2025.jpg`,
 };
 
 export const EVENT_IMAGES: EventImagesMap = {
@@ -183,7 +190,7 @@ export function getEventImages(eventId: string): EventImages {
     const validGallery = images.gallery?.filter((img) => img && img.trim() !== "") ?? [];
     const gallery = validGallery.length > 0 ? validGallery : [PLACEHOLDER.gallery];
 
-    return { thumbnail, gallery };
+    return {thumbnail, gallery};
 }
 
 export function getEventThumbnail(eventId: string): string {
