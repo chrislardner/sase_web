@@ -12,6 +12,7 @@ const LINKS = [
     { href: '/calendar', label: 'Calendar' },
     { href: '/sponsorship', label: 'Sponsorship' },
     { href: '/contact', label: 'Contact' },
+    { href: '/board', label: 'Board' },
 ];
 
 export default function Navbar() {

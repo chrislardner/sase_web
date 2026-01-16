@@ -360,3 +360,24 @@
         .cal-badge { display: none; }
     }
 }
+
+@theme {
+    --color-rhit-maroon: #800000;
+    --color-rhit-maroon-soft: #9c1f1f;
+
+    --color-sase-blue: #0056b3;
+    --color-sase-gold: #f4c430;
+
+    --color-brand-ink: #1a1a1a;
+    --color-brand-paper: #ffffff;
+}
+
+.dark {
+    --color-rhit-maroon: #9c1f1f;
+    --color-rhit-maroon-soft: #b03030;
+
+    --color-sase-blue: #4d8fdc;
+    --color-sase-gold: #ffd966;
+
+    --color-brand-paper: #0e0e0e;
+}

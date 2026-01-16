@@ -161,7 +161,7 @@ export default function UpdatePage() {
                 userAttendanceMap[key].quarters[record.quarter]++;
             });
 
-            const lastQuarter = '2024Q2';
+            const lastQuarter = '2024Q1';
             const activeMembers = Object.values(userAttendanceMap).map(user => ({
                 ...user,
                 isActive: (user.quarters[lastQuarter] || 0) >= 4

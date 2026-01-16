@@ -166,10 +166,6 @@ export const EVENT_IMAGES: EventImagesMap = {
     },
 };
 
-/**
- * Get images for a specific event with automatic fallback to placeholders
- * GUARANTEED: Never returns empty strings or empty arrays
- */
 export function getEventImages(eventId: string): EventImages {
     const images = EVENT_IMAGES[eventId];
 
@@ -216,10 +212,6 @@ export function eventHasImages(eventId: string): boolean {
     const hasGallery = images.gallery?.some((img) => img && img.trim() !== "");
 
     return hasThumb || hasGallery;
-}
-
-export function getEventsNeedingImages(allEventIds: string[]): string[] {
-    return allEventIds.filter((id) => !eventHasImages(id));
 }
 
 export const placeholder = {
