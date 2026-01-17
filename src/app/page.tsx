@@ -20,9 +20,6 @@ export default function HomePage() {
                     <Link href="/contact" className="btn btn-ghost">
                         Contact Us
                     </Link>
-                    <Link href="/puzzle" className="btn btn-ghost">
-                        Word Puzzle
-                    </Link>
                 </nav>
             </header>
 

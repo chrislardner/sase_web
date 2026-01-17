@@ -110,7 +110,7 @@ export const boardMembers: BoardMember[] = [
         hometown: "Denver, Colorado",
         image: BOARD_IMAGES.webDeveloper,
         interests: ["Full Stack Software Engineering"],
-        bio: "Chris is the creator and current maintainer of this website. He is a long time board member of SASE@RHIT, and has extensive experience with Full Stack Software Engineering. His hobbies include running, hiking, and writing.",
+        bio: "Chris is the creator and current maintainer of this website. He is a long time board member of SASE@RHIT, and has extensive experience with Full Stack Software Engineering. His hobbies include running, hiking and writing.",
         links: {
             linkedin: "https://www.linkedin.com/in/chrislardner/",
             github: "https://www.github.com/chrislardner/",
