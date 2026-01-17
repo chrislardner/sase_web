@@ -5,6 +5,7 @@ import Image from 'next/image';
 import {FaEnvelope, FaGithub, FaGlobe, FaLinkedin, FaMapMarkerAlt} from 'react-icons/fa';
 import type {BoardMember} from './boardMembers';
 import {useEffect, useState} from "react";
+import ReactMarkdown from 'react-markdown';
 
 interface BoardCardProps {
     member: BoardMember;
@@ -40,10 +41,7 @@ export function BoardCard({member}: BoardCardProps) {
 
             const avg = total / (data.length / 4);
 
-            if (avg > 200) setOverlayStrength(0.82);
-            else if (avg > 150) setOverlayStrength(0.68);
-            else if (avg > 110) setOverlayStrength(0.55);
-            else setOverlayStrength(0.45);
+            if (avg > 200) setOverlayStrength(0.82); else if (avg > 150) setOverlayStrength(0.68); else if (avg > 110) setOverlayStrength(0.55); else setOverlayStrength(0.45);
         };
     }, [member.image, imageLoaded]);
 
@@ -132,9 +130,21 @@ export function BoardCard({member}: BoardCardProps) {
                 <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-3">
                     About {member.name.split(' ')[0]}
                 </h3>
-                <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
-                    {member.bio || "More information about this board member will be added soon."}
-                </p>
+                <div className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+                    <ReactMarkdown
+                        components={{
+                            a: ({node, ...props}) => (<a
+                                    {...props}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 hover:underline"
+                                />),
+                        }}
+                    >
+                        {member.bio || ""}
+                    </ReactMarkdown>
+                </div>
+
             </motion.div>
 
             <motion.div
