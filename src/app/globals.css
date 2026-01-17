@@ -4,7 +4,7 @@
 
 @layer base {
     :root {
-        --bg-page: rgb(235, 235, 235);
+        --bg-page: rgb(248, 249, 250);
         --bg-nav: rgba(225, 225, 225, 0.10);
         --bg-footer: rgb(243, 244, 246);
 
