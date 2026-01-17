@@ -18,7 +18,7 @@ export default function ExecutiveBoardPage() {
                         transition={{duration: 0.6}}
                         className="text-center"
                     >
-                        <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r text-gray-50 bg-clip-text">
+                        <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r text-neutral-50 bg-clip-text">
                             Executive Board
                         </h1>
 
@@ -29,7 +29,7 @@ export default function ExecutiveBoardPage() {
                                 animate={{width: '36rem', opacity: 1}}
                                 transition={{duration: 0.6, ease: 'easeOut'}}
                             >
-                                <div className="h-1 w-full rounded-full bg-gray-50"/>
+                                <div className="h-1 w-full rounded-full bg-neutral-50"/>
                             </motion.div>
                         </div>
                     </motion.div>

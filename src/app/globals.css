@@ -4,8 +4,8 @@
 
 @layer base {
     :root {
-        --bg-page: rgb(250, 250, 250);
-        --bg-nav: rgba(255, 255, 255, 0.90);
+        --bg-page: rgb(235, 235, 235);
+        --bg-nav: rgba(225, 225, 225, 0.10);
         --bg-footer: rgb(243, 244, 246);
 
         --fg: rgb(26, 26, 26);
@@ -30,7 +30,7 @@
 
     .dark {
         --bg-page: rgb(14, 14, 14);
-        --bg-nav: rgba(22, 22, 22, 0.80);
+        --bg-nav: rgba(62, 62, 62, 0.20);
         --bg-footer: rgb(18, 18, 18);
 
         --fg: rgb(250, 250, 250);
@@ -532,9 +532,6 @@
 
     --color-sase-blue: #0056b3;
     --color-sase-gold: #f4c430;
-
-    --color-brand-ink: #1a1a1a;
-    --color-brand-paper: #ffffff;
 }
 
 .dark {
@@ -543,6 +540,4 @@
 
     --color-sase-blue: #4d8fdc;
     --color-sase-gold: #ffd966;
-
-    --color-brand-paper: #0e0e0e;
 }

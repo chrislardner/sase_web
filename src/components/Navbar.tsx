@@ -9,10 +9,10 @@ import {FaBars, FaMoon, FaSun, FaTimes} from 'react-icons/fa';
 
 const LINKS = [
     {href: '/', label: 'Home'},
+    {href: '/board', label: 'Board'},
     {href: '/calendar', label: 'Calendar'},
     {href: '/sponsorship', label: 'Sponsorship'},
     {href: '/contact', label: 'Contact'},
-    {href: '/board', label: 'Board'},
 ];
 
 export default function Navbar() {

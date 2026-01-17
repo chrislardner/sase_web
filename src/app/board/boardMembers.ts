@@ -32,7 +32,7 @@ export const boardMembers: BoardMember[] = [
         year: "Junior",
         minors: "Chemistry (Organic) • Concurrent MS in Engineering Management",
         bio: "Keira is a junior chemical engineering major who is pursuing a concurrent masters degree in engineering management as well as a minor in chemistry (organic). Her interests lie in R&D and engineering opportunities, and her hobbies include archery, reading, and baking. She has served on the SASE executive board for 3 years now as the former Freshman Representative, former Internal Vice President, and now is currently serving as the President.",
-        interests: ["R&D", "Engineering Opportunities"],
+        interests: ["R&D", "Engineering"],
         hobbies: ["Archery", "Reading", "Baking"],
         previousRoles: ["Freshman Representative", "Internal Vice President"],
         whySASE: "What draws her to SASE is the vibrant community and opportunities to give back and create a welcoming space for all students via events that honor SASE RHIT's Asian community's collective heritages."
@@ -104,5 +104,16 @@ export const boardMembers: BoardMember[] = [
         id: "web-developer",
         name: "Chris",
         role: "Web Developer",
+        major: "Software Engineering",
+        minors: "Japanese",
+        year: "Senior",
+        hometown: "Denver, Colorado",
+        image: BOARD_IMAGES.webDeveloper,
+        interests: ["Full Stack Software Engineering"],
+        bio: "Chris is the creator and current maintainer of this website. He is a long time board member of SASE@RHIT, and has extensive experience with Full Stack Software Engineering. His hobbies include running, hiking, and writing.",
+        links: {
+            linkedin: "https://www.linkedin.com/in/chrislardner/",
+            github: "https://www.github.com/chrislardner/",
+        }
     }
 ];

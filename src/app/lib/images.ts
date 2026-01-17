@@ -26,6 +26,7 @@ export const SECTION_IMAGES = {
 export const BOARD_IMAGES: Record<string, string> = {
     externalVP: `${BOARD_BASE_PATH}/Jonathan_Lin_2025.jpg`,
     eventCoordinator: `${BOARD_BASE_PATH}/Sandya_Suresh_2025.jpg`,
+    webDeveloper: `${BOARD_BASE_PATH}/Chris_Lardner_2025.jpg`,
 };
 
 export const EVENT_IMAGES: EventImagesMap = {
