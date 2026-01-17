@@ -12,15 +12,7 @@ const nextConfig: NextConfig = {
         dangerouslyAllowSVG: false,
     },
 
-    webpack(config) {
-        config.resolve.fallback = {
-            ...config.resolve.fallback,
-
-            fs: false,
-        };
-
-        return config;
-    },
+    turbopack: {},
 };
 
 export default nextConfig;
