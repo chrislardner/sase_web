@@ -1,11 +1,11 @@
 'use client';
 
 import { signIn } from 'next-auth/react';
-import React, { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { FaEnvelope, FaArrowRight } from 'react-icons/fa';
 
-export default function SignInPage() {
+function SignInForm() {
     const [email, setEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -81,7 +81,7 @@ export default function SignInPage() {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="your.email@gmail.com"
+                                placeholder="your.email@rose-hulman.edu"
                                 required
                                 className="w-full px-4 py-3 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-rhit-maroon dark:bg-neutral-900 dark:text-neutral-100"
                             />
@@ -111,5 +111,17 @@ export default function SignInPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function SignInPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-neutral-600 dark:text-neutral-400">Loading...</div>
+            </div>
+        }>
+            <SignInForm />
+        </Suspense>
     );
 }
