@@ -104,20 +104,21 @@ export function BudgetOverview({
               {formatCurrency(summary.sgaTotalSpent + summary.sgaTotalPlanned)} of {formatCurrency(summary.sgaTotalAllocated)}
             </span>
                     </div>
-                    <div className="relative w-full bg-neutral-200 dark:bg-neutral-800 rounded-full h-4 overflow-hidden">
+                    <div
+                        className="relative w-full bg-neutral-200 dark:bg-neutral-800 rounded-full h-4 overflow-hidden">
                         <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${Math.min(actualPercent, 100)}%` }}
-                            transition={{ duration: 0.8, delay: 0.2 }}
+                            initial={{width: 0}}
+                            animate={{width: `${Math.min(actualPercent, 100)}%`}}
+                            transition={{duration: 0.8, delay: 0.2}}
                             className="absolute left-0 top-0 h-full bg-red-600 dark:bg-red-500"
                         />
                         <motion.div
-                            initial={{ width: 0 }}
+                            initial={{width: 0}}
                             animate={{
                                 width: `${Math.min(plannedPercent, 100 - actualPercent)}%`,
                                 left: `${Math.min(actualPercent, 100)}%`,
                             }}
-                            transition={{ duration: 0.8, delay: 0.4 }}
+                            transition={{duration: 0.8, delay: 0.4}}
                             className="absolute top-0 h-full bg-yellow-500 dark:bg-yellow-400"
                         />
                     </div>

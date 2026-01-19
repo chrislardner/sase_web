@@ -69,6 +69,15 @@ export default function FinancePageClient({}: FinancePageClientProps) {
         }
     };
 
+    const handleDeleteFinanceEvent = async (financeId: string) => {
+        try {
+            await deleteFinanceEvent(financeId);
+        } catch (error) {
+            console.error('Failed to delete finance event:', error);
+            alert('Failed to delete finance event. Please try again.');
+        }
+    };
+
     const selectedEvent = calendarEvents.find(e => e.id === modalState.eventId);
 
     return (
@@ -199,6 +208,7 @@ export default function FinancePageClient({}: FinancePageClientProps) {
                             financeEvents={financeEvents}
                             plannedEvents={plannedEvents}
                             onEditEvent={handleEditEvent}
+                            onDeleteEvent={handleDeleteFinanceEvent}
                         />
                     )}
                 </motion.div>

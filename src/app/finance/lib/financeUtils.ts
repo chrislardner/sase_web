@@ -1,14 +1,57 @@
 import type {EventItem} from '@/app/calendar/types';
 import {AcademicYear, Quarter} from "@/app/calendar/types";
-import type {
-    BudgetCategory,
-    BudgetSummary,
-    CategoryBudget,
-    FinanceEvent,
-    PlannedEvent,
-    QuarterSummary,
-} from '../types/finance';
+import type {BudgetCategory, BudgetSummary, CategoryBudget, FinanceEvent, PlannedEvent, QuarterSummary} from '../types/finance';
 import {SGA_CATEGORY_ALLOCATIONS} from '../types/finance';
+
+export function parseNumber(value: any): number {
+    if (value === null || value === undefined) return 0;
+    if (typeof value === 'number') return isNaN(value) ? 0 : value;
+    if (typeof value === 'string') {
+        const parsed = Number(value);
+        return isNaN(parsed) ? 0 : parsed;
+    }
+    return 0;
+}
+
+export function formatCurrency(amount: number | string | null | undefined): string {
+    const num = parseNumber(amount);
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    }).format(num);
+}
+
+export function formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+    }).format(date);
+}
+
+export function formatQuarter(quarter: Quarter): string {
+    return quarter.charAt(0).toUpperCase() + quarter.slice(1);
+}
+export function getQuarterFromDate(date: Date): Quarter {
+    const month = date.getMonth(); // 0-11
+    const day = date.getDate();
+
+    // Fall: Aug 25 - Nov 22
+    if ((month === 7 && day >= 25) || (month >= 8 && month <= 10) || (month === 10 && day <= 22)) {
+        return 'fall';
+    }
+
+    // Winter: Nov 23 - Mar 7
+    if ((month === 10 && day >= 23) || month === 11 || month === 0 || month === 1 || (month === 2 && day <= 7)) {
+        return 'winter';
+    }
+
+    // Spring: Mar 8 - Jun
+    return 'spring';
+}
 
 export function detectEventCategory(title: string): BudgetCategory {
     const lower = title.toLowerCase();
@@ -19,7 +62,7 @@ export function detectEventCategory(title: string): BudgetCategory {
         return 'Travel';
     }
 
-    if (lower.includes('lunar new year') || lower.includes('midautumn') ||
+    if (lower.includes('lunar new year') || lower.includes('mid-autumn') ||
         lower.includes('night market') || lower.includes('festival') ||
         lower.includes('cultural') || lower.includes('lantern')) {
         return 'Cultural Events';
@@ -37,25 +80,22 @@ export function calculateCategoryBudgets(
         return [];
     }
 
-    console.log(financeEvents, "financeEvents");
-    console.log(plannedEvents, "plannedEvents");
-
     const categories: BudgetCategory[] = ['Travel', 'Cultural Events', 'Social/Service'];
 
     return categories.map(category => {
-        const allocated = allocations[category];
+        const allocated = parseNumber(allocations[category]);
 
         const categoryFinanceEvents = financeEvents.filter(
             e => e.category === category
         );
 
         const sgaSpent = categoryFinanceEvents.reduce(
-            (sum, e) => sum + Number(e.sgaAmount ?? 0),
+            (sum, e) => sum + parseNumber(e.sgaAmount),
             0
         );
 
         const groupFundsSpent = categoryFinanceEvents.reduce(
-            (sum, e) => sum + Number(e.groupFundsAmount ?? 0),
+            (sum, e) => sum + parseNumber(e.groupFundsAmount),
             0
         );
 
@@ -64,17 +104,11 @@ export function calculateCategoryBudgets(
         );
 
         const sgaPlanned = categoryPlannedEvents.reduce(
-            (sum, e) => sum + Number(e.sgaAmount ?? 0),
-            0
-        );
-
-        const groupFundsPlanned = categoryPlannedEvents.reduce(
-            (sum, e) => sum + Number(e.groupFundsAmount ?? 0),
+            (sum, e) => sum + parseNumber(e.sgaAmount),
             0
         );
 
         const totalSpent = sgaSpent + groupFundsSpent;
-        const totalPlanned = sgaPlanned + groupFundsPlanned;
 
         const remaining = allocated - sgaSpent - sgaPlanned;
         const isExceeded = sgaSpent + sgaPlanned > allocated;
@@ -103,32 +137,31 @@ export function calculateBudgetSummary(
     );
 
     const sgaTotalAllocated = categories.reduce(
-        (sum, c) => sum + Number(c.allocated ?? 0),
+        (sum, c) => sum + parseNumber(c.allocated),
         0
     );
 
     const sgaTotalSpent = categories.reduce(
-        (sum, c) => sum + Number(c.sgaSpent ?? 0),
+        (sum, c) => sum + parseNumber(c.sgaSpent),
         0
     );
 
     const groupFundsTotalSpent = categories.reduce(
-        (sum, c) => sum + Number(c.groupFundsSpent ?? 0),
+        (sum, c) => sum + parseNumber(c.groupFundsSpent),
         0
     );
 
     const sgaTotalPlanned = plannedEvents.reduce(
-        (sum, e) => sum + Number(e.sgaAmount ?? 0),
+        (sum, e) => sum + parseNumber(e.sgaAmount),
         0
     );
 
     const groupFundsTotalPlanned = plannedEvents.reduce(
-        (sum, e) => sum + Number(e.groupFundsAmount ?? 0),
+        (sum, e) => sum + parseNumber(e.groupFundsAmount),
         0
     );
 
-    const sgaRemaining =
-        sgaTotalAllocated - sgaTotalSpent - sgaTotalPlanned;
+    const sgaRemaining = sgaTotalAllocated - sgaTotalSpent - sgaTotalPlanned;
 
     return {
         academicYear,
@@ -151,7 +184,6 @@ export function calculateQuarterSummaries(
     const quarters: Quarter[] = ['fall', 'winter', 'spring'];
 
     return quarters.map(quarter => {
-
         const quarterEventIds = calendarEvents
             .filter(e => e.academicYear === academicYear && e.quarter === quarter)
             .map(e => e.id);
@@ -165,38 +197,35 @@ export function calculateQuarterSummaries(
         );
 
         const sgaSpent = quarterFinanceEvents.reduce(
-            (sum, e) => sum + Number(e.sgaAmount ?? 0),
+            (sum, e) => sum + parseNumber(e.sgaAmount),
             0
         );
 
         const groupFundsSpent = quarterFinanceEvents.reduce(
-            (sum, e) => sum + Number(e.groupFundsAmount ?? 0),
+            (sum, e) => sum + parseNumber(e.groupFundsAmount),
             0
         );
 
         const sgaPlanned = quarterPlannedEvents.reduce(
-            (sum, e) => sum + Number(e.sgaAmount ?? 0),
+            (sum, e) => sum + parseNumber(e.sgaAmount),
             0
         );
 
         const groupFundsPlanned = quarterPlannedEvents.reduce(
-            (sum, e) => sum + Number(e.groupFundsAmount ?? 0),
+            (sum, e) => sum + parseNumber(e.groupFundsAmount),
             0
         );
 
-        const categoryBreakdown: Partial<Record<BudgetCategory, number>> =
-            {};
+        const categoryBreakdown: Partial<Record<BudgetCategory, number>> = {};
 
         quarterFinanceEvents.forEach(e => {
             categoryBreakdown[e.category] =
-                (categoryBreakdown[e.category] || 0) +
-                Number(e.totalCost ?? 0);
+                (categoryBreakdown[e.category] || 0) + parseNumber(e.totalCost);
         });
 
         quarterPlannedEvents.forEach(e => {
             categoryBreakdown[e.category] =
-                (categoryBreakdown[e.category] || 0) +
-                Number(e.estimatedCost ?? 0);
+                (categoryBreakdown[e.category] || 0) + parseNumber(e.estimatedCost);
         });
 
         return {
@@ -207,102 +236,5 @@ export function calculateQuarterSummaries(
             eventCount: quarterFinanceEvents.length + quarterPlannedEvents.length,
             categoryBreakdown,
         };
-    });
-}
-
-export function validateBudgetAllocation(
-    category: BudgetCategory,
-    sgaAmount: number,
-    groupFundsAmount: number,
-    academicYear: AcademicYear,
-    existingEvents: FinanceEvent[],
-    plannedEvents: PlannedEvent[],
-    excludeEventId?: string
-): {
-    isValid: boolean;
-    exceedsBy?: number;
-    warning?: string;
-} {
-    const allocations = SGA_CATEGORY_ALLOCATIONS[academicYear];
-    if (!allocations) {
-        return {isValid: true};
-    }
-
-    const allocated = allocations[category];
-
-    const currentSgaSpent = existingEvents
-        .filter(e => e.category === category && e.id !== excludeEventId)
-        .reduce(
-            (sum, e) => sum + Number(e.sgaAmount ?? 0),
-            0
-        );
-
-    const currentSgaPlanned = plannedEvents
-        .filter(e => e.category === category && e.id !== excludeEventId)
-        .reduce(
-            (sum, e) => sum + Number(e.sgaAmount ?? 0),
-            0
-        );
-
-    const newTotal = currentSgaSpent + currentSgaPlanned + sgaAmount;
-
-    if (newTotal > allocated) {
-        const exceedsBy = newTotal - allocated;
-        return {
-            isValid: false,
-            exceedsBy,
-            warning: `This would exceed the ${category} SGA budget by ${formatCurrency(exceedsBy)}. Consider using Group Funds for the excess.`,
-        };
-    }
-
-    return {isValid: true};
-}
-
-export function formatCurrency(amount: number): string {
-    return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-    }).format(amount);
-}
-
-export function formatDate(isoString: string): string {
-    return new Intl.DateTimeFormat('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-    }).format(new Date(isoString));
-}
-
-export function formatQuarter(quarter: Quarter): string {
-    return quarter.charAt(0).toUpperCase() + quarter.slice(1);
-}
-
-export function getQuarterFromDate(date: Date, academicYear: AcademicYear): Quarter {
-    const month = date.getMonth(); // 0-11
-    const day = date.getDate();
-
-    // const [startYear] = academicYear.split('-').map(Number);
-
-    if ((month === 7 && day >= 25) || (month >= 8 && month <= 10) || (month === 10 && day <= 22)) {
-        return 'fall';
-    }
-
-    if ((month === 10 && day >= 23) || month === 11 || month === 0 || month === 1 || (month === 2 && day <= 7)) {
-        return 'winter';
-    }
-
-    return 'spring';
-}
-
-export function sortByDate<T extends { date?: string; createdAt?: string }>(
-    items: T[],
-    ascending = true
-): T[] {
-    return [...items].sort((a, b) => {
-        const dateA = new Date(a.date || a.createdAt || 0).getTime();
-        const dateB = new Date(b.date || b.createdAt || 0).getTime();
-        return ascending ? dateA - dateB : dateB - dateA;
     });
 }

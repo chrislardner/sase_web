@@ -1,6 +1,6 @@
 "use client";
 
-import {useCallback, useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import ImageCarousel from "./ImageCarousel";
 import type {EventItem} from "./EventsData";
 import {getEventGallery} from "@/lib/images";

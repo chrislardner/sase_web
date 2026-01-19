@@ -3,8 +3,8 @@ import {motion} from 'framer-motion';
 import type {EventItem} from '@/app/calendar/types';
 import {AcademicYear} from "@/app/calendar/types";
 import type {BudgetCategory, FinanceEvent, PlannedEvent} from '../types/finance';
-import {formatCurrency, formatDate} from '../lib/financeUtils';
-import {FaEdit, FaPlus, FaSearch, FaSort, FaSortDown, FaSortUp} from 'react-icons/fa';
+import {formatCurrency, formatDate, parseNumber} from '../lib/financeUtils';
+import {FaEdit, FaPlus, FaSearch, FaSort, FaSortDown, FaSortUp, FaTrash} from 'react-icons/fa';
 
 interface EventsTableProps {
     academicYear: AcademicYear;
@@ -12,6 +12,8 @@ interface EventsTableProps {
     financeEvents: FinanceEvent[];
     plannedEvents: PlannedEvent[];
     onEditEvent: (eventId: string, finance?: FinanceEvent) => void;
+    onCreateEvent?: (eventId: string) => void;
+    onDeleteEvent?: (financeId: string) => void;
 }
 
 type SortField = 'date' | 'title' | 'category' | 'sga' | 'groupFunds' | 'total';
@@ -36,6 +38,8 @@ export function EventsTable({
                                 financeEvents,
                                 plannedEvents,
                                 onEditEvent,
+                                onCreateEvent,
+                                onDeleteEvent,
                             }: EventsTableProps) {
     const [searchTerm, setSearchTerm] = useState('');
     const [categoryFilter, setCategoryFilter] = useState<BudgetCategory | 'all'>('all');
@@ -53,9 +57,9 @@ export function EventsTable({
                     title: event.title,
                     date: event.startsAt,
                     category: finance?.category || 'N/A' as const,
-                    sgaAmount: finance?.sgaAmount || 0,
-                    groupFundsAmount: finance?.groupFundsAmount || 0,
-                    totalCost: finance?.totalCost || 0,
+                    sgaAmount: parseNumber(finance?.sgaAmount),
+                    groupFundsAmount: parseNumber(finance?.groupFundsAmount),
+                    totalCost: parseNumber(finance?.totalCost),
                     hasFinance: !!finance,
                     finance,
                     eventId: event.id,
@@ -68,9 +72,9 @@ export function EventsTable({
                     title: `[PLANNED] ${pe.title}`,
                     date: pe.date,
                     category: pe.category,
-                    sgaAmount: pe.sgaAmount,
-                    groupFundsAmount: pe.groupFundsAmount,
-                    totalCost: pe.estimatedCost,
+                    sgaAmount: parseNumber(pe.sgaAmount),
+                    groupFundsAmount: parseNumber(pe.groupFundsAmount),
+                    totalCost: parseNumber(pe.estimatedCost),
                     hasFinance: true,
                     eventId: undefined,
                 })),
@@ -119,11 +123,13 @@ export function EventsTable({
         });
     }, [rows, searchTerm, categoryFilter, sortField, sortDirection]);
 
-    const totals = useMemo(() => ({
-        sga: filteredRows.reduce((sum, r) => sum + r.sgaAmount, 0),
-        groupFunds: filteredRows.reduce((sum, r) => sum + r.groupFundsAmount, 0),
-        total: filteredRows.reduce((sum, r) => sum + r.totalCost, 0),
-    }), [filteredRows]);
+    const totals = useMemo(() => {
+        const sga = filteredRows.reduce((sum, r) => sum + r.sgaAmount, 0);
+        const groupFunds = filteredRows.reduce((sum, r) => sum + r.groupFundsAmount, 0);
+        const total = filteredRows.reduce((sum, r) => sum + r.totalCost, 0);
+
+        return {sga, groupFunds, total};
+    }, [filteredRows]);
 
     const handleSort = (field: SortField) => {
         if (sortField === field) {
@@ -137,6 +143,14 @@ export function EventsTable({
     const SortIcon = ({field}: { field: SortField }) => {
         if (sortField !== field) return <FaSort className="text-neutral-400"/>;
         return sortDirection === 'asc' ? <FaSortUp/> : <FaSortDown/>;
+    };
+
+    const handleDelete = (financeId: string) => {
+        if (onDeleteEvent) {
+            if (confirm('Are you sure you want to delete this finance entry? This cannot be undone.')) {
+                onDeleteEvent(financeId);
+            }
+        }
     };
 
     return (
@@ -177,9 +191,15 @@ export function EventsTable({
             Showing {filteredRows.length} events
           </span>
                     <div className="flex gap-6 text-sm font-medium">
-                        <span>SGA: {formatCurrency(totals.sga)}</span>
-                        <span>Group Funds: {formatCurrency(totals.groupFunds)}</span>
-                        <span className="font-bold">Total: {formatCurrency(totals.total)}</span>
+                        <span className="text-red-600 dark:text-red-400">
+                            SGA: {formatCurrency(totals.sga)}
+                        </span>
+                        <span className="text-blue-600 dark:text-blue-400">
+                            Group Funds: {formatCurrency(totals.groupFunds)}
+                        </span>
+                        <span className="font-bold">
+                            Total: {formatCurrency(totals.total)}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -277,23 +297,37 @@ export function EventsTable({
                                 <td className="py-3 px-4 text-sm text-right font-bold">
                                     {row.totalCost > 0 ? formatCurrency(row.totalCost) : '—'}
                                 </td>
-                                <td className="py-3 px-4 text-center">
-                                    {row.eventId && (
-                                        <button
-                                            onClick={() => onEditEvent(row.eventId!, row.finance)}
-                                            className="inline-flex items-center gap-1 px-3 py-1 rounded text-xs font-medium transition-colors hover:bg-neutral-200 dark:hover:bg-neutral-700"
-                                        >
-                                            {row.hasFinance ? (
-                                                <>
-                                                    <FaEdit/> Edit
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <FaPlus/> Add
-                                                </>
-                                            )}
-                                        </button>
-                                    )}
+                                <td className="py-3 px-4">
+                                    <div className="flex items-center justify-center gap-2">
+                                        {row.eventId && (
+                                            <>
+                                                <button
+                                                    onClick={() => row.hasFinance ? onEditEvent(row.eventId!, row.finance) : (onCreateEvent ? onCreateEvent(row.eventId!) : onEditEvent(row.eventId!))}
+                                                    className="inline-flex items-center gap-1 px-3 py-1 rounded text-xs font-medium transition-colors hover:bg-neutral-200 dark:hover:bg-neutral-700"
+                                                    title={row.hasFinance ? 'Edit finance details' : 'Add finance details'}
+                                                >
+                                                    {row.hasFinance ? (
+                                                        <>
+                                                            <FaEdit/> Edit
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <FaPlus/> Add
+                                                        </>
+                                                    )}
+                                                </button>
+                                                {row.hasFinance && row.finance && onDeleteEvent && (
+                                                    <button
+                                                        onClick={() => handleDelete(row.finance!.id)}
+                                                        className="inline-flex items-center gap-1 px-3 py-1 rounded text-xs font-medium text-red-600 dark:text-red-400 transition-colors hover:bg-red-50 dark:hover:bg-red-900/20"
+                                                        title="Delete finance entry"
+                                                    >
+                                                        <FaTrash/>
+                                                    </button>
+                                                )}
+                                            </>
+                                        )}
+                                    </div>
                                 </td>
                             </motion.tr>
                         ))}

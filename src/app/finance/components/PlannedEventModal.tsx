@@ -1,6 +1,6 @@
 'use client';
 
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FaTimes} from 'react-icons/fa';
 import type {BudgetCategory, PlannedEvent} from '../types/finance';
 import type {AcademicYear, Quarter} from '@/app/calendar/types';

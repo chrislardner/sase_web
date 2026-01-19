@@ -75,6 +75,7 @@ export async function deletePlannedEvent(id: string): Promise<void> {
         method: 'DELETE',
     });
 }
+
 export async function getBudgetPlans(academicYear: string): Promise<BudgetPlan[]> {
     return fetchAPI<BudgetPlan[]>(`/budget-plans?year=${academicYear}`);
 }

@@ -3,7 +3,7 @@ import {AnimatePresence, motion} from 'framer-motion';
 import type {EventItem} from '@/app/calendar/types';
 import {AcademicYear} from "@/app/calendar/types";
 import type {BudgetCategory, FinanceEvent, PurchaseItem} from '../types/finance';
-import {detectEventCategory, formatCurrency, validateBudgetAllocation} from '../lib/financeUtils';
+import {detectEventCategory, formatCurrency, parseNumber} from '../lib/financeUtils';
 import {FaExclamationTriangle, FaPlus, FaTimes, FaTrash} from 'react-icons/fa';
 
 interface EventFinanceModalProps {
@@ -41,9 +41,10 @@ export function EventFinanceModal({
         if (existingFinance) {
             setPurchases(existingFinance.purchases || []);
             setCategory(existingFinance.category);
-            setSgaAmount(existingFinance.sgaAmount.toString());
-            setGroupFundsAmount(existingFinance.groupFundsAmount.toString());
-            setAttendees(existingFinance.attendeeCount?.toString() || '');
+            // CRITICAL: Use parseNumber to ensure proper conversion
+            setSgaAmount(parseNumber(existingFinance.sgaAmount).toString());
+            setGroupFundsAmount(parseNumber(existingFinance.groupFundsAmount).toString());
+            setAttendees(existingFinance.attendeeCount ? parseNumber(existingFinance.attendeeCount).toString() : '');
             setNotes(existingFinance.notes || '');
             setIsPaid(existingFinance.isPaid);
         } else if (event) {
@@ -81,7 +82,8 @@ export function EventFinanceModal({
                 const updated = {...p, [field]: value};
 
                 if (field === 'quantity' || field === 'unitCost') {
-                    updated.totalCost = updated.quantity * updated.unitCost;
+                    // Ensure proper numeric calculation
+                    updated.totalCost = parseNumber(updated.quantity) * parseNumber(updated.unitCost);
                 }
 
                 return updated;
@@ -93,39 +95,43 @@ export function EventFinanceModal({
         setPurchases(prev => prev.filter(p => p.id !== id));
     };
 
-    const totalCost = purchases.reduce((sum, p) => sum + p.totalCost, 0);
+    const totalCost = purchases.reduce((sum, p) => sum + parseNumber(p.totalCost), 0);
 
     useEffect(() => {
-        if (!sgaAmount || parseFloat(sgaAmount) === 0) {
+        const sgaNum = parseNumber(sgaAmount);
+
+        if (!sgaAmount || sgaNum === 0) {
             setBudgetWarning(null);
             return;
         }
 
-        const validation = validateBudgetAllocation(
-            category,
-            parseFloat(sgaAmount) || 0,
-            parseFloat(groupFundsAmount) || 0,
-            academicYear,
-            allFinanceEvents,
-            allPlannedEvents,
-            existingFinance?.id
+        const categoryEvents = allFinanceEvents.filter(
+            fe => fe.category === category && fe.id !== existingFinance?.id
         );
 
-        if (!validation.isValid) {
-            setBudgetWarning(validation.warning || null);
-        } else {
-            setBudgetWarning(null);
-        }
+        const categorySpent = categoryEvents.reduce(
+            (sum, fe) => sum + parseNumber(fe.sgaAmount),
+            0
+        );
+
+        const categoryPlanned = allPlannedEvents
+            .filter(pe => pe.category === category)
+            .reduce((sum, pe) => sum + parseNumber(pe.sgaAmount), 0);
+
     }, [category, sgaAmount, groupFundsAmount, academicYear, allFinanceEvents, allPlannedEvents, existingFinance]);
 
     const handleSave = async () => {
-        if (!event || purchases.length === 0) return;
+        if (!event || purchases.length === 0) {
+            alert('Please add at least one purchase item');
+            return;
+        }
 
         setIsSaving(true);
 
         try {
-            const sga = parseFloat(sgaAmount) || 0;
-            const gf = parseFloat(groupFundsAmount) || 0;
+            const sga = parseNumber(sgaAmount);
+            const gf = parseNumber(groupFundsAmount);
+            const attendeeCount = attendees ? parseNumber(attendees) : undefined;
 
             const financeData: Omit<FinanceEvent, 'id' | 'createdAt' | 'updatedAt'> = {
                 eventId: event.id,
@@ -134,8 +140,8 @@ export function EventFinanceModal({
                 category,
                 sgaAmount: sga,
                 groupFundsAmount: gf,
-                attendeeCount: attendees ? parseInt(attendees) : undefined,
-                costPerPerson: attendees ? totalCost / parseInt(attendees) : undefined,
+                attendeeCount,
+                costPerPerson: attendeeCount ? totalCost / attendeeCount : undefined,
                 notes: notes || undefined,
                 isPaid,
             };
@@ -152,8 +158,9 @@ export function EventFinanceModal({
 
     if (!event) return null;
 
-    const sgaPlusGroupFunds = (parseFloat(sgaAmount) || 0) + (parseFloat(groupFundsAmount) || 0);
+    const sgaPlusGroupFunds = parseNumber(sgaAmount) + parseNumber(groupFundsAmount);
     const allocationMismatch = Math.abs(sgaPlusGroupFunds - totalCost) > 0.01;
+    const attendeeCount = parseNumber(attendees);
 
     return (
         <AnimatePresence>
@@ -203,8 +210,10 @@ export function EventFinanceModal({
                             <div className="space-y-4 mb-6">
                                 <div className="flex items-center justify-between">
                                     <h3 className="font-bold text-lg">Purchase Items *</h3>
-                                    <button onClick={addPurchase}
-                                            className="btn btn-primary text-sm flex items-center gap-2">
+                                    <button
+                                        onClick={addPurchase}
+                                        className="btn btn-primary text-sm flex items-center gap-2"
+                                    >
                                         <FaPlus/> Add Item
                                     </button>
                                 </div>
@@ -237,18 +246,20 @@ export function EventFinanceModal({
                                                 />
                                                 <input
                                                     type="number"
-                                                    placeholder="0.00"
+                                                    placeholder="Qty"
                                                     value={purchase.quantity}
-                                                    onChange={(e) => updatePurchase(purchase.id, 'quantity', parseInt(e.target.value) || 0)}
+                                                    onChange={(e) => updatePurchase(purchase.id, 'quantity', parseNumber(e.target.value))}
                                                     className="col-span-2 px-3 py-2 border rounded dark:bg-neutral-700 dark:border-neutral-600 text-sm"
+                                                    min="0"
                                                 />
                                                 <input
                                                     type="number"
-                                                    placeholder="0.00"
+                                                    placeholder="$0.00"
                                                     value={purchase.unitCost}
-                                                    onChange={(e) => updatePurchase(purchase.id, 'unitCost', parseFloat(e.target.value) || 0)}
+                                                    onChange={(e) => updatePurchase(purchase.id, 'unitCost', parseNumber(e.target.value))}
                                                     className="col-span-2 px-3 py-2 border rounded dark:bg-neutral-700 dark:border-neutral-600 text-sm"
                                                     step="0.01"
+                                                    min="0"
                                                 />
                                                 <input
                                                     type="text"
@@ -257,13 +268,16 @@ export function EventFinanceModal({
                                                     onChange={(e) => updatePurchase(purchase.id, 'vendor', e.target.value)}
                                                     className="col-span-2 px-3 py-2 border rounded dark:bg-neutral-700 dark:border-neutral-600 text-sm"
                                                 />
-                                                <div className="col-span-1 flex items-center">
+                                                <div className="col-span-1 flex items-center justify-end">
                                                     <span
                                                         className="text-sm font-bold">{formatCurrency(purchase.totalCost)}</span>
                                                 </div>
                                                 <div className="col-span-1 flex items-center justify-center">
-                                                    <button onClick={() => deletePurchase(purchase.id)}
-                                                            className="text-red-600 hover:text-red-700">
+                                                    <button
+                                                        onClick={() => deletePurchase(purchase.id)}
+                                                        className="text-red-600 hover:text-red-700 p-1"
+                                                        title="Delete item"
+                                                    >
                                                         <FaTrash/>
                                                     </button>
                                                 </div>
@@ -277,8 +291,8 @@ export function EventFinanceModal({
                                         className="flex justify-end items-center gap-4 pt-3 border-t border-neutral-200 dark:border-neutral-700">
                                         <span className="font-medium">Total Cost:</span>
                                         <span className="text-2xl font-bold text-rhit-maroon dark:text-red-400">
-                      {formatCurrency(totalCost)}
-                    </span>
+                                            {formatCurrency(totalCost)}
+                                        </span>
                                     </div>
                                 )}
                             </div>
@@ -296,6 +310,7 @@ export function EventFinanceModal({
                                             onChange={(e) => setSgaAmount(e.target.value)}
                                             className="w-full px-4 py-2 border rounded-lg dark:bg-neutral-800 dark:border-neutral-700"
                                             step="0.01"
+                                            min="0"
                                         />
                                     </div>
                                     <div>
@@ -307,6 +322,7 @@ export function EventFinanceModal({
                                             onChange={(e) => setGroupFundsAmount(e.target.value)}
                                             className="w-full px-4 py-2 border rounded-lg dark:bg-neutral-800 dark:border-neutral-700"
                                             step="0.01"
+                                            min="0"
                                         />
                                     </div>
                                 </div>
@@ -315,9 +331,8 @@ export function EventFinanceModal({
                                     <div
                                         className="p-3 bg-yellow-50 dark:bg-yellow-900/10 rounded-lg border border-yellow-200 dark:border-yellow-800">
                                         <p className="text-sm text-yellow-700 dark:text-yellow-400">
-                                            WARNING:️ Allocation ({formatCurrency(sgaPlusGroupFunds)}) doesn't match
-                                            total cost
-                                            ({formatCurrency(totalCost)})
+                                            ⚠️ Allocation ({formatCurrency(sgaPlusGroupFunds)}) doesn't match
+                                            total cost ({formatCurrency(totalCost)})
                                         </p>
                                     </div>
                                 )}
@@ -349,10 +364,11 @@ export function EventFinanceModal({
                                         value={attendees}
                                         onChange={(e) => setAttendees(e.target.value)}
                                         className="w-full px-4 py-2 border rounded-lg dark:bg-neutral-800 dark:border-neutral-700"
+                                        min="0"
                                     />
-                                    {attendees && totalCost > 0 && (
+                                    {attendeeCount > 0 && totalCost > 0 && (
                                         <p className="text-sm card-subtle mt-1">
-                                            Cost per person: {formatCurrency(totalCost / parseInt(attendees))}
+                                            Cost per person: {formatCurrency(totalCost / attendeeCount)}
                                         </p>
                                     )}
                                 </div>
@@ -395,7 +411,7 @@ export function EventFinanceModal({
                                     className="btn btn-accent"
                                     disabled={purchases.length === 0 || isSaving || allocationMismatch}
                                 >
-                                    {isSaving ? 'Saving...' : 'Save Financial Data'}
+                                    {isSaving ? 'Saving...' : (existingFinance ? 'Update' : 'Create')} Financial Data
                                 </button>
                             </div>
                         </div>

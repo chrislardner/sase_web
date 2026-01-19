@@ -27,7 +27,6 @@ export function CalendarPlanner({
                                     financeEvents,
                                     plannedEvents,
                                     onEditEvent,
-                                    onEditFinance,
                                     onDeleteFinance,
                                     onAddPlanned,
                                     onUpdatePlanned,
@@ -101,7 +100,6 @@ export function CalendarPlanner({
         setSelectedDate(date);
         setIsAddingPlanned(true);
 
-        // const quarter = getQuarterFromDate(date, academicYear);
         const category = detectEventCategory('');
 
         setNewPlanned(prev => ({
@@ -117,7 +115,7 @@ export function CalendarPlanner({
             await onAddPlanned({
                 title: newPlanned.title,
                 date: selectedDate.toISOString().split('T')[0],
-                quarter: getQuarterFromDate(selectedDate, academicYear),
+                quarter: getQuarterFromDate(selectedDate),
                 academicYear,
                 estimatedCost: parseFloat(newPlanned.estimatedCost),
                 category: newPlanned.category,
@@ -185,7 +183,6 @@ export function CalendarPlanner({
                             return <div key={`empty-${index}`} className="min-h-[100px]"/>;
                         }
 
-                        const dayKey = date.toISOString().split('T')[0];
                         const dateKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
                         const dayEvents = eventsByDate.get(dateKey) || [];
                         const isToday = new Date().toDateString() === date.toDateString();
@@ -194,7 +191,7 @@ export function CalendarPlanner({
                             <div
                                 key={dateKey}
                                 onClick={() => handleDateClick(date)}
-                                className={`min-h-[100px] p-2 rounded-lg border transition-all text-left ${
+                                className={`min-h-[100px] p-2 rounded-lg border transition-all text-left cursor-pointer ${
                                     isToday
                                         ? 'border-2 border-blue-500 bg-blue-50 dark:bg-blue-900/20'
                                         : 'border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800'
@@ -206,15 +203,15 @@ export function CalendarPlanner({
                                     {dayEvents.map(({event, finance}) => (
                                         <div
                                             key={event.id}
-                                            className="group relative text-xs p-2 mb-1 rounded bg-blue-100 dark:bg-blue-900/30 border-l-2 border-blue-500 hover:bg-blue-200 dark:hover:bg-blue-800/40 transition-colors cursor-pointer"
+                                            className="group relative text-xs p-2 mb-1 rounded bg-blue-100 dark:bg-blue-900/30 border-l-2 border-blue-500 hover:bg-blue-200 dark:hover:bg-blue-800/40 transition-colors"
                                         >
                                             <div className="flex items-start justify-between gap-2">
                                                 <div className="flex-1">
                                                     <div
                                                         className="font-medium text-blue-900 dark:text-blue-100">{event.oneWordTitle}</div>
-                                                    {finance && finance.totalCost != null && (
+                                                    {finance && (
                                                         <div className="text-blue-700 dark:text-blue-300 text-xs">
-                                                            ${Number(finance.totalCost).toFixed(2)} spent
+                                                            {formatCurrency(finance.totalCost)} spent
                                                         </div>
                                                     )}
                                                 </div>
@@ -238,30 +235,37 @@ export function CalendarPlanner({
                                                             <FaTrash className="w-3 h-3"/>
                                                         </button>
                                                     </>}
+                                                    {!finance && (
+                                                        <button onClick={e => {
+                                                            e.stopPropagation();
+                                                            onEditEvent(event.id);
+                                                        }}
+                                                                className="p-1 hover:bg-green-200 dark:hover:bg-green-800 rounded text-green-600 dark:text-green-400"
+                                                                title="Add Finance">
+                                                            <FaPlus className="w-3 h-3"/>
+                                                        </button>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
                                     ))}
-
                                     {plannedEvents
                                         .filter(pe => new Date(pe.date).toDateString() === date.toDateString())
                                         .map(plannedEvent => (
                                             <div
                                                 key={plannedEvent.id}
-                                                className="group relative text-xs p-2 mb-1 rounded bg-yellow-100 dark:bg-yellow-900/30 border-l-2 border-yellow-500 hover:bg-yellow-200 dark:hover:bg-yellow-800/40 transition-colors cursor-pointer"
+                                                className="group relative text-xs p-2 mb-1 rounded bg-yellow-100 dark:bg-yellow-900/30 border-l-2 border-yellow-500 hover:bg-yellow-200 dark:hover:bg-yellow-800/40 transition-colors"
                                             >
                                                 <div className="flex items-start justify-between gap-2">
                                                     <div className="flex-1">
-                                                        <div
-                                                            className="font-medium text-yellow-900 dark:text-yellow-100">
+                                                        <div className="font-medium text-yellow-900 dark:text-yellow-100">
                                                             {plannedEvent.title}
                                                         </div>
                                                         <div className="text-yellow-700 dark:text-yellow-300 text-xs">
-                                                            ${Number(plannedEvent.estimatedCost).toFixed(2)} planned
+                                                            {formatCurrency(plannedEvent.estimatedCost)} planned
                                                         </div>
                                                     </div>
-                                                    <div
-                                                        className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                                         <button
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
@@ -478,16 +482,20 @@ export function CalendarPlanner({
                                                 e.stopPropagation();
                                                 setPlannedModalState({isOpen: true, event: event});
                                             }}
-                                            className="p-1 hover:bg-yellow-300 dark:hover:bg-yellow-700 rounded"
+                                            className="p-2 hover:bg-yellow-100 dark:hover:bg-yellow-900/20 rounded"
                                             title="Edit"
                                         >
-                                            <FaEdit className="w-3 h-3"/>
+                                            <FaEdit className="w-4 h-4"/>
                                         </button>
                                         <button
-                                            onClick={() => onDeletePlanned(event.id)}
-                                            className="text-red-600 hover:text-red-700 dark:text-red-400"
+                                            onClick={() => {
+                                                if (confirm(`Delete planned event "${event.title}"?`)) {
+                                                    onDeletePlanned(event.id);
+                                                }
+                                            }}
+                                            className="text-red-600 hover:text-red-700 dark:text-red-400 p-2"
                                         >
-                                            <FaTrash/>
+                                            <FaTrash className="w-4 h-4"/>
                                         </button>
                                     </div>
                                 </div>
@@ -495,6 +503,7 @@ export function CalendarPlanner({
                     </div>
                 )}
             </div>
+
             <PlannedEventModal
                 isOpen={plannedModalState.isOpen}
                 onClose={() => setPlannedModalState({isOpen: false})}
