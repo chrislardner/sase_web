@@ -1,4 +1,5 @@
 import type {EventItem} from '@/app/calendar/types';
+import {AcademicYear, Quarter} from "@/app/calendar/types";
 import type {
     BudgetCategory,
     BudgetSummary,
@@ -8,7 +9,6 @@ import type {
     QuarterSummary,
 } from '../types/finance';
 import {SGA_CATEGORY_ALLOCATIONS} from '../types/finance';
-import {AcademicYear, Quarter} from "@/app/calendar/types";
 
 export function detectEventCategory(title: string): BudgetCategory {
     const lower = title.toLowerCase();
@@ -37,6 +37,9 @@ export function calculateCategoryBudgets(
         return [];
     }
 
+    console.log(financeEvents, "financeEvents");
+    console.log(plannedEvents, "plannedEvents");
+
     const categories: BudgetCategory[] = ['Travel', 'Cultural Events', 'Social/Service'];
 
     return categories.map(category => {
@@ -51,8 +54,8 @@ export function calculateCategoryBudgets(
         const groupFundsPlanned = categoryPlannedEvents.reduce((sum, e) => sum + e.groupFundsAmount, 0);
 
         const totalSpent = sgaSpent + groupFundsSpent;
-        // const totalPlanned = sgaPlanned + groupFundsPlanned;
-        // const totalWithPlanned = totalSpent + totalPlanned;
+        const totalPlanned = sgaPlanned + groupFundsPlanned;
+        const totalWithPlanned = totalSpent + totalPlanned;
 
         const remaining = allocated - sgaSpent - sgaPlanned;
         const isExceeded = sgaSpent + sgaPlanned > allocated;

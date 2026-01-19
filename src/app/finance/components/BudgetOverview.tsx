@@ -1,10 +1,10 @@
 import {useMemo} from 'react';
 import {motion} from 'framer-motion';
 import type {EventItem} from '@/app/calendar/types';
+import {AcademicYear} from "@/app/calendar/types";
 import type {FinanceEvent, PlannedEvent} from '../types/finance';
 import {BUDGET_CATEGORY_COLORS} from '../types/finance';
 import {calculateBudgetSummary, calculateQuarterSummaries, formatCurrency, formatQuarter} from '../lib/financeUtils';
-import {AcademicYear} from "@/app/calendar/types";
 
 interface BudgetOverviewProps {
     academicYear: AcademicYear;

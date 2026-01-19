@@ -6,10 +6,7 @@ import {useEvents} from '@/app/calendar/useEvents';
 import type {FinanceEvent} from './types/finance';
 import {CURRENT_ACADEMIC_YEAR} from './types/finance';
 import {useFinanceData} from './lib/useFinanceData';
-import {BudgetOverview} from '@/app/finance/components';
-import {CalendarPlanner} from '@/app/finance/components';
-import {EventsTable} from '@/app/finance/components';
-import {EventFinanceModal} from '@/app/finance/components';
+import {BudgetOverview, CalendarPlanner, EventFinanceModal, EventsTable} from '@/app/finance/components';
 import {AcademicYear} from "@/app/calendar/types";
 
 type Tab = 'budget' | 'calendar' | 'events';
@@ -18,7 +15,7 @@ interface FinancePageClientProps {
     userEmail: string;
 }
 
-export default function FinancePageClient({  }: FinancePageClientProps) {
+export default function FinancePageClient({}: FinancePageClientProps) {
     const {events: calendarEvents} = useEvents();
     const [selectedYear, setSelectedYear] = useState<AcademicYear>(CURRENT_ACADEMIC_YEAR);
     const [activeTab, setActiveTab] = useState<Tab>('budget');
@@ -37,7 +34,9 @@ export default function FinancePageClient({  }: FinancePageClientProps) {
         syncState,
         createFinanceEvent,
         updateFinanceEvent,
+        deleteFinanceEvent,
         createPlannedEvent,
+        updatePlannedEvent,
         deletePlannedEvent,
     } = useFinanceData(selectedYear);
 
@@ -180,7 +179,15 @@ export default function FinancePageClient({  }: FinancePageClientProps) {
                             financeEvents={financeEvents}
                             plannedEvents={plannedEvents}
                             onEditEvent={handleEditEvent}
+                            onEditFinance={(id, finance) => {
+                                const event = calendarEvents.find(e => finance.eventId === e.id);
+                                if (event) {
+                                    handleEditEvent(event.id, finance);
+                                }
+                            }}
+                            onDeleteFinance={deleteFinanceEvent}
                             onAddPlanned={createPlannedEvent}
+                            onUpdatePlanned={updatePlannedEvent}
                             onDeletePlanned={deletePlannedEvent}
                         />
                     )}

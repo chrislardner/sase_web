@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
 import {AnimatePresence, motion} from 'framer-motion';
 import type {EventItem} from '@/app/calendar/types';
+import {AcademicYear} from "@/app/calendar/types";
 import type {BudgetCategory, FinanceEvent, PurchaseItem} from '../types/finance';
 import {detectEventCategory, formatCurrency, validateBudgetAllocation} from '../lib/financeUtils';
 import {FaExclamationTriangle, FaPlus, FaTimes, FaTrash} from 'react-icons/fa';
-import {AcademicYear} from "@/app/calendar/types";
 
 interface EventFinanceModalProps {
     event: EventItem | null;
@@ -118,16 +118,6 @@ export function EventFinanceModal({
         }
     }, [category, sgaAmount, groupFundsAmount, academicYear, allFinanceEvents, allPlannedEvents, existingFinance]);
 
-    const handleAutoSplit = () => {
-        const sga = parseFloat(sgaAmount) || 0;
-        const groupFunds = parseFloat(groupFundsAmount) || 0;
-        const currentTotal = sga + groupFunds;
-
-        if (currentTotal < totalCost) {
-            setGroupFundsAmount((totalCost - sga).toFixed(2));
-        }
-    };
-
     const handleSave = async () => {
         if (!event || purchases.length === 0) return;
 
@@ -226,6 +216,15 @@ export function EventFinanceModal({
                                     </div>
                                 ) : (
                                     <div className="space-y-3">
+                                        <div
+                                            className="grid grid-cols-12 gap-3 text-xs font-medium text-neutral-500 px-3">
+                                            <div className="col-span-4">Item</div>
+                                            <div className="col-span-2">Quantity</div>
+                                            <div className="col-span-2">Unit Cost</div>
+                                            <div className="col-span-2">Vendor</div>
+                                            <div className="col-span-1 text-right">Total</div>
+                                            <div className="col-span-1"/>
+                                        </div>
                                         {purchases.map((purchase) => (
                                             <div key={purchase.id}
                                                  className="grid grid-cols-12 gap-3 p-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
@@ -238,19 +237,17 @@ export function EventFinanceModal({
                                                 />
                                                 <input
                                                     type="number"
-                                                    placeholder="Qty"
+                                                    placeholder="0.00"
                                                     value={purchase.quantity}
                                                     onChange={(e) => updatePurchase(purchase.id, 'quantity', parseInt(e.target.value) || 0)}
                                                     className="col-span-2 px-3 py-2 border rounded dark:bg-neutral-700 dark:border-neutral-600 text-sm"
-                                                    min="1"
                                                 />
                                                 <input
                                                     type="number"
-                                                    placeholder="Unit $"
+                                                    placeholder="0.00"
                                                     value={purchase.unitCost}
                                                     onChange={(e) => updatePurchase(purchase.id, 'unitCost', parseFloat(e.target.value) || 0)}
                                                     className="col-span-2 px-3 py-2 border rounded dark:bg-neutral-700 dark:border-neutral-600 text-sm"
-                                                    min="0"
                                                     step="0.01"
                                                 />
                                                 <input
@@ -299,7 +296,6 @@ export function EventFinanceModal({
                                             onChange={(e) => setSgaAmount(e.target.value)}
                                             className="w-full px-4 py-2 border rounded-lg dark:bg-neutral-800 dark:border-neutral-700"
                                             step="0.01"
-                                            min="0"
                                         />
                                     </div>
                                     <div>
@@ -311,7 +307,6 @@ export function EventFinanceModal({
                                             onChange={(e) => setGroupFundsAmount(e.target.value)}
                                             className="w-full px-4 py-2 border rounded-lg dark:bg-neutral-800 dark:border-neutral-700"
                                             step="0.01"
-                                            min="0"
                                         />
                                     </div>
                                 </div>
@@ -320,11 +315,9 @@ export function EventFinanceModal({
                                     <div
                                         className="p-3 bg-yellow-50 dark:bg-yellow-900/10 rounded-lg border border-yellow-200 dark:border-yellow-800">
                                         <p className="text-sm text-yellow-700 dark:text-yellow-400">
-                                            WARNING:️ Allocation ({formatCurrency(sgaPlusGroupFunds)}) doesn't match total cost
+                                            WARNING:️ Allocation ({formatCurrency(sgaPlusGroupFunds)}) doesn't match
+                                            total cost
                                             ({formatCurrency(totalCost)})
-                                            <button onClick={handleAutoSplit} className="ml-2 underline font-medium">
-                                                Auto-adjust
-                                            </button>
                                         </p>
                                     </div>
                                 )}
@@ -356,7 +349,6 @@ export function EventFinanceModal({
                                         value={attendees}
                                         onChange={(e) => setAttendees(e.target.value)}
                                         className="w-full px-4 py-2 border rounded-lg dark:bg-neutral-800 dark:border-neutral-700"
-                                        min="1"
                                     />
                                     {attendees && totalCost > 0 && (
                                         <p className="text-sm card-subtle mt-1">

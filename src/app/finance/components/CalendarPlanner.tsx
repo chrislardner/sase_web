@@ -1,10 +1,11 @@
 import {useMemo, useState} from 'react';
 import {AnimatePresence, motion} from 'framer-motion';
 import type {EventItem} from '@/app/calendar/types';
+import {AcademicYear} from "@/app/calendar/types";
 import type {BudgetCategory, FinanceEvent, PlannedEvent} from '../types/finance';
 import {detectEventCategory, formatCurrency, formatDate, getQuarterFromDate} from '../lib/financeUtils';
-import {FaChevronLeft, FaChevronRight, FaTimes, FaTrash} from 'react-icons/fa';
-import {AcademicYear} from "@/app/calendar/types";
+import {FaChevronLeft, FaChevronRight, FaEdit, FaPlus, FaTimes, FaTrash} from 'react-icons/fa';
+import {PlannedEventModal} from "@/app/finance/components/PlannedEventModal";
 
 
 interface CalendarPlannerProps {
@@ -13,7 +14,10 @@ interface CalendarPlannerProps {
     financeEvents: FinanceEvent[];
     plannedEvents: PlannedEvent[];
     onEditEvent: (eventId: string, finance?: FinanceEvent) => void;
+    onEditFinance: (id: string, finance: FinanceEvent) => void;
+    onDeleteFinance: (id: string) => Promise<void>;
     onAddPlanned: (event: Omit<PlannedEvent, 'id' | 'createdAt' | 'updatedAt'>) => Promise<PlannedEvent>;
+    onUpdatePlanned: (id: string, updates: Partial<PlannedEvent>) => Promise<PlannedEvent>;
     onDeletePlanned: (id: string) => Promise<void>;
 }
 
@@ -23,7 +27,10 @@ export function CalendarPlanner({
                                     financeEvents,
                                     plannedEvents,
                                     onEditEvent,
+                                    onEditFinance,
+                                    onDeleteFinance,
                                     onAddPlanned,
+                                    onUpdatePlanned,
                                     onDeletePlanned,
                                 }: CalendarPlannerProps) {
     const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -37,6 +44,10 @@ export function CalendarPlanner({
         groupFundsAmount: '',
         notes: '',
     });
+    const [plannedModalState, setPlannedModalState] = useState<{
+        isOpen: boolean;
+        event?: PlannedEvent;
+    }>({isOpen: false});
 
     const calendarGrid = useMemo(() => {
         const year = currentMonth.getFullYear();
@@ -150,6 +161,16 @@ export function CalendarPlanner({
                         <FaChevronRight/>
                     </button>
                 </div>
+                <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold">Calendar Planning</h2>
+                    <button
+                        onClick={() => setPlannedModalState({isOpen: true})}
+                        className="flex items-center gap-2 px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors"
+                    >
+                        <FaPlus/>
+                        Add Planned Event
+                    </button>
+                </div>
 
                 <div className="grid grid-cols-7 gap-2">
                     {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
@@ -164,6 +185,7 @@ export function CalendarPlanner({
                             return <div key={`empty-${index}`} className="min-h-[100px]"/>;
                         }
 
+                        const dayKey = date.toISOString().split('T')[0];
                         const dateKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
                         const dayEvents = eventsByDate.get(dateKey) || [];
                         const isToday = new Date().toDateString() === date.toDateString();
@@ -184,20 +206,89 @@ export function CalendarPlanner({
                                     {dayEvents.map(({event, finance}) => (
                                         <div
                                             key={event.id}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                onEditEvent(event.id, finance);
-                                            }}
-                                            className="text-xs p-1 rounded bg-green-100 dark:bg-green-900/30 hover:bg-green-200 dark:hover:bg-green-900/50 cursor-pointer"
+                                            className="group relative text-xs p-2 mb-1 rounded bg-blue-100 dark:bg-blue-900/30 border-l-2 border-blue-500 hover:bg-blue-200 dark:hover:bg-blue-800/40 transition-colors cursor-pointer"
                                         >
-                                            <div className="font-medium truncate">{event.oneWordTitle}</div>
-                                            {finance && (
-                                                <div className="text-[10px] font-bold">
-                                                    ${finance.totalCost.toFixed(0)}
+                                            <div className="flex items-start justify-between gap-2">
+                                                <div className="flex-1">
+                                                    <div
+                                                        className="font-medium text-blue-900 dark:text-blue-100">{event.oneWordTitle}</div>
+                                                    {finance && finance.totalCost && finance.totalCost.toFixed(2) && <div
+                                                        className="text-blue-700 dark:text-blue-300 text-xs">${finance.totalCost.toFixed(2)} spent</div>}
                                                 </div>
-                                            )}
+                                                <div
+                                                    className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    {finance && <>
+                                                        <button onClick={e => {
+                                                            e.stopPropagation();
+                                                            onEditEvent(event.id, finance);
+                                                        }}
+                                                                className="p-1 hover:bg-blue-300 dark:hover:bg-blue-700 rounded"
+                                                                title="Edit">
+                                                            <FaEdit className="w-3 h-3"/>
+                                                        </button>
+                                                        <button onClick={e => {
+                                                            e.stopPropagation();
+                                                            if (confirm(`Delete finance record for "${event.oneWordTitle}"?`)) onDeleteFinance(finance.id);
+                                                        }}
+                                                                className="p-1 hover:bg-red-200 dark:hover:bg-red-800 rounded text-red-600 dark:text-red-400"
+                                                                title="Delete">
+                                                            <FaTrash className="w-3 h-3"/>
+                                                        </button>
+                                                    </>}
+                                                </div>
+                                            </div>
                                         </div>
                                     ))}
+
+                                    {plannedEvents
+                                        .filter(pe => pe.date === dayKey)
+                                        .map(plannedEvent => (
+                                            <div
+                                                key={plannedEvent.id}
+                                                className="group relative text-xs p-2 mb-1 rounded bg-yellow-100 dark:bg-yellow-900/30 border-l-2 border-yellow-500 hover:bg-yellow-200 dark:hover:bg-yellow-800/40 transition-colors cursor-pointer"
+                                            >
+                                                <div className="flex items-start justify-between gap-2">
+                                                    <div className="flex-1">
+                                                        <div
+                                                            className="font-medium text-yellow-900 dark:text-yellow-100">
+                                                            {plannedEvent.title}
+                                                        </div>
+                                                        <div className="text-yellow-700 dark:text-yellow-300 text-xs">
+                                                            ${plannedEvent.estimatedCost.toFixed(2)} planned
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                setPlannedModalState({
+                                                                    isOpen: true,
+                                                                    event: plannedEvent
+                                                                });
+                                                            }}
+                                                            className="p-1 hover:bg-yellow-300 dark:hover:bg-yellow-700 rounded"
+                                                            title="Edit planned event"
+                                                        >
+                                                            <FaEdit className="w-3 h-3"/>
+                                                        </button>
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                if (confirm(`Delete planned event "${plannedEvent.title}"?`)) {
+                                                                    onDeletePlanned(plannedEvent.id);
+                                                                }
+                                                            }}
+                                                            className="p-1 hover:bg-red-200 dark:hover:bg-red-800 rounded text-red-600 dark:text-red-400"
+                                                            title="Delete planned event"
+                                                        >
+                                                            <FaTrash className="w-3 h-3"/>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
                                 </div>
                             </button>
                         );
@@ -380,6 +471,16 @@ export function CalendarPlanner({
                                             <div className="font-bold">{formatCurrency(event.estimatedCost)}</div>
                                         </div>
                                         <button
+                                            onClick={e => {
+                                                e.stopPropagation();
+                                                setPlannedModalState({isOpen: true, event: event});
+                                            }}
+                                            className="p-1 hover:bg-yellow-300 dark:hover:bg-yellow-700 rounded"
+                                            title="Edit"
+                                        >
+                                            <FaEdit className="w-3 h-3"/>
+                                        </button>
+                                        <button
                                             onClick={() => onDeletePlanned(event.id)}
                                             className="text-red-600 hover:text-red-700 dark:text-red-400"
                                         >
@@ -391,6 +492,20 @@ export function CalendarPlanner({
                     </div>
                 )}
             </div>
+            <PlannedEventModal
+                isOpen={plannedModalState.isOpen}
+                onClose={() => setPlannedModalState({isOpen: false})}
+                onSave={async (data) => {
+                    if (plannedModalState.event) {
+                        await onUpdatePlanned(plannedModalState.event.id, data);
+                    } else {
+                        await onAddPlanned(data);
+                    }
+                    setPlannedModalState({isOpen: false});
+                }}
+                existingEvent={plannedModalState.event}
+                academicYear={academicYear}
+            />
         </div>
     );
 }
