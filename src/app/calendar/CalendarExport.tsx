@@ -37,7 +37,6 @@ export default function CalendarExport({events}: Props) {
         downloadICS(events, "SASE_RHIT_All_Events.ics", "SASE RHIT All Events");
     };
 
-    // Group quarters by academic year
     const quartersByYear = availableQuarters.reduce((acc, {quarter, academicYear}) => {
         if (!acc[academicYear]) acc[academicYear] = [];
         acc[academicYear].push(quarter);

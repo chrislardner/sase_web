@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import {SECTION_IMAGES} from '@/app/lib/images';
+import {SECTION_IMAGES} from '@/lib/images';
 
 const MembersSection = () => {
     return (

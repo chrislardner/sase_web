@@ -3,17 +3,17 @@
 import {useCallback, useEffect, useRef, useState} from "react";
 import ImageCarousel from "./ImageCarousel";
 import type {EventItem} from "./EventsData";
-import {getEventGallery} from "@/app/lib/images";
+import {getEventGallery} from "@/lib/images";
 
 type Props = {
     event: EventItem;
     index: number;
-    onClose: () => void;
-    onPrevEvent: () => void;
-    onNextEvent: () => void;
+    onCloseAction: () => void;
+    onPrevEventAction: () => void;
+    onNextEventAction: () => void;
 };
 
-export default function EventOverlay({event, index, onClose, onPrevEvent, onNextEvent}: Props) {
+export default function EventOverlay({event, index, onCloseAction, onPrevEventAction, onNextEventAction}: Props) {
     const dialogRef = useRef<HTMLDivElement>(null);
     const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -26,10 +26,10 @@ export default function EventOverlay({event, index, onClose, onPrevEvent, onNext
     }, []);
 
     const onKey = useCallback((e: KeyboardEvent) => {
-        if (e.key === "Escape") onClose();
-        if (e.key === "ArrowLeft") onPrevEvent();
-        if (e.key === "ArrowRight") onNextEvent();
-    }, [onClose, onPrevEvent, onNextEvent]);
+        if (e.key === "Escape") onCloseAction();
+        if (e.key === "ArrowLeft") onPrevEventAction();
+        if (e.key === "ArrowRight") onNextEventAction();
+    }, [onCloseAction, onPrevEventAction, onNextEventAction]);
 
     useEffect(() => {
         document.addEventListener("keydown", onKey);
@@ -40,7 +40,7 @@ export default function EventOverlay({event, index, onClose, onPrevEvent, onNext
         const node = dialogRef.current;
         if (!node) return;
         const target = e.target as Node;
-        if (!node.contains(target)) onClose();
+        if (!node.contains(target)) onCloseAction();
     };
 
     const outlineBtn =
@@ -67,7 +67,7 @@ export default function EventOverlay({event, index, onClose, onPrevEvent, onNext
                     <button
                         ref={closeRef}
                         className={`${outlineIcon} absolute top-3 right-3`}
-                        onClick={onClose}
+                        onClick={onCloseAction}
                         aria-label="Close overlay"
                         title="Close"
                     >
@@ -83,7 +83,7 @@ export default function EventOverlay({event, index, onClose, onPrevEvent, onNext
                             title={event.title}
                             images={images}
                             current={imgIdx}
-                            onChange={setImgIdx}
+                            onChangeAction={setImgIdx}
                         />
 
                         <div className="max-h-[60vh] lg:max-h-[24rem] overflow-y-auto pr-1">
@@ -95,10 +95,10 @@ export default function EventOverlay({event, index, onClose, onPrevEvent, onNext
 
                     <div
                         className="mt-6 pt-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
-                        <button className={outlineBtn} onClick={onPrevEvent} aria-label="Previous event">
+                        <button className={outlineBtn} onClick={onPrevEventAction} aria-label="Previous event">
                             ← Prev Event
                         </button>
-                        <button className={outlineBtn} onClick={onNextEvent} aria-label="Next event">
+                        <button className={outlineBtn} onClick={onNextEventAction} aria-label="Next event">
                             Next Event →
                         </button>
                     </div>

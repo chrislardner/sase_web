@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import {HERO_IMAGES} from '@/app/lib/images';
+import {HERO_IMAGES} from '@/lib/images';
 
 const CoverSection = () => {
     return (

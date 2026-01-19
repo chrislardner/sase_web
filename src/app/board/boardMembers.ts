@@ -1,4 +1,4 @@
-import {BOARD_IMAGES} from "@/app/lib/images";
+import {BOARD_IMAGES} from "@/lib/images";
 
 export interface BoardMember {
     id: string;

@@ -83,7 +83,6 @@ export function DonutChart(props: DonutChartProps) {
     return (
         <section className="card h-full">
             <div className="card-body flex flex-col gap-6 md:flex-row">
-                {/* Donut */}
                 <div className="flex items-center justify-center md:basis-1/2">
                     <svg
                         viewBox="0 0 300 300"

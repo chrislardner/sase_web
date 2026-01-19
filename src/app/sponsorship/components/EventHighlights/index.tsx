@@ -23,15 +23,15 @@ export default function EventHighlights() {
     return (
         <section id="events" className="mb-12 fade-in">
             <h2 className="text-3xl font-bold text-center mb-8">Event Highlights</h2>
-            <EventList events={EVENTS} onOpen={open}/>
+            <EventList events={EVENTS} onOpenAction={open}/>
 
             {openIndex !== null && (
                 <EventOverlay
                     event={EVENTS[openIndex]}
                     index={openIndex}
-                    onClose={close}
-                    onNextEvent={nextEvent}
-                    onPrevEvent={prevEvent}
+                    onCloseAction={close}
+                    onNextEventAction={nextEvent}
+                    onPrevEventAction={prevEvent}
                 />
             )}
         </section>

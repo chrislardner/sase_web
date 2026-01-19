@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import type {EventItem} from "./EventsData";
-import {getEventThumbnail} from "@/app/lib/images";
+import {getEventThumbnail} from "@/lib/images";
 
-export default function EventList({events, onOpen,}: { events: EventItem[]; onOpen: (index: number) => void; }) {
+export default function EventList({events, onOpenAction,}: { events: EventItem[]; onOpenAction: (index: number) => void; }) {
     return (
         <div className="space-y-8">
             {events.map((ev, i) => (
@@ -14,7 +14,7 @@ export default function EventList({events, onOpen,}: { events: EventItem[]; onOp
                 >
                     <div
                         className="relative w-full md:w-[240px] h-40 md:h-32 overflow-hidden rounded-md cursor-pointer"
-                        onClick={() => onOpen(i)}
+                        onClick={() => onOpenAction(i)}
                     >
                         <Image
                             src={getEventThumbnail(ev.id)}
@@ -34,7 +34,7 @@ export default function EventList({events, onOpen,}: { events: EventItem[]; onOp
 
                     <div className="flex md:justify-end">
                         <button
-                            onClick={() => onOpen(i)}
+                            onClick={() => onOpenAction(i)}
                             className="btn border bg-transparent hover:bg-black/5 text-black border-black/70 dark:text-white dark:border-white/80 dark:hover:bg-white/10"
                             aria-haspopup="dialog"
                             aria-controls={`event-overlay-${ev.id}`}

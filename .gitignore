@@ -45,3 +45,6 @@ public/events/*
 .idea/
 
 /private/
+.env*.local
+
+/src/generated/prisma

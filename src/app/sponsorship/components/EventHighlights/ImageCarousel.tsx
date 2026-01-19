@@ -8,11 +8,11 @@ const PLACEHOLDER_IMAGE = "https://placehold.co/1600x1000/1a1a2e/ffffff?text=SAS
 type Props = {
     images: string[];
     current: number;
-    onChange: (nextIndex: number) => void;
+    onChangeAction: (nextIndex: number) => void;
     title: string;
 };
 
-export default function ImageCarousel({images, current, onChange, title}: Props) {
+export default function ImageCarousel({images, current, onChangeAction, title}: Props) {
     const validImages = images?.filter((img) => img && img.trim() !== "") ?? [];
     const imgs = validImages.length > 0 ? validImages : [PLACEHOLDER_IMAGE];
 
@@ -34,8 +34,8 @@ export default function ImageCarousel({images, current, onChange, title}: Props)
         btn?.scrollIntoView({behavior: "smooth", block: "nearest", inline: "center"});
     }, [safeIndex]);
 
-    const prev = () => onChange((safeIndex - 1 + imgs.length) % imgs.length);
-    const next = () => onChange((safeIndex + 1) % imgs.length);
+    const prev = () => onChangeAction((safeIndex - 1 + imgs.length) % imgs.length);
+    const next = () => onChangeAction((safeIndex + 1) % imgs.length);
 
     const showNav = imgs.length > 1;
 
@@ -78,7 +78,7 @@ export default function ImageCarousel({images, current, onChange, title}: Props)
                             <button
                                 key={`thumb-${i}-${src}`}
                                 ref={setThumbRef(i)}
-                                onClick={() => onChange(i)}
+                                onClick={() => onChangeAction(i)}
                                 className={`relative shrink-0 w-24 h-16 md:w-28 md:h-20 rounded-md overflow-hidden border-2 transition-all ${
                                     i === safeIndex
                                         ? "border-white ring-2 ring-red-500 md:border-red-600"
