@@ -191,7 +191,7 @@ export function CalendarPlanner({
                         const isToday = new Date().toDateString() === date.toDateString();
 
                         return (
-                            <button
+                            <div
                                 key={dateKey}
                                 onClick={() => handleDateClick(date)}
                                 className={`min-h-[100px] p-2 rounded-lg border transition-all text-left ${
@@ -212,8 +212,11 @@ export function CalendarPlanner({
                                                 <div className="flex-1">
                                                     <div
                                                         className="font-medium text-blue-900 dark:text-blue-100">{event.oneWordTitle}</div>
-                                                    {finance && finance.totalCost && finance.totalCost.toFixed(2) && <div
-                                                        className="text-blue-700 dark:text-blue-300 text-xs">${finance.totalCost.toFixed(2)} spent</div>}
+                                                    {finance && finance.totalCost != null && (
+                                                        <div className="text-blue-700 dark:text-blue-300 text-xs">
+                                                            ${Number(finance.totalCost).toFixed(2)} spent
+                                                        </div>
+                                                    )}
                                                 </div>
                                                 <div
                                                     className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -241,7 +244,7 @@ export function CalendarPlanner({
                                     ))}
 
                                     {plannedEvents
-                                        .filter(pe => pe.date === dayKey)
+                                        .filter(pe => new Date(pe.date).toDateString() === date.toDateString())
                                         .map(plannedEvent => (
                                             <div
                                                 key={plannedEvent.id}
@@ -254,7 +257,7 @@ export function CalendarPlanner({
                                                             {plannedEvent.title}
                                                         </div>
                                                         <div className="text-yellow-700 dark:text-yellow-300 text-xs">
-                                                            ${plannedEvent.estimatedCost.toFixed(2)} planned
+                                                            ${Number(plannedEvent.estimatedCost).toFixed(2)} planned
                                                         </div>
                                                     </div>
                                                     <div
@@ -290,7 +293,7 @@ export function CalendarPlanner({
                                         ))
                                     }
                                 </div>
-                            </button>
+                            </div>
                         );
                     })}
                 </div>

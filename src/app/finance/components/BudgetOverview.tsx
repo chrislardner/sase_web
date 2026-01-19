@@ -39,6 +39,16 @@ export function BudgetOverview({
         return 'text-green-600 dark:text-green-400';
     };
 
+    const actualPercent =
+        summary.sgaTotalAllocated > 0
+            ? (summary.sgaTotalSpent / summary.sgaTotalAllocated) * 100
+            : 0;
+
+    const plannedPercent =
+        summary.sgaTotalAllocated > 0
+            ? (summary.sgaTotalPlanned / summary.sgaTotalAllocated) * 100
+            : 0;
+
     return (
         <div className="space-y-8">
             <div>
@@ -94,19 +104,21 @@ export function BudgetOverview({
               {formatCurrency(summary.sgaTotalSpent + summary.sgaTotalPlanned)} of {formatCurrency(summary.sgaTotalAllocated)}
             </span>
                     </div>
-                    <div
-                        className="relative w-full bg-neutral-200 dark:bg-neutral-800 rounded-full h-4 overflow-hidden">
+                    <div className="relative w-full bg-neutral-200 dark:bg-neutral-800 rounded-full h-4 overflow-hidden">
                         <motion.div
-                            initial={{width: 0}}
-                            animate={{width: `${Math.min((summary.sgaTotalSpent / summary.sgaTotalAllocated) * 100, 100)}%`}}
-                            transition={{duration: 0.8, delay: 0.2}}
+                            initial={{ width: 0 }}
+                            animate={{ width: `${Math.min(actualPercent, 100)}%` }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
                             className="absolute left-0 top-0 h-full bg-red-600 dark:bg-red-500"
                         />
                         <motion.div
-                            initial={{width: 0}}
-                            animate={{width: `${Math.min(sgaPercentUsed, 100)}%`}}
-                            transition={{duration: 0.8, delay: 0.4}}
-                            className="absolute left-0 top-0 h-full bg-yellow-500 dark:bg-yellow-400 opacity-70"
+                            initial={{ width: 0 }}
+                            animate={{
+                                width: `${Math.min(plannedPercent, 100 - actualPercent)}%`,
+                                left: `${Math.min(actualPercent, 100)}%`,
+                            }}
+                            transition={{ duration: 0.8, delay: 0.4 }}
+                            className="absolute top-0 h-full bg-yellow-500 dark:bg-yellow-400"
                         />
                     </div>
                     <div className="flex justify-between text-xs">

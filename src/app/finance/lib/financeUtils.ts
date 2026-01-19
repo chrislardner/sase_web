@@ -45,17 +45,36 @@ export function calculateCategoryBudgets(
     return categories.map(category => {
         const allocated = allocations[category];
 
-        const categoryFinanceEvents = financeEvents.filter(e => e.category === category);
-        const sgaSpent = categoryFinanceEvents.reduce((sum, e) => sum + e.sgaAmount, 0);
-        const groupFundsSpent = categoryFinanceEvents.reduce((sum, e) => sum + e.groupFundsAmount, 0);
+        const categoryFinanceEvents = financeEvents.filter(
+            e => e.category === category
+        );
 
-        const categoryPlannedEvents = plannedEvents.filter(e => e.category === category);
-        const sgaPlanned = categoryPlannedEvents.reduce((sum, e) => sum + e.sgaAmount, 0);
-        const groupFundsPlanned = categoryPlannedEvents.reduce((sum, e) => sum + e.groupFundsAmount, 0);
+        const sgaSpent = categoryFinanceEvents.reduce(
+            (sum, e) => sum + Number(e.sgaAmount ?? 0),
+            0
+        );
+
+        const groupFundsSpent = categoryFinanceEvents.reduce(
+            (sum, e) => sum + Number(e.groupFundsAmount ?? 0),
+            0
+        );
+
+        const categoryPlannedEvents = plannedEvents.filter(
+            e => e.category === category
+        );
+
+        const sgaPlanned = categoryPlannedEvents.reduce(
+            (sum, e) => sum + Number(e.sgaAmount ?? 0),
+            0
+        );
+
+        const groupFundsPlanned = categoryPlannedEvents.reduce(
+            (sum, e) => sum + Number(e.groupFundsAmount ?? 0),
+            0
+        );
 
         const totalSpent = sgaSpent + groupFundsSpent;
         const totalPlanned = sgaPlanned + groupFundsPlanned;
-        const totalWithPlanned = totalSpent + totalPlanned;
 
         const remaining = allocated - sgaSpent - sgaPlanned;
         const isExceeded = sgaSpent + sgaPlanned > allocated;
@@ -77,16 +96,39 @@ export function calculateBudgetSummary(
     financeEvents: FinanceEvent[],
     plannedEvents: PlannedEvent[]
 ): BudgetSummary {
-    const categories = calculateCategoryBudgets(academicYear, financeEvents, plannedEvents);
+    const categories = calculateCategoryBudgets(
+        academicYear,
+        financeEvents,
+        plannedEvents
+    );
 
-    const sgaTotalAllocated = categories.reduce((sum, c) => sum + c.allocated, 0);
-    const sgaTotalSpent = categories.reduce((sum, c) => sum + c.sgaSpent, 0);
-    const groupFundsTotalSpent = categories.reduce((sum, c) => sum + c.groupFundsSpent, 0);
+    const sgaTotalAllocated = categories.reduce(
+        (sum, c) => sum + Number(c.allocated ?? 0),
+        0
+    );
 
-    const sgaTotalPlanned = plannedEvents.reduce((sum, e) => sum + e.sgaAmount, 0);
-    const groupFundsTotalPlanned = plannedEvents.reduce((sum, e) => sum + e.groupFundsAmount, 0);
+    const sgaTotalSpent = categories.reduce(
+        (sum, c) => sum + Number(c.sgaSpent ?? 0),
+        0
+    );
 
-    const sgaRemaining = sgaTotalAllocated - sgaTotalSpent - sgaTotalPlanned;
+    const groupFundsTotalSpent = categories.reduce(
+        (sum, c) => sum + Number(c.groupFundsSpent ?? 0),
+        0
+    );
+
+    const sgaTotalPlanned = plannedEvents.reduce(
+        (sum, e) => sum + Number(e.sgaAmount ?? 0),
+        0
+    );
+
+    const groupFundsTotalPlanned = plannedEvents.reduce(
+        (sum, e) => sum + Number(e.groupFundsAmount ?? 0),
+        0
+    );
+
+    const sgaRemaining =
+        sgaTotalAllocated - sgaTotalSpent - sgaTotalPlanned;
 
     return {
         academicYear,
@@ -118,24 +160,43 @@ export function calculateQuarterSummaries(
             quarterEventIds.includes(e.eventId)
         );
 
-        const quarterPlannedEvents = plannedEvents.filter(e =>
-            e.academicYear === academicYear && e.quarter === quarter
+        const quarterPlannedEvents = plannedEvents.filter(
+            e => e.academicYear === academicYear && e.quarter === quarter
         );
 
-        const sgaSpent = quarterFinanceEvents.reduce((sum, e) => sum + e.sgaAmount, 0);
-        const groupFundsSpent = quarterFinanceEvents.reduce((sum, e) => sum + e.groupFundsAmount, 0);
+        const sgaSpent = quarterFinanceEvents.reduce(
+            (sum, e) => sum + Number(e.sgaAmount ?? 0),
+            0
+        );
 
-        const sgaPlanned = quarterPlannedEvents.reduce((sum, e) => sum + e.sgaAmount, 0);
-        const groupFundsPlanned = quarterPlannedEvents.reduce((sum, e) => sum + e.groupFundsAmount, 0);
+        const groupFundsSpent = quarterFinanceEvents.reduce(
+            (sum, e) => sum + Number(e.groupFundsAmount ?? 0),
+            0
+        );
 
-        const categoryBreakdown: Partial<Record<BudgetCategory, number>> = {};
+        const sgaPlanned = quarterPlannedEvents.reduce(
+            (sum, e) => sum + Number(e.sgaAmount ?? 0),
+            0
+        );
+
+        const groupFundsPlanned = quarterPlannedEvents.reduce(
+            (sum, e) => sum + Number(e.groupFundsAmount ?? 0),
+            0
+        );
+
+        const categoryBreakdown: Partial<Record<BudgetCategory, number>> =
+            {};
 
         quarterFinanceEvents.forEach(e => {
-            categoryBreakdown[e.category] = (categoryBreakdown[e.category] || 0) + e.totalCost;
+            categoryBreakdown[e.category] =
+                (categoryBreakdown[e.category] || 0) +
+                Number(e.totalCost ?? 0);
         });
 
         quarterPlannedEvents.forEach(e => {
-            categoryBreakdown[e.category] = (categoryBreakdown[e.category] || 0) + e.estimatedCost;
+            categoryBreakdown[e.category] =
+                (categoryBreakdown[e.category] || 0) +
+                Number(e.estimatedCost ?? 0);
         });
 
         return {
@@ -171,11 +232,17 @@ export function validateBudgetAllocation(
 
     const currentSgaSpent = existingEvents
         .filter(e => e.category === category && e.id !== excludeEventId)
-        .reduce((sum, e) => sum + e.sgaAmount, 0);
+        .reduce(
+            (sum, e) => sum + Number(e.sgaAmount ?? 0),
+            0
+        );
 
     const currentSgaPlanned = plannedEvents
         .filter(e => e.category === category && e.id !== excludeEventId)
-        .reduce((sum, e) => sum + e.sgaAmount, 0);
+        .reduce(
+            (sum, e) => sum + Number(e.sgaAmount ?? 0),
+            0
+        );
 
     const newTotal = currentSgaSpent + currentSgaPlanned + sgaAmount;
 

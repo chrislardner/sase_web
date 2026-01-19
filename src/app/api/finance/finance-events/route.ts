@@ -11,10 +11,11 @@ async function handleGET(request: NextRequest) {
     if (!year) {
         return NextResponse.json({success: false, error: 'Year parameter required'}, {status: 400});
     }
+    const yearSuffix = year.slice(2, 4);
 
     const result = await sql`
         SELECT * FROM finance_events
-        WHERE "eventId" LIKE ${year.split('-')[0].slice(-2) + '%'}
+        WHERE "eventId" LIKE ${'%' + yearSuffix + '-%'}
         ORDER BY "createdAt" DESC
     `;
 
