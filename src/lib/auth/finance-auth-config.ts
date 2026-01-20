@@ -1,17 +1,24 @@
-export const AUTHORIZED_FINANCE_EMAILS = [
-    'chrislardnercl@gmail.com'
-] as const;
+function getAuthorizedEmails(): string[] {
+    const emailsString = process.env.AUTHORIZED_FINANCE_EMAILS;
 
-export type AuthorizedEmail = typeof AUTHORIZED_FINANCE_EMAILS[number];
+    if (!emailsString) {
+        console.warn('⚠️  AUTHORIZED_FINANCE_EMAILS environment variable is not set!');
+        return [];
+    }
+
+    return emailsString
+        .split(',')
+        .map(email => email.trim().toLowerCase())
+        .filter(email => email.length > 0);
+}
 
 export function isAuthorizedForFinance(email: string | null | undefined): boolean {
     if (!email) return false;
 
     const normalizedEmail = email.toLowerCase().trim();
+    const authorizedEmails = getAuthorizedEmails();
 
-    return AUTHORIZED_FINANCE_EMAILS.some(
-        authorizedEmail => authorizedEmail.toLowerCase() === normalizedEmail
-    );
+    return authorizedEmails.includes(normalizedEmail);
 }
 
 export function getUnauthorizedMessage(email?: string): string {

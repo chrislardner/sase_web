@@ -26,11 +26,16 @@ async function handleGET(request: NextRequest) {
     if (!year) {
         return NextResponse.json({success: false, error: 'Year parameter required'}, {status: 400});
     }
-    const yearSuffix = year.slice(2, 4);
+
+    const [startYear, endYear] = year.split('-');
+    const fallSuffix = startYear.slice(2, 4);
+    const winterSuffix = endYear.slice(2, 4);
 
     const result = await sql`
         SELECT * FROM finance_events
-        WHERE "eventId" LIKE ${'%' + yearSuffix + '-%'}
+        WHERE "eventId" LIKE ${'F' + fallSuffix + '-%'}
+           OR "eventId" LIKE ${'W' + winterSuffix + '-%'}
+           OR "eventId" LIKE ${'S' + winterSuffix + '-%'}
         ORDER BY "createdAt" DESC
     `;
 

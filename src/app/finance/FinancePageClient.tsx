@@ -1,6 +1,5 @@
 'use client';
 
-import {useState} from 'react';
 import {motion} from 'framer-motion';
 import {useEvents} from '@/app/calendar/useEvents';
 import type {FinanceEvent} from './types/finance';
@@ -8,6 +7,7 @@ import {CURRENT_ACADEMIC_YEAR} from './types/finance';
 import {useFinanceData} from './lib/useFinanceData';
 import {BudgetOverview, CalendarPlanner, EventFinanceModal, EventsTable} from '@/app/finance/components';
 import {AcademicYear} from "@/app/calendar/types";
+import {useState} from "react";
 
 type Tab = 'budget' | 'calendar' | 'events';
 

@@ -5,7 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {usePathname} from 'next/navigation';
 import {useTheme} from 'next-themes';
-import {FaBars, FaMoon, FaSun, FaTimes} from 'react-icons/fa';
+import {FaBars, FaMoon, FaSun, FaTimes, FaSignInAlt, FaSignOutAlt, FaUser} from 'react-icons/fa';
+import {signOut, useSession} from 'next-auth/react';
 
 const LINKS = [
     {href: '/', label: 'Home'},
@@ -18,6 +19,7 @@ const LINKS = [
 export default function Navbar() {
     const pathname = usePathname();
     const {resolvedTheme, setTheme} = useTheme();
+    const {data: session, status} = useSession();
     const [mounted, setMounted] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -35,6 +37,14 @@ export default function Navbar() {
         setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
     };
     const closeMenu = () => setIsOpen(false);
+
+    const handleSignOut = async () => {
+        await signOut({callbackUrl: '/'});
+        closeMenu();
+    };
+
+    const isSignedIn = status === 'authenticated';
+    const userEmail = session?.user?.email;
 
     return (
         <nav className={`nav-root ${scrolled ? 'has-shadow' : ''}`} aria-label="Main">
@@ -86,7 +96,36 @@ export default function Navbar() {
                         );
                     })}
 
-                    <button type="button" onClick={toggleTheme} className="btn-icon" aria-label="Toggle dark mode">
+                    {mounted && (
+                        <>
+                            {isSignedIn ? (
+                                <button
+                                    type="button"
+                                    onClick={handleSignOut}
+                                    className="nav-link flex items-center gap-2 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"
+                                    title={`Signed in as ${userEmail}`}
+                                >
+                                    <FaSignOutAlt className="text-sm" />
+                                    <span>Sign Out</span>
+                                </button>
+                            ) : (
+                                <Link
+                                    href="/finance"
+                                    className="nav-link flex items-center gap-2"
+                                >
+                                    <FaSignInAlt className="text-sm" />
+                                    <span>Sign In</span>
+                                </Link>
+                            )}
+                        </>
+                    )}
+
+                    <button
+                        type="button"
+                        onClick={toggleTheme}
+                        className="btn-icon"
+                        aria-label="Toggle dark mode"
+                    >
                         {mounted && resolvedTheme === 'dark' ? <FaSun/> : <FaMoon/>}
                     </button>
                 </div>
@@ -120,6 +159,36 @@ export default function Navbar() {
                             </Link>
                         );
                     })}
+
+                    {mounted && (
+                        <>
+                            {isSignedIn ? (
+                                <>
+                                    <div className="px-3 py-2 text-sm text-neutral-600 dark:text-neutral-400 flex items-center gap-2">
+                                        <FaUser className="text-xs" />
+                                        <span className="truncate">{userEmail}</span>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={handleSignOut}
+                                        className="nav-mobile-link flex items-center gap-2 text-red-600 dark:text-red-400"
+                                    >
+                                        <FaSignOutAlt />
+                                        <span>Sign Out</span>
+                                    </button>
+                                </>
+                            ) : (
+                                <Link
+                                    href="/finance"
+                                    onClick={closeMenu}
+                                    className="nav-mobile-link flex items-center gap-2"
+                                >
+                                    <FaSignInAlt />
+                                    <span>Sign In</span>
+                                </Link>
+                            )}
+                        </>
+                    )}
 
                     <button
                         type="button"
