@@ -14,6 +14,7 @@ const LINKS = [
     {href: '/calendar', label: 'Calendar'},
     {href: '/sponsorship', label: 'Sponsorship'},
     {href: '/contact', label: 'Contact'},
+    {href: '/finance', label: 'Officer Dashboard'},
 ];
 
 export default function Navbar() {
@@ -23,6 +24,8 @@ export default function Navbar() {
     const [mounted, setMounted] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const isFinancePage = pathname?.startsWith('/finance');
+
 
     useEffect(() => setMounted(true), []);
     useEffect(() => {
@@ -96,7 +99,7 @@ export default function Navbar() {
                         );
                     })}
 
-                    {mounted && (
+                    {mounted && isFinancePage && (
                         <>
                             {isSignedIn ? (
                                 <button

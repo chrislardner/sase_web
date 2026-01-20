@@ -10,12 +10,12 @@ export default function Footer() {
 
     return (
         <footer className="footer-root">
-            <Link href="/" className="footer-inner">
-                <div className="footer-brand">
+            <div className="footer-inner">
+                <Link href="/" className="footer-brand">
                     <Image src={saseFlask} alt="SASE Flask" width={64} className="h-auto"/>
                     <Image src={rhitLogo} alt="RHIT Logo" width={220} className="h-auto"/>
-                </div>
-            </Link>
+                </Link>
+            </div>
 
             <div className="footer-bottom">
                 <div className="footer-bottom-inner">
