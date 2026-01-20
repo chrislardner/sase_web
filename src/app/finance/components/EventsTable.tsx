@@ -18,6 +18,7 @@ interface EventsTableProps {
 
 type SortField = 'date' | 'title' | 'category' | 'sga' | 'groupFunds' | 'total';
 type SortDirection = 'asc' | 'desc';
+type EventTypeFilter = 'all' | 'actual' | 'planned';
 
 interface CombinedEventRow {
     id: string;
@@ -30,6 +31,7 @@ interface CombinedEventRow {
     hasFinance: boolean;
     finance?: FinanceEvent;
     eventId?: string;
+    isPlanned: boolean; // ✅ NEW: Track if this is a planned event
 }
 
 export function EventsTable({
@@ -43,6 +45,7 @@ export function EventsTable({
                             }: EventsTableProps) {
     const [searchTerm, setSearchTerm] = useState('');
     const [categoryFilter, setCategoryFilter] = useState<BudgetCategory | 'all'>('all');
+    const [eventTypeFilter, setEventTypeFilter] = useState<EventTypeFilter>('all'); // ✅ NEW
     const [sortField, setSortField] = useState<SortField>('date');
     const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
@@ -63,6 +66,7 @@ export function EventsTable({
                     hasFinance: !!finance,
                     finance,
                     eventId: event.id,
+                    isPlanned: false, // ✅ Actual events
                 };
             }),
             ...plannedEvents
@@ -77,6 +81,7 @@ export function EventsTable({
                     totalCost: parseNumber(pe.estimatedCost),
                     hasFinance: true,
                     eventId: undefined,
+                    isPlanned: true,
                 })),
         ];
 
@@ -85,6 +90,12 @@ export function EventsTable({
 
     const filteredRows = useMemo(() => {
         let filtered = rows;
+
+        if (eventTypeFilter === 'actual') {
+            filtered = filtered.filter(r => !r.isPlanned);
+        } else if (eventTypeFilter === 'planned') {
+            filtered = filtered.filter(r => r.isPlanned);
+        }
 
         if (searchTerm) {
             const term = searchTerm.toLowerCase();
@@ -121,7 +132,7 @@ export function EventsTable({
 
             return sortDirection === 'asc' ? comparison : -comparison;
         });
-    }, [rows, searchTerm, categoryFilter, sortField, sortDirection]);
+    }, [rows, searchTerm, categoryFilter, eventTypeFilter, sortField, sortDirection]);
 
     const totals = useMemo(() => {
         const sga = filteredRows.reduce((sum, r) => sum + r.sgaAmount, 0);
@@ -157,11 +168,11 @@ export function EventsTable({
         <div className="space-y-6">
             <div>
                 <h2 className="h2-title">All Events - {academicYear}</h2>
-                <p className="lead">Complete event list with financial tracking</p>
+                <p className="lead">Complete event list with filtering and sorting</p>
             </div>
 
             <div className="card card-body">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="relative">
                         <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400"/>
                         <input
@@ -174,9 +185,19 @@ export function EventsTable({
                     </div>
 
                     <select
+                        value={eventTypeFilter}
+                        onChange={(e) => setEventTypeFilter(e.target.value as EventTypeFilter)}
+                        className="px-4 py-2 border rounded-lg dark:bg-neutral-800 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-rhit-maroon"
+                    >
+                        <option value="all">All Events</option>
+                        <option value="actual">Actual Events Only</option>
+                        <option value="planned">Planned Events Only</option>
+                    </select>
+
+                    <select
                         value={categoryFilter}
                         onChange={(e) => setCategoryFilter(e.target.value as typeof categoryFilter)}
-                        className="px-4 py-2 border rounded-lg dark:bg-neutral-800 dark:border-neutral-700"
+                        className="px-4 py-2 border rounded-lg dark:bg-neutral-800 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-rhit-maroon"
                     >
                         <option value="all">All Categories</option>
                         <option value="Travel">Travel</option>
@@ -185,11 +206,10 @@ export function EventsTable({
                     </select>
                 </div>
 
-                <div
-                    className="flex justify-between items-center pt-4 border-t border-neutral-200 dark:border-neutral-800 mt-4">
-          <span className="text-sm card-subtle">
-            Showing {filteredRows.length} events
-          </span>
+                <div className="flex justify-between items-center pt-4 border-t border-neutral-200 dark:border-neutral-800 mt-4">
+                    <span className="text-sm card-subtle">
+                        Showing {filteredRows.length} of {rows.length} events
+                    </span>
                     <div className="flex gap-6 text-sm font-medium">
                         <span className="text-red-600 dark:text-red-400">
                             SGA: {formatCurrency(totals.sga)}
@@ -284,9 +304,9 @@ export function EventsTable({
                                     {row.title}
                                 </td>
                                 <td className="py-3 px-4 text-sm">
-                    <span className="inline-block px-2 py-1 rounded-full bg-neutral-100 dark:bg-neutral-700 text-xs">
-                      {row.category}
-                    </span>
+                                    <span className="inline-block px-2 py-1 rounded-full bg-neutral-100 dark:bg-neutral-700 text-xs">
+                                        {row.category}
+                                    </span>
                                 </td>
                                 <td className="py-3 px-4 text-sm text-right font-medium text-red-600 dark:text-red-400">
                                     {row.sgaAmount > 0 ? formatCurrency(row.sgaAmount) : '—'}
@@ -337,7 +357,7 @@ export function EventsTable({
 
                 {filteredRows.length === 0 && (
                     <div className="text-center py-12 text-neutral-500 dark:text-neutral-400">
-                        No events found
+                        No events found matching your filters
                     </div>
                 )}
             </div>
