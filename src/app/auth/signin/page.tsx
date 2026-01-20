@@ -81,7 +81,7 @@ function SignInForm() {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="your.email@rose-hulman.edu"
+                                placeholder="your.email@gmail.com"
                                 required
                                 className="w-full px-4 py-3 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-rhit-maroon dark:bg-neutral-900 dark:text-neutral-100"
                             />

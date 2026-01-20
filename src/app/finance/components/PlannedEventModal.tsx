@@ -89,7 +89,6 @@ export function PlannedEventModal({
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
             <div className="bg-white dark:bg-neutral-900 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b dark:border-neutral-800">
                     <h2 className="text-2xl font-bold">
                         {existingEvent ? 'Edit Planned Event' : 'Add Planned Event'}
@@ -102,9 +101,7 @@ export function PlannedEventModal({
                     </button>
                 </div>
 
-                {/* Form */}
                 <form onSubmit={handleSubmit} className="p-6 space-y-6">
-                    {/* Title */}
                     <div>
                         <label className="block text-sm font-medium mb-2">Event Title *</label>
                         <input
@@ -117,7 +114,6 @@ export function PlannedEventModal({
                         />
                     </div>
 
-                    {/* Date & Quarter */}
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium mb-2">Date *</label>
@@ -144,7 +140,6 @@ export function PlannedEventModal({
                         </div>
                     </div>
 
-                    {/* Category */}
                     <div>
                         <label className="block text-sm font-medium mb-2">Category *</label>
                         <select
@@ -159,7 +154,6 @@ export function PlannedEventModal({
                         </select>
                     </div>
 
-                    {/* Budget Amounts */}
                     <div className="grid grid-cols-3 gap-4">
                         <div>
                             <label className="block text-sm font-medium mb-2">Estimated Cost *</label>
@@ -203,7 +197,6 @@ export function PlannedEventModal({
                         </div>
                     </div>
 
-                    {/* Expected Attendees */}
                     <div>
                         <label className="block text-sm font-medium mb-2">Expected Attendees</label>
                         <input
@@ -219,7 +212,6 @@ export function PlannedEventModal({
                         />
                     </div>
 
-                    {/* Notes */}
                     <div>
                         <label className="block text-sm font-medium mb-2">Notes</label>
                         <textarea
@@ -231,7 +223,6 @@ export function PlannedEventModal({
                         />
                     </div>
 
-                    {/* Actions */}
                     <div className="flex justify-end gap-3 pt-4 border-t dark:border-neutral-800">
                         <button
                             type="button"
