@@ -141,7 +141,7 @@ export function BoardCard({member}: BoardCardProps) {
                                 />),
                         }}
                     >
-                        {member.bio || ""}
+                        {member.bio || "Bio coming soon!"}
                     </ReactMarkdown>
                 </div>
 
